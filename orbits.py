@@ -1,6 +1,6 @@
 from pylab import *
 
-for v0 in [0.2]:#linspace(0.5, 1.5, 101):
+for v0 in linspace(0.4, 0.995, 120):
 	# Initial position
 	pos = array([1., 0.])
 
@@ -8,7 +8,7 @@ for v0 in [0.2]:#linspace(0.5, 1.5, 101):
 	vel = array([0., v0])
 
 	# Timestep
-	dt = 0.001
+	dt = 0.0005
 	tfinal = 10.
 	steps = int(tfinal/dt)
 
@@ -22,7 +22,7 @@ for v0 in [0.2]:#linspace(0.5, 1.5, 101):
 	  accel = -pos/(pos[0]**2 + pos[1]**2)**1.5
 	  vel += dt*accel
 	  pos += 0.5*dt*vel
-	  keep[i, :] = pos
+	  keep[i, :] = vel
 
 	  phi2 = arctan2(pos[1], pos[0])
 
@@ -38,7 +38,7 @@ for v0 in [0.2]:#linspace(0.5, 1.5, 101):
 	    keep = keep[0:(i+1), :]
 	    break
 	 
-	savetxt('keep' + str(v0) + '.txt', keep)
+	savetxt('Orbits/orbits' + str(v0) + '.dat', keep)
 ioff()
 show()
 
