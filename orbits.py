@@ -1,6 +1,6 @@
 from pylab import *
 
-for v0 in linspace(0.4, 0.995, 120):
+for v0 in linspace(0.4, 1., 121):
 	# Initial position
 	pos = array([1., 0.])
 
