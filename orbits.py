@@ -38,7 +38,7 @@ for v0 in linspace(0.4, 0.995, 120):
 	    keep = keep[0:(i+1), :]
 	    break
 	 
-	savetxt('Orbits/orbits' + str(v0) + '.dat', keep)
+	savetxt('Orbits/orbits' + '{v:.3f}'.format(v=v0) + '.dat', keep)
 ioff()
 show()
 
