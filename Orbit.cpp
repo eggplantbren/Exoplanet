@@ -46,11 +46,14 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 	double S = sin(viewing_angle);
 	vector<double> vr = vx;
 	double vrmax = -1E300;
+	int closest = 0;
 	for(size_t i=0; i<vr.size(); i++)
 	{
 		vr[i] = C*vx[i] + S*vy[i];
-		if(vr[i] > vrmax)
-			vrmax = vr[i];
+		if(abs(vr[i]) > vrmax)
+			vrmax = abs(vr[i]);
+		if(abs(vr[i]) < abs(vr[closest]))
+			closest = i;
 	}
 
 	bool flip = vr[1] < vr[0];
@@ -63,9 +66,10 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 
 	vector<double> result = arg_to_sin;
 	int index;
+	double cc = 2.*M_PI*((double)(closest))/vr.size();
 	for(size_t i=0; i<result.size(); i++)
 	{
-		index = (int)(vr.size()*mod(arg_to_sin[i], 2.*M_PI)/(2*M_PI));
+		index = (int)(vr.size()*mod(arg_to_sin[i] + cc, 2.*M_PI)/(2*M_PI));
 		result[i] = vr[index];
 	}
 
@@ -76,13 +80,13 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 int main()
 {
 	Orbit o;
-	o.load("Orbits/orbits0.900.dat");
+	o.load("Orbits/orbits0.710.dat");
 
 	vector<double> t;
 	for(double tt=-5; tt <= 10; tt += 0.01)
 		t.push_back(tt);
 
-	vector<double> y = o.evaluate(t, 0.);
+	vector<double> y = o.evaluate(t, 1.);
 	for(size_t i=0; i<y.size(); i++)
 		cout<<t[i]<<' '<<y[i]<<endl;
 
