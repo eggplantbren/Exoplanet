@@ -14,7 +14,6 @@ class Orbit
 
 		std::vector<double> evaluate
 				(const std::vector<double>& arg_to_sin,
-						double v0,
 						double viewing_angle);
 };
 

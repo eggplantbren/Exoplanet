@@ -39,7 +39,6 @@ void Orbit::load(const char* filename)
 }
 
 vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
-						double v0,
 						double viewing_angle)
 {
 	// Create radial velocities
@@ -71,5 +70,22 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 	}
 
 	return result;
+}
+
+
+int main()
+{
+	Orbit o;
+	o.load("Orbits/orbits0.900.dat");
+
+	vector<double> t;
+	for(double tt=-5; tt <= 10; tt += 0.01)
+		t.push_back(tt);
+
+	vector<double> y = o.evaluate(t, 0.);
+	for(size_t i=0; i<y.size(); i++)
+		cout<<t[i]<<' '<<y[i]<<endl;
+
+	return 0;
 }
 
