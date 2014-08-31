@@ -16,6 +16,13 @@ class Lookup
 		Lookup();
 		void load();
 
+	// Instance
+	private:
+		static Lookup instance;
+	public:
+		static Lookup& get_instance()
+		{ return instance; }
+
 };
 
 #endif

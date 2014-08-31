@@ -5,8 +5,8 @@ using namespace std;
 
 int main()
 {
-	Lookup l;
-	l.load();
+	Lookup::get_instance().load();
+
 
 	return 0;
 }

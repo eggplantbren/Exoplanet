@@ -5,6 +5,8 @@
 
 using namespace std;
 
+Lookup Lookup::instance;
+
 Lookup::Lookup()
 {
 
