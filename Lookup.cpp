@@ -34,3 +34,18 @@ void Lookup::load()
 	}
 }
 
+vector<double> Lookup::evaluate
+		(const vector<double>& arg_to_sin,
+			double v0,
+			double viewing_angle) const
+{
+	vector<double> result;
+
+	// If v0 is out of bounds, do nothing
+	if(v0 < 0.4 || v0 > 1.)
+		return result;
+
+	int which = (v0 - 0.4)/0.005;
+	return orbits[which].evaluate(arg_to_sin, viewing_angle);
+}
+

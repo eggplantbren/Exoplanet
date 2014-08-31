@@ -39,7 +39,7 @@ void Orbit::load(const char* filename)
 }
 
 vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
-						double viewing_angle)
+						double viewing_angle) const
 {
 	// Create radial velocities
 	double C = cos(viewing_angle);
