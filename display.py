@@ -1,7 +1,7 @@
 from pylab import *
 import os
 
-data = loadtxt('fake_data.txt')
+data = loadtxt('exoplanet.txt')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
 saveFrames = False # For making movies

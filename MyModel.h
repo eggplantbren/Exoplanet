@@ -10,7 +10,8 @@ class MyModel:public DNest3::Model
 {
 	private:
 		RJObject<MyDistribution> objects;
-		double sigma; // Noise standard deviation
+		double sigma; // Noise scale parameter
+		double nu; // Noise shape parameter
 
 		// The signal
 		std::vector<long double> mu;

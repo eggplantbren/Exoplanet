@@ -4,6 +4,7 @@
 #include "Data.h"
 #include <cmath>
 #include "Lookup.h"
+#include <gsl/gsl_sf_gamma.h>
 
 using namespace std;
 using namespace DNest3;
@@ -20,6 +21,7 @@ void MyModel::fromPrior()
 	objects.fromPrior();
 	objects.consolidate_diff();
 	sigma = exp(log(1E-3) + log(1E6)*randomU());
+	nu = exp(log(0.1) + log(1000.)*randomU());
 	calculate_mu();
 }
 
@@ -73,6 +75,11 @@ double MyModel::perturb()
 		sigma += log(1E6)*randh();
 		sigma = mod(sigma - log(1E-3), log(1E6)) + log(1E-3);
 		sigma = exp(sigma);
+
+		nu = log(nu);
+		nu += log(1000.)*randh();
+		wrap(nu, log(0.1), log(1000.));
+		nu = exp(nu);
 	}
 
 	return logH;
@@ -84,9 +91,12 @@ double MyModel::logLikelihood() const
 	const vector<double>& y = Data::get_instance().get_y();
 
 	double logL = 0.;
-	double var = sigma*sigma;
 	for(size_t i=0; i<y.size(); i++)
-		logL += -0.5*log(2.*M_PI*var) - 0.5*pow(y[i] - mu[i], 2)/var;
+	{
+		logL += gsl_sf_lngamma(0.5*(nu + 1.)) - gsl_sf_lngamma(0.5*nu)
+			- 0.5*log(M_PI*nu) - log(sigma)
+			- 0.5*(nu + 1.)*log(1. + pow((y[i] - mu[i])/sigma, 2)/nu);
+	}
 
 	return logL;
 }
@@ -95,7 +105,7 @@ void MyModel::print(std::ostream& out) const
 {
 	for(size_t i=0; i<mu.size(); i++)
 		out<<mu[i]<<' ';
-	out<<sigma<<' ';
+	out<<sigma<<' '<<nu<<' ';
 	objects.print(out); out<<' ';
 }
 
