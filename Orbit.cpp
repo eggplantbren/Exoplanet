@@ -77,19 +77,19 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 }
 
 
-int main()
-{
-	Orbit o;
-	o.load("Orbits/orbits0.710.dat");
+//int main()
+//{
+//	Orbit o;
+//	o.load("Orbits/orbits0.710.dat");
 
-	vector<double> t;
-	for(double tt=-5; tt <= 10; tt += 0.01)
-		t.push_back(tt);
+//	vector<double> t;
+//	for(double tt=-5; tt <= 10; tt += 0.01)
+//		t.push_back(tt);
 
-	vector<double> y = o.evaluate(t, 1.);
-	for(size_t i=0; i<y.size(); i++)
-		cout<<t[i]<<' '<<y[i]<<endl;
+//	vector<double> y = o.evaluate(t, 1.);
+//	for(size_t i=0; i<y.size(); i++)
+//		cout<<t[i]<<' '<<y[i]<<endl;
 
-	return 0;
-}
+//	return 0;
+//}
 
