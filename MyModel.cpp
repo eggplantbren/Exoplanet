@@ -3,12 +3,13 @@
 #include "Utils.h"
 #include "Data.h"
 #include <cmath>
+#include "Lookup.h"
 
 using namespace std;
 using namespace DNest3;
 
 MyModel::MyModel()
-:objects(3, 10, false, MyDistribution(-10., 10., 1E-3, 1E3))
+:objects(5, 10, false, MyDistribution(-10., 10., 1E-3, 1E3))
 ,mu(Data::get_instance().get_t().size())
 {
 
@@ -38,14 +39,21 @@ void MyModel::calculate_mu()
 	if(!update)
 		mu.assign(mu.size(), 0.);
 
-	double T, A, phi;
+	double T, A, phi, v0, viewing_angle;
+	vector<double> arg, evaluations;
 	for(size_t j=0; j<components.size(); j++)
 	{
 		T = exp(components[j][0]);
 		A = components[j][1];
 		phi = components[j][2];
+		v0 = components[j][3];
+		viewing_angle = components[j][4];
+		arg = t;
+		for(size_t i=0; i<arg.size(); i++)
+			arg[i] = 2.*M_PI*t[i]/T + phi;
+		evaluations = Lookup::get_instance().evaluate(arg, v0, viewing_angle);
 		for(size_t i=0; i<t.size(); i++)
-			mu[i] += A*sin(2.*M_PI*t[i]/T + phi);
+			mu[i] += A*evaluations[i];
 	}
 }
 
