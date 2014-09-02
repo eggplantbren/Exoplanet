@@ -103,8 +103,44 @@ double MyModel::logLikelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
-	for(size_t i=0; i<mu.size(); i++)
-		out<<mu[i]<<' ';
+	// Make a mock signal on a finer grid than the data
+	// Much of this code is copied from calculate_mu()
+	// Get times from the data
+	const vector<double>& tt = Data::get_instance().get_t();
+	double t_min = *min_element(tt.begin(), tt.end());
+	double t_max = *max_element(tt.begin(), tt.end());
+
+	vector<double> t(1000);
+	double dt = (t_max - t_min)/((int)t.size() - 1);
+	for(size_t i=0; i<t.size(); i++)
+		t[i] = t_min + i*dt;
+
+	// Get the components
+	const vector< vector<double> >& components = objects.get_components();
+
+	// Zero the signal
+	vector<double> signal(t.size());
+	signal.assign(signal.size(), 0.);
+
+	double T, A, phi, v0, viewing_angle;
+	vector<double> arg, evaluations;
+	for(size_t j=0; j<components.size(); j++)
+	{
+		T = exp(components[j][0]);
+		A = components[j][1];
+		phi = components[j][2];
+		v0 = components[j][3];
+		viewing_angle = components[j][4];
+		arg = t;
+		for(size_t i=0; i<arg.size(); i++)
+			arg[i] = 2.*M_PI*t[i]/T + phi;
+		evaluations = Lookup::get_instance().evaluate(arg, v0, viewing_angle);
+		for(size_t i=0; i<t.size(); i++)
+			signal[i] += A*evaluations[i];
+	}
+
+	for(size_t i=0; i<signal.size(); i++)
+		out<<signal[i]<<' ';
 	out<<sigma<<' '<<nu<<' ';
 	objects.print(out); out<<' ';
 }
