@@ -16,6 +16,7 @@ class MyModel:public DNest3::Model
 		// The signal
 		std::vector<long double> mu;
 		void calculate_mu();
+		unsigned int staleness;
 
 	public:
 		MyModel();

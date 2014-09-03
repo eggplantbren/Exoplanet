@@ -31,7 +31,8 @@ void MyModel::calculate_mu()
 	const vector<double>& t = Data::get_instance().get_t();
 
 	// Update or from scratch?
-	bool update = (objects.get_added().size() < objects.get_components().size());
+	bool update = (objects.get_added().size() < objects.get_components().size())
+			(staleness <= 10);
 
 	// Get the components
 	const vector< vector<double> >& components = (update)?(objects.get_added()):
@@ -39,7 +40,12 @@ void MyModel::calculate_mu()
 
 	// Zero the signal
 	if(!update)
+	{
 		mu.assign(mu.size(), 0.);
+		staleness = 0;
+	}
+	else
+		staleness++;
 
 	double T, A, phi, v0, viewing_angle;
 	vector<double> arg, evaluations;
@@ -142,11 +148,11 @@ void MyModel::print(std::ostream& out) const
 	for(size_t i=0; i<signal.size(); i++)
 		out<<signal[i]<<' ';
 	out<<sigma<<' '<<nu<<' ';
-	objects.print(out); out<<' ';
+	objects.print(out); out<<' '<<staleness<<' ';
 }
 
 string MyModel::description() const
 {
-	return string("objects, sigma");
+	return string("");
 }
 
