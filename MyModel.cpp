@@ -31,7 +31,7 @@ void MyModel::calculate_mu()
 	const vector<double>& t = Data::get_instance().get_t();
 
 	// Update or from scratch?
-	bool update = (objects.get_added().size() < objects.get_components().size())
+	bool update = (objects.get_added().size() < objects.get_components().size()) &&
 			(staleness <= 10);
 
 	// Get the components
