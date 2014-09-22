@@ -10,6 +10,8 @@ class MyModel:public DNest3::Model
 {
 	private:
 		RJObject<MyDistribution> objects;
+
+		double background;
 		double sigma; // Noise scale parameter
 		double nu; // Noise shape parameter
 

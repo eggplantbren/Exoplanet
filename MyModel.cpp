@@ -10,7 +10,7 @@ using namespace std;
 using namespace DNest3;
 
 MyModel::MyModel()
-:objects(5, 10, false, MyDistribution(-10., 10., 1E-3, 1E3))
+:objects(5, 10, false, MyDistribution(-3., 10., 1E-3, 1E3))
 ,mu(Data::get_instance().get_t().size())
 {
 
@@ -20,6 +20,7 @@ void MyModel::fromPrior()
 {
 	objects.fromPrior();
 	objects.consolidate_diff();
+	background = -20. + 40.*randomU();
 	sigma = exp(log(1E-3) + log(1E6)*randomU());
 	nu = exp(log(0.1) + log(1000.)*randomU());
 	calculate_mu();
@@ -41,7 +42,7 @@ void MyModel::calculate_mu()
 	// Zero the signal
 	if(!update)
 	{
-		mu.assign(mu.size(), 0.);
+		mu.assign(mu.size(), background);
 		staleness = 0;
 	}
 	else
@@ -75,7 +76,7 @@ double MyModel::perturb()
 		objects.consolidate_diff();
 		calculate_mu();
 	}
-	else
+	else if(randomU() <= 0.5)
 	{
 		sigma = log(sigma);
 		sigma += log(1E6)*randh();
@@ -86,6 +87,17 @@ double MyModel::perturb()
 		nu += log(1000.)*randh();
 		wrap(nu, log(0.1), log(1000.));
 		nu = exp(nu);
+	}
+	else
+	{
+		for(size_t i=0; i<mu.size(); i++)
+			mu[i] -= background;
+
+		background += 40.*randh();
+		wrap(background, -20., 20.);
+
+		for(size_t i=0; i<mu.size(); i++)
+			mu[i] += background;
 	}
 
 	return logH;
@@ -126,7 +138,7 @@ void MyModel::print(std::ostream& out) const
 
 	// Zero the signal
 	vector<double> signal(t.size());
-	signal.assign(signal.size(), 0.);
+	signal.assign(signal.size(), background);
 
 	double T, A, phi, v0, viewing_angle;
 	vector<double> arg, evaluations;
@@ -149,6 +161,7 @@ void MyModel::print(std::ostream& out) const
 		out<<signal[i]<<' ';
 	out<<sigma<<' '<<nu<<' ';
 	objects.print(out); out<<' '<<staleness<<' ';
+	out<<background<<' ';
 }
 
 string MyModel::description() const
