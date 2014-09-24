@@ -4,6 +4,10 @@ import os
 data = loadtxt('exoplanet.txt')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
+hist(posterior_sample[:,1005], 100)
+xlabel('Number of Planets')
+show()
+
 t = linspace(data[:,0].min(), data[:,0].max(), 1000)
 
 saveFrames = False # For making movies
