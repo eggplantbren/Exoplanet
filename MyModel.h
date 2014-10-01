@@ -12,7 +12,7 @@ class MyModel:public DNest3::Model
 		RJObject<MyDistribution> objects;
 
 		double background;
-		double sigma; // Noise scale parameter
+		double extra_sigma; // Noise scale parameter
 		double nu; // Noise shape parameter
 
 		// The signal

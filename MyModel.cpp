@@ -22,7 +22,7 @@ void MyModel::fromPrior()
 	objects.consolidate_diff();
 	background = Data::get_instance().get_y_min() +
 		(Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*randomU();
-	sigma = exp(tan(M_PI*(0.97*randomU() - 0.485)));
+	extra_sigma = exp(tan(M_PI*(0.97*randomU() - 0.485)));
 	nu = exp(log(0.1) + log(1000.)*randomU());
 	calculate_mu();
 }
@@ -79,12 +79,12 @@ double MyModel::perturb()
 	}
 	else if(randomU() <= 0.5)
 	{
-		sigma = log(sigma);
-		sigma = (atan(sigma)/M_PI + 0.485)/0.97;
-		sigma += randh();
-		wrap(sigma, 0., 1.);
-		sigma = tan(M_PI*(0.97*sigma - 0.485));
-		sigma = exp(sigma);
+		extra_sigma = log(extra_sigma);
+		extra_sigma = (atan(extra_sigma)/M_PI + 0.485)/0.97;
+		extra_sigma += randh();
+		wrap(extra_sigma, 0., 1.);
+		extra_sigma = tan(M_PI*(0.97*extra_sigma - 0.485));
+		extra_sigma = exp(extra_sigma);
 
 		nu = log(nu);
 		nu += log(1000.)*randh();
@@ -110,10 +110,13 @@ double MyModel::logLikelihood() const
 {
 	// Get the data
 	const vector<double>& y = Data::get_instance().get_y();
+	const vector<double>& sig = Data::get_instance().get_sig();
 
 	double logL = 0.;
+	double sigma;
 	for(size_t i=0; i<y.size(); i++)
 	{
+		sigma = sqrt(pow(sig[i], 2) + pow(extra_sigma, 2));
 		logL += gsl_sf_lngamma(0.5*(nu + 1.)) - gsl_sf_lngamma(0.5*nu)
 			- 0.5*log(M_PI*nu) - log(sigma)
 			- 0.5*(nu + 1.)*log(1. + pow((y[i] - mu[i])/sigma, 2)/nu);
@@ -162,7 +165,7 @@ void MyModel::print(std::ostream& out) const
 
 	for(size_t i=0; i<signal.size(); i++)
 		out<<signal[i]<<' ';
-	out<<sigma<<' '<<nu<<' ';
+	out<<extra_sigma<<' '<<nu<<' ';
 	objects.print(out); out<<' '<<staleness<<' ';
 	out<<background<<' ';
 }
