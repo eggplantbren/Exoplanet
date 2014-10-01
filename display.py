@@ -8,6 +8,12 @@ hist(posterior_sample[:,1007], 100)
 xlabel('Number of Planets')
 show()
 
+T = posterior_sample[:,1008:1018]
+T = T[T != 0].flatten()
+hist(T, 200, alpha=0.5)
+xlabel(r'$\ln$(Period/days)')
+show()
+
 t = linspace(data[:,0].min(), data[:,0].max(), 1000)
 
 saveFrames = False # For making movies
