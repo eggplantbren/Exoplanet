@@ -10,7 +10,13 @@ show()
 
 T = posterior_sample[:,1008:1018]
 T = T[T != 0].flatten()
-hist(T, 200, alpha=0.5)
+# Trim
+s = sort(T)
+left, middle, right = s[0.25*len(s)], s[0.5*len(s)], s[0.75*len(s)]
+iqr = right - left
+s = s[logical_and(s > middle - 5*iqr, s < middle + 5*iqr)]
+
+hist(s, 200, alpha=0.5)
 xlabel(r'$\ln$(Period/days)')
 show()
 
