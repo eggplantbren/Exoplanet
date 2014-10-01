@@ -22,7 +22,7 @@ void MyModel::fromPrior()
 	objects.consolidate_diff();
 	background = Data::get_instance().get_y_min() +
 		(Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*randomU();
-	sigma = exp(log(1E-3) + log(1E6)*randomU());
+	sigma = exp(tan(M_PI*(0.97*randomU() - 0.485)));
 	nu = exp(log(0.1) + log(1000.)*randomU());
 	calculate_mu();
 }
@@ -80,8 +80,10 @@ double MyModel::perturb()
 	else if(randomU() <= 0.5)
 	{
 		sigma = log(sigma);
-		sigma += log(1E6)*randh();
-		sigma = mod(sigma - log(1E-3), log(1E6)) + log(1E-3);
+		sigma = (atan(sigma)/M_PI + 0.485)/0.97;
+		sigma += randh();
+		wrap(sigma, 0., 1.);
+		sigma = tan(M_PI*(0.97*sigma - 0.485));
 		sigma = exp(sigma);
 
 		nu = log(nu);
