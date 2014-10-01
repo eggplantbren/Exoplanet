@@ -113,13 +113,13 @@ double MyModel::logLikelihood() const
 	const vector<double>& sig = Data::get_instance().get_sig();
 
 	double logL = 0.;
-	double sigma;
+	double var;
 	for(size_t i=0; i<y.size(); i++)
 	{
-		sigma = sqrt(pow(sig[i], 2) + pow(extra_sigma, 2));
+		var = sig[i]*sig[i] + extra_sigma*extra_sigma;
 		logL += gsl_sf_lngamma(0.5*(nu + 1.)) - gsl_sf_lngamma(0.5*nu)
-			- 0.5*log(M_PI*nu) - log(sigma)
-			- 0.5*(nu + 1.)*log(1. + pow((y[i] - mu[i])/sigma, 2)/nu);
+			- 0.5*log(M_PI*nu) - 0.5*log(var)
+			- 0.5*(nu + 1.)*log(1. + pow(y[i] - mu[i], 2)/var/nu);
 	}
 
 	return logL;
