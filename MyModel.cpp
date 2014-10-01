@@ -20,7 +20,8 @@ void MyModel::fromPrior()
 {
 	objects.fromPrior();
 	objects.consolidate_diff();
-	background = -20. + 40.*randomU();
+	background = Data::get_instance().get_y_min() +
+		(Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*randomU();
 	sigma = exp(log(1E-3) + log(1E6)*randomU());
 	nu = exp(log(0.1) + log(1000.)*randomU());
 	calculate_mu();
@@ -93,8 +94,8 @@ double MyModel::perturb()
 		for(size_t i=0; i<mu.size(); i++)
 			mu[i] -= background;
 
-		background += 40.*randh();
-		wrap(background, -20., 20.);
+		background += (Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*randh();
+		wrap(background, Data::get_instance().get_y_min(), Data::get_instance().get_y_max());
 
 		for(size_t i=0; i<mu.size(); i++)
 			mu[i] += background;

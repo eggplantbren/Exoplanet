@@ -2,6 +2,7 @@
 #define _Data_
 
 #include <vector>
+#include <algorithm>
 
 class Data
 {
@@ -15,6 +16,8 @@ class Data
 		// Getters
 		const std::vector<double>& get_t() const { return t; }
 		const std::vector<double>& get_y() const { return y; }
+		double get_y_min() const { return *min_element(y.begin(), y.end()); }
+		double get_y_max() const { return *max_element(y.begin(), y.end()); }
 
 	// Singleton
 	private:
