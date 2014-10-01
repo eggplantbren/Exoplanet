@@ -10,7 +10,7 @@ using namespace std;
 using namespace DNest3;
 
 MyModel::MyModel()
-:objects(5, 10, false, MyDistribution(0., 10., 1E-3, 1E3))
+:objects(5, 10, false, MyDistribution())
 ,mu(Data::get_instance().get_t().size())
 {
 

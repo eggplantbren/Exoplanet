@@ -4,7 +4,7 @@ import os
 data = loadtxt('exoplanet.txt')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
-hist(posterior_sample[:,1005], 100)
+hist(posterior_sample[:,1007], 100)
 xlabel('Number of Planets')
 show()
 

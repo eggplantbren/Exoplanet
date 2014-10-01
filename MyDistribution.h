@@ -9,9 +9,8 @@
 class MyDistribution:public Distribution
 {
 	private:
-		// Limits
-		double x_min, x_max;
-		double mu_min, mu_max;
+		// Parameters of bi-exponential distribution for log-periods
+		double center, width;
 
 		// Mean of exponential distribution for amplitudes
 		double mu;
@@ -19,8 +18,7 @@ class MyDistribution:public Distribution
 		double perturb_parameters();
 
 	public:
-		MyDistribution(double x_min, double x_max,
-					double mu_min, double mu_max);
+		MyDistribution();
 
 		void fromPrior();
 
