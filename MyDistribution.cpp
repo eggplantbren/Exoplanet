@@ -17,7 +17,7 @@ MyDistribution::MyDistribution(double x_min, double x_max,
 
 void MyDistribution::fromPrior()
 {
-	mu = exp(log(mu_min) + log(mu_max/mu_min)*randomU());
+	mu = exp(tan(M_PI*(0.97*randomU() - 0.485)));
 }
 
 double MyDistribution::perturb_parameters()
@@ -25,8 +25,10 @@ double MyDistribution::perturb_parameters()
 	double logH = 0.;
 
 	mu = log(mu);
-	mu += log(mu_max/mu_min)*pow(10., 1.5 - 6.*randomU())*randn();
-	mu = mod(mu - log(mu_min), log(mu_max/mu_min)) + log(mu_min);
+	mu = (atan(mu)/M_PI + 0.485)/0.97;
+	mu += randh();
+	wrap(mu, 0., 1.);
+	mu = tan(M_PI*(0.97*mu - 0.485));
 	mu = exp(mu);
 
 	return logH;
