@@ -37,6 +37,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
+Inferring the number of planets $N$ in an exoplanetary system from radial velocity
+(RV) data is a challenging task. Typically, the posterior distribution for the
+planet parameters is multimodal and may have other awkward features. In
+addition, when $N$ is unknown, the marginal likelihood (or evidence), as a
+function of $N$, is required. In this paper we propose an alternative
+approach using a trans-dimensional Markov Chain Monte Carlo method within
+Nested Sampling. We also implement the likelihood function using a look-up
+table of pre-computed elliptical orbits.
+The posterior distribution for $N$ can be obtained with a
+single run, which takes $\sim$ 10 minutes on a typical modern desktop computer.
+We apply the method to $\nu$ Oph and XXX, and find moderate evidence
+(posterior probability of existence = 70\%) for a third planet around
+$\nu$ Oph with an orbital period of 75.7 $\pm$ 1.8 days.
 \end{abstract}
 
 \begin{keywords}
