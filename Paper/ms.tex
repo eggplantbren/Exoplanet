@@ -9,7 +9,8 @@
 \usepackage{dsfont}
 
 % Bold symbols
-\renewcommand{\btheta}{\{\theta_i\}}
+\renewcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\bdata}{\boldsymbol{D}}
 \newcommand{\bx}{\{x_i\}}
 
 % \onecolumn
@@ -64,7 +65,8 @@ decades \citep{}. These discoveries have been driven by improvements in
 all of the different techniques used to detect and characterise exoplanets,
 including the radial velocity method \citep[e.g.][]{},
 the transit method \citep[e.g.]{},
-and gravitational microlensing \citep[e.g.][]{}. This paper focuses on the
+and gravitational microlensing
+\citep[e.g.][]{2014ApJ...785..155B, 2014ApJ...790...14Y}. This paper focuses on the
 radial velocity method.
 
 Many authors have considered the problem of inferring the properties of an
@@ -73,10 +75,37 @@ the expected signal due to an exoplanet is periodic, and the goal is to
 infer the number of planets in the system, as well as their properties such
 as orbital periods and eccentricities. Many
 different techniques have been proposed. These techniques fall into two main
-classes: i) those based on periodograms \citep[e.g.][]{}, ii) those based on
-Bayesian inference, to describe the uncertainties probabilistically.
+classes: i) those based on periodograms \citep[e.g.][]{},
+and ii) those based on model fitting in the Bayesian inference framework,
+to describe the uncertainties probabilistically.
 
 \section{Inference}
+Bayesian inference is the use of probability theory to describe uncertainty
+\citep{}. In this framework, we approach data analysis problems by first
+constructing a {\it hypothesis space}, which is the set of possible answers
+to the problem we are considering. Normally, this is the set of possible
+values of a vector of parameters $\btheta$ whose values we want
+to know. We then assign probability distributions
+called the {\it prior} and the {\it sampling distribution}. The prior
+distribution $p(\btheta)$ describes
+our initial uncertainty about which values of the parameters
+$\btheta$ are plausible, and the
+sampling distribution $p(\bdata | \btheta)$ describes
+our initial uncertainty about the data set we're going to observe, as a
+function of the unknown parameters $\btheta$.
+When the data is known, our state of knowledge about the parameter is
+updated from the prior $p(\theta)$ to the posterior distribution given by
+Bayes' rule:
+\begin{eqnarray}
+p(\btheta | \bdata) &=&
+\frac{p(\btheta)p(\bdata | \btheta)}
+{p(\bdata)}
+\end{eqnarray}
+where the denominator, often called the {\it evidence} or
+{\it marginal likelihood}, is given by:
+\begin{eqnarray}
+p(\bdata) = \int p(\btheta) p(\bdata | \btheta) d^N \btheta
+\end{eqnarray}
 
 The unknown parameters are:
 \begin{eqnarray}
@@ -89,7 +118,7 @@ hyperparameters, and $\phi_i = \{\}$ are the properties of planet $i$.
 The number of orbiting planets, $N$, is usually of significant interest.
 Most authors have carried out the inference for $N$ by doing separate runs, one
 for each possible value of $N$, and calculating the marginal likelihood
-$p(\boldsymbol{D} | N)$ as a function of $N$
+$p(\bdata | N)$ as a function of $N$
 \citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}.
 
 \begin{table*}
@@ -130,7 +159,7 @@ $S_i =  \log_{10}(T/\textnormal{1 day})$,
 Figure~\ref{fig:nu_oph_periods} is a Monte Carlo representation
 of the mixture distribution
 \begin{eqnarray}
-f(S) &=& \sum_{N=1}^{10} \frac{1}{N}\sum_{i=1}^N p(S_i | N, \boldsymbol{D}).
+f(S) &=& \sum_{N=1}^{10} \frac{1}{N}\sum_{i=1}^N p(S_i | N, \bdata).
 \end{eqnarray}
 
 
@@ -152,6 +181,10 @@ BJB is partially
 supported by the Marsden Fund (Royal Society of New Zealand).
 
 \begin{thebibliography}{99}
+
+\bibitem[\protect\citeauthoryear{Bennett et 
+al.}{2014}]{2014ApJ...785..155B} Bennett D.~P., et al., 2014, ApJ, 785, 155 
+
 \bibitem[\protect\citeauthoryear{Feroz 
 \& Hobson}{2014}]{2014MNRAS.437.3540F} Feroz F., Hobson M.~P., 2014, MNRAS, 437, 3540 
 
@@ -166,6 +199,10 @@ Gregory P.~C., 2011, MNRAS, 415, 2523
 
 \bibitem[\protect\citeauthoryear{Sato et al.}{2012}]{2012PASJ...64..135S} 
 Sato B., et al., 2012, PASJ, 64, 135 
+
+\bibitem[\protect\citeauthoryear{Yee et al.}{2014}]{2014ApJ...790...14Y} 
+Yee J.~C., et al., 2014, ApJ, 790, 14 
+
 \end{thebibliography}
 
 
