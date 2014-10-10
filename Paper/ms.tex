@@ -109,11 +109,28 @@ of $530.3$ and $3190$ days.
 The posterior distribution for $N$, the number of planets, is shown in
 Figure~\ref{fig:nu_oph_N}.
 
+The posterior distribution for the logarithms of the periods is shown in
+Figure~\ref{fig:nu_oph_periods}. Because of the label-switching degeneracy,
+the posterior samples for all periods were combined to make this figure, which
+shows three prominent peaks. Defining the log-periods by
+$S_i =  \log_{10}(T/\textnormal{1 day})$,
+Figure~\ref{fig:nu_oph_periods} is a Monte Carlo representation
+of the mixture distribution
+\begin{eqnarray}
+f(S) &=& \sum_{N=1}^{10} \frac{1}{N}\sum_{i=1}^N p(S_i | N, \boldsymbol{D}).
+\end{eqnarray}
+
 
 \begin{figure}
 \includegraphics[scale=0.5]{Figures/nu_oph_N.eps}
 \caption{The posterior distribution for the number of planets $N$ orbiting
 $\nu$ Oph.\label{fig:nu_oph_N}}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.5]{Figures/nu_oph_periods.eps}
+\caption{The posterior distribution for the orbital periods in the $\nu$ Oph
+system.\label{fig:nu_oph_periods}}
 \end{figure}
 
 \vspace{-0.5cm}
