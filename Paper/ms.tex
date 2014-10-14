@@ -146,8 +146,13 @@ point mass at the origin. The equations of motion for the particle are:
 \frac{d^2x}{dt^2} &=& -\frac{x}{r^3} \\
 \frac{d^2y}{dt^2} &=& -\frac{y}{r^3} \\
 \end{eqnarray}
-where $r = \sqrt{x^2 + y^2}$. The initial conditions
-$\{x(0), y(0), \dot{x}(0), \dot{y}(0)\} = \{1, 0, 0, v\}$.
+where $r = \sqrt{x^2 + y^2}$. The ODEs can be solved for any given set of
+initial conditions for $x$, $y$, $\frac{dx}{dt}$, and $\frac{dy}{dt}$ to yield
+the shape of the orbit. To simulate orbits
+of different ellipticities, we set the initial position to $(1, 0)$, and
+the initial velocity to $(0, v)$ where $v \in [0.4, 1]$.
+If $v=1$, the orbit is circular and as $v$ decreases the orbit becomes more
+elliptical.
 
 \section{Reanalysis of $\nu$ Oph}
 The $\nu$ Oph system is generally accepted to have two confirmed planets
@@ -183,8 +188,11 @@ system.\label{fig:nu_oph_periods}}
 
 \vspace{-0.5cm}
 \section*{Acknowledgements}
-BJB is partially
-supported by the Marsden Fund (Royal Society of New Zealand).
+It is a pleasure to thank Fengji Hou and David Hogg (NYU) for inspiring me to
+finally work on this problem, and Phil Gregory (UBC) for writing so many
+interesting papers on it. This work was supported by a Marsden Fast Start
+grant from the Royal Society of
+New Zealand.
 
 \begin{thebibliography}{99}
 
