@@ -92,11 +92,17 @@ $\mu_T$		&			&	\\
 \end{table*}
 
 \section{Orbit Simulations}
+The expected (noise-free) signal due to an exoplanet is periodic, but
+non-sinusoidal when the orbit is not perfectly circular. The expected
+shape of the variations can be obtained from mechanical considerations.
+To save time, we pre-computed the properties of orbits as a function of
+ellipticity.
 
-The equations of motion were
+Consider a test particle moving in the $x$-$y$ plane under the influence of a
+point mass at the origin. The equations of motion for the particle are:
 \begin{eqnarray}
-\ddot{x} &=& -\frac{x}{r^3} \\
-\ddot{y} &=& -\frac{y}{r^3} \\
+\frac{d^2x}{dt^2} &=& -\frac{x}{r^3} \\
+\frac{d^2y}{dt^2} &=& -\frac{y}{r^3} \\
 \end{eqnarray}
 where $r = \sqrt{x^2 + y^2}$. The initial conditions
 $\{x(0), y(0), \dot{x}(0), \dot{y}(0)\} = \{1, 0, 0, v\}$.
