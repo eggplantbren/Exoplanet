@@ -152,7 +152,11 @@ the shape of the orbit. To simulate orbits
 of different ellipticities, we set the initial position to $(1, 0)$, and
 the initial velocity to $(0, v)$ where $v \in [0.4, 1]$.
 If $v=1$, the orbit is circular and as $v$ decreases the orbit becomes more
-elliptical.
+elliptical. For trial values of $v$ ranging from 0.4 to 1 in steps of 0.005,
+we simulated an orbit using a leapfrog integrator, and saved the
+velocities $\frac{dx}{dt}$ and $\frac{dy}{dt}$ as a function of time.
+Because of the initial conditions, the simulated orbits were all horizontally
+aligned.
 
 \section{Reanalysis of $\nu$ Oph}
 The $\nu$ Oph system is generally accepted to have two confirmed planets
