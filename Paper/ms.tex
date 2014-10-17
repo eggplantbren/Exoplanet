@@ -114,7 +114,6 @@ The unknown parameters are:
 where $\boldsymbol{\alpha} = \{\mu_T, \sigma_T, \mu_A\}$ are the
 hyperparameters, and $\phi_i = \{\}$ are the properties of planet $i$.
 
-
 The number of orbiting planets, $N$, is usually of significant interest.
 Most authors have carried out the inference for $N$ by doing separate runs, one
 for each possible value of $N$, and calculating the marginal likelihood
@@ -132,6 +131,8 @@ $N$		& Number of planets	& Discrete Uniform$(0, 10)$\\
 $\mu_T$		&			&	\\
 \end{tabular}
 \end{table*}
+
+We used hierarchical priors because...
 
 \section{Orbit Simulations}
 The expected (noise-free) signal due to an exoplanet is periodic, but
@@ -154,8 +155,11 @@ the initial velocity to $(0, v)$ where $v \in [0.4, 1]$.
 If $v=1$, the orbit is circular and as $v$ decreases the orbit becomes more
 elliptical. For trial values of $v$ ranging from 0.4 to 1 in steps of 0.005,
 we simulated an orbit using a leapfrog integrator, and saved the
-velocities $\frac{dx}{dt}$ and $\frac{dy}{dt}$ as a function of time.
-Because of the initial conditions, the simulated orbits were all horizontally
+velocities $\frac{dx}{dt}$ and $\frac{dy}{dt}$ as a function of time to disk.
+These saved orbits were used as a lookup table for constructing the expected
+signal $y(t)$ due to a single planet.
+Because of the initial conditions used,
+the simulated orbits were all horizontally
 aligned.
 
 \section{Reanalysis of $\nu$ Oph}
