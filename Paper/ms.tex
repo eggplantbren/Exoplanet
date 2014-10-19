@@ -119,14 +119,26 @@ $p(\bdata | N)$ as a function of $N$
 \citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}.
 
 \begin{table*}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|l|l|l|}
 \hline
 Quantity	&	Meaning		& Prior\\
 \hline
-$N$		& Number of planets	& Discrete Uniform$(0, 10)$\\
+{\bf Hyperparameters}	&	\\
+$\mu_T$		&	Median orbital period	& $\ln(\mu_T) \sim$ Cauchy$(5.9, 1)T(-15.3, 27.1)$\\
+$w_T$		&	Diversity of orbital periods & $w_T \sim$ Uniform$(0.1, 3)$\\
+$\mu_A$		&	Mean amplitude	& $\ln(\mu_A) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
 \hline
-		&	Hyperparameters	&	\\
-$\mu_T$		&			&	\\
+{\bf Planet Parameters}\\
+$T_i$		&	Orbital period	&	$\ln(T_i) \sim $Biexponential($\ln(\mu_T), w_T$)\\
+$A_i$		&	Amplitude of signal	& Exponential$(\mu_A)$\\
+$\phi_i$	&	Phase of signal	&	Uniform($0, 2\pi$)\\
+$v_i$		&	Initial speed of orbit	&	Uniform$(0.4, 1)$\\
+$\theta_i$	&	Viewing angle	&	Uniform$(0, 2\pi)$\\
+\hline
+{\bf Other}\\
+$N$		& Number of planets	& Uniform$(\{0, 1, ..., N_{\rm max}\})$\\
+$\sigma$	& Standard deviation of extra noise	& $\ln(\sigma) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
+$\nu$		& Shape parameter for $t$-distribution for noise & $\ln(\nu) \sim$ Uniform$(\ln(0.01), \ln(1000))$
 \end{tabular}
 \end{table*}
 
