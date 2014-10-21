@@ -147,17 +147,19 @@ We used hierarchical priors because...
 \section{Orbit Simulations}
 The expected (noise-free) signal due to an exoplanet is periodic, but
 non-sinusoidal when the orbit is not perfectly circular. The expected
-shape of the variations can be obtained from mechanical considerations.
+shape $m(t)$ of the variations can be obtained from mechanical considerations.
 To save time, we pre-computed the properties of orbits as a function of
 ellipticity.
 
 Consider a test particle moving in the $x$-$y$ plane under the influence of a
-point mass at the origin. The equations of motion for the particle are:
+point mass at the origin. The motion of the test particle represents the
+reflex motion of the host star orbiting around the center of mass of the
+system. The equations of motion for the particle are:
 \begin{eqnarray}
 \frac{d^2x}{dt^2} &=& -\frac{x}{r^3} \\
 \frac{d^2y}{dt^2} &=& -\frac{y}{r^3} \\
 \end{eqnarray}
-where $r = \sqrt{x^2 + y^2}$. The ODEs can be solved for any given set of
+where $r = \sqrt{x^2 + y^2}$. These ODEs can be solved for any given set of
 initial conditions for $x$, $y$, $\frac{dx}{dt}$, and $\frac{dy}{dt}$ to yield
 the shape of the orbit. To simulate orbits
 of different ellipticities, we set the initial position to $(1, 0)$, and
@@ -168,11 +170,12 @@ we simulated an orbit using a leapfrog integrator, and saved the
 velocities $\frac{dx}{dt}$ and $\frac{dy}{dt}$ as a function of time to disk.
 These saved orbits were used as a lookup table for constructing the expected
 signal $y(t)$ due to a single planet.
-Because of the initial conditions used,
-the simulated orbits were all horizontally
-aligned.
+Because of the initial conditions, the simulated orbits were all horizontally
+aligned. If the observer is located on the $x$-axis a large distance
+from the origin, they will measure $m(t) = \dot{x}(t)$. However, if the
+observer is located at
 
-Although we parameterise the eccentricity using the initial velocity $v$,
+Although we parameterised the orbits using the initial velocity $v$,
 the standard eccentricity $\epsilon$ can be recovered using the relation
 $\epsilon = 1 - v^2$.
 
