@@ -105,7 +105,7 @@ p(\btheta | \bdata) &=&
 where the denominator, often called the {\it evidence} or
 {\it marginal likelihood}, is given by:
 \begin{eqnarray}
-p(\bdata) = \int p(\btheta) p(\bdata | \btheta) d^N \btheta
+\mathcal{Z} = p(\bdata) = \int p(\btheta) p(\bdata | \btheta) d^N \btheta
 \end{eqnarray}
 
 The unknown parameters are:
@@ -201,6 +201,8 @@ of the mixture distribution
 f(S) &=& \sum_{N=1}^{10} \frac{1}{N}\sum_{i=1}^N p(S_i | N, \bdata).
 \end{eqnarray}
 
+The marginal likelihood was $\ln(\mathcal{Z}) \approx -217.04$.
+
 
 \begin{figure}
 \includegraphics[scale=0.5]{Figures/nu_oph_N.eps}
@@ -214,6 +216,17 @@ $\nu$ Oph.\label{fig:nu_oph_N}}
 system.\label{fig:nu_oph_periods}}
 \end{figure}
 
+\section{Reanalysis of Gliese 581}
+
+The red dwarf star Gliese 581 is thought to host several planets. Exactly
+how many is a matter of considerable debate. According to \citet{}, there
+are two planets whose existence is not doubted, two more whose existence is
+doubted by some, and another two thought not to exist by most groups.
+
+Our model cannot distinguish between oscillations due to planets and
+oscillations due to stellar activity: any oscillations found in the dataset
+will be described as ``planets'' by the model.
+
 \begin{figure}
 \includegraphics[scale=0.5]{Figures/gliese581_N.eps}
 \caption{The posterior distribution for the number of planets $N$ orbiting
@@ -225,6 +238,8 @@ Gliese 581.\label{fig:gliese581_N}}
 \caption{The posterior distribution for the orbital periods in the Gliese 581
 system.\label{fig:gliese581_periods}}
 \end{figure}
+
+The marginal likelihood was $\ln(\mathcal{Z}) \approx -618.04$.
 
 \vspace{-0.5cm}
 \section*{Acknowledgements}
