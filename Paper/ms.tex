@@ -50,7 +50,7 @@ single run, which takes $\sim$ 15 minutes on a typical modern desktop computer.
 We apply the method to $\nu$ Oph and Gliese 581, finding moderate evidence
 (posterior probability of existence = 70\%) for a third planet around
 $\nu$ Oph with an orbital period of 75.7 $\pm$ 1.8 days. The results also
-suggest Gliese 581 hosts many (7-15) planets (or causes of other periodic
+suggest Gliese 581 hosts many (7-15) planets (or other causes of other periodic
 signals), but only four have well determined orbital periods. 
 \end{abstract}
 
@@ -180,7 +180,11 @@ signal $y(t)$ due to a single planet.
 Because of the initial conditions, the simulated orbits were all horizontally
 aligned. If the observer is located on the $x$-axis a large distance
 from the origin, they will measure $m(t) = \dot{x}(t)$. However, if the
-observer is located at
+observer is located at an angle $\theta$ with respect to the $x$-axis, then
+the radial velocity measured will instead be
+$m(t) = \cos(\theta)\dot{x}(t) + \sin(\theta)\dot{y}(t)$.
+Since the our orientation with respect to the orbits is unknown, each planet
+requires a ``viewing angle'' parameter $\theta$.
 
 Although we parameterised the orbits using the initial velocity $v$,
 the standard eccentricity $\epsilon$ can be recovered using the relation
