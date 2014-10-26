@@ -117,14 +117,16 @@ with respect to the prior:
 \end{eqnarray}
 where the integral is over the entire $n$-dimensional parameter space.
 
+\subsection{Inferring the number of planets}
 The number of orbiting planets, $N$, is an important parameter.
 To calculate the posterior distribution for $N$, most authors
 consider various trial values of $N$, and calculate the marginal likelihood
 \begin{eqnarray}
-p(\bdata | N) &=& \int p(\btheta | N) p(\bdata | \btheta, N) \, d^n \theta
+p(\bdata | N) &=& \int p(\btheta | N) p(\bdata | \btheta, N) \, d^n \btheta
 \end{eqnarray}
 for each possible value of $N$
-\citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}.
+\citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}, marginalising
+over all other model parameters.
 The posterior distribution for $N$ can then be found straightforwardly by
 using Bayes' rule with $N$ as the only unknown parameter:
 \begin{eqnarray}
@@ -135,7 +137,24 @@ methods for calculating the marginal likelihood are Nested Sampling
 \citep{skilling} and ideas related to thermodynamic integration
 \citep[e.g.][]{neal}.
 
+This traditional approach can be very time consuming.
+Methods for calculating the marginal likelihood are
+already more intensive than standard MCMC methods for sampling the posterior,
+because they usually involve a sequence of probability distributions
+(e.g. the constrained priors in Nested Sampling, or the annealed distributions
+in thermodynamic integration) rather than a single distribution (the posterior).
+This intensive process needs to be run many times, for $N=0$, $N=1$, $N=2$, and
+so on.
 
+The traditional approach also contradicts standard practice in Bayesian
+computation. Imagine we are trying to compute the posterior distribution for
+a parameter $a$ in the presence of a nuisance parameter $b$. This is solved
+by exploring the joint posterior for $a$ and $b$, and then only looking at the
+generated values of $a$. Nobody would suggest the wasteful alternative
+of using a discrete grid of possible $a$ values and doing an entire Nested
+Sampling run for each, to get the marginal likelihood as a function of $a$.
+Yet when the hypothesis space for $a$ is already discrete, the wasteful
+alternative somehow becomes standard practice.
 
 The unknown parameters are:
 \begin{eqnarray}
