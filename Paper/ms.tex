@@ -43,7 +43,8 @@ Inferring the number of planets $N$ in an exoplanetary system from radial veloci
 planet parameters, such as orbital periods,
 is multimodal and may have other awkward features. In
 addition, when $N$ is unknown, the marginal likelihood (or evidence), as a
-function of $N$, is required. In this paper we propose an alternative
+function of $N$, is required. Rather than doing separate runs with different
+values of $N$, we propose an alternative
 approach using a trans-dimensional Markov Chain Monte Carlo method within
 Nested Sampling. The posterior distribution for $N$ can be obtained with a
 single run, which takes $\sim$ 15 minutes on a typical modern desktop computer.
@@ -108,8 +109,23 @@ p(\btheta | \bdata) &=&
 where the denominator, often called the {\it evidence} or
 {\it marginal likelihood}, is given by:
 \begin{eqnarray}
-\mathcal{Z} = p(\bdata) = \int p(\btheta) p(\bdata | \btheta) d^N \btheta
+\mathcal{Z} = p(\bdata) = \int p(\btheta) p(\bdata | \btheta) d^n \btheta
 \end{eqnarray}
+where the integral is over the entire $n$-dimensional parameter space.
+
+The number of orbiting planets, $N$, is an important parameter.
+To calculate the posterior distribution for $N$, most authors
+consider various trial values of $N$, and calculate the marginal likelihood
+\begin{eqnarray}
+p(\bdata | N) &=& \int p(\btheta | N) p(\bdata | \btheta, N) \, d^n \theta
+\end{eqnarray}
+for each possible value of $N$
+\citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}. Popular
+methods for calculating the marginal likelihood are Nested Sampling
+\citep{skilling} and ideas related to thermodynamic integration
+\citep[e.g.][]{neal}.
+
+
 
 The unknown parameters are:
 \begin{eqnarray}
@@ -118,11 +134,6 @@ The unknown parameters are:
 where $\boldsymbol{\alpha} = \{\mu_T, \sigma_T, \mu_A\}$ are the
 hyperparameters, and $\phi_i = \{\}$ are the properties of planet $i$.
 
-The number of orbiting planets, $N$, is usually of significant interest.
-Most authors have carried out the inference for $N$ by doing separate runs, one
-for each possible value of $N$, and calculating the marginal likelihood
-$p(\bdata | N)$ as a function of $N$
-\citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}.
 
 Diffusive Nested Sampling \citep{dnest} is a variant of
 Nested Sampling \citep{skilling}. RJObject \citep{rjobject}
@@ -286,6 +297,9 @@ Gregory P.~C., 2011, MNRAS, 410, 94
 
 \bibitem[\protect\citeauthoryear{Hou, Goodman, 
 \& Hogg}{2014}]{fengji} Hou F., Goodman J., Hogg D.~W., 2014, arXiv, arXiv:1401.6128 
+
+\bibitem[\protect\citeauthoryear{Neal}{2001}]{neal}
+Neal, R.~M., 2001, Statistics and Computing 11.2, 125-139.
 
 \bibitem[\protect\citeauthoryear{O'Hagan and Forster}{2004}]{ohagan}
 O'Hagan, A., Forster,~J., 2004, Bayesian inference. London: Arnold.
