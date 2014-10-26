@@ -146,15 +146,15 @@ in thermodynamic integration) rather than a single distribution (the posterior).
 This intensive process needs to be run many times, for $N=0$, $N=1$, $N=2$, and
 so on.
 
-The traditional approach also contradicts standard practice in Bayesian
+The traditional approach also contradicts the normal approach to Bayesian
 computation. Imagine we are trying to compute the posterior distribution for
-a parameter $a$ in the presence of a nuisance parameter $b$. This is solved
+a parameter $a$ in the presence of a nuisance parameter $b$. This is usually solved
 by exploring the joint posterior for $a$ and $b$, and then only looking at the
 generated values of $a$. Nobody would suggest the wasteful alternative
 of using a discrete grid of possible $a$ values and doing an entire Nested
 Sampling run for each, to get the marginal likelihood as a function of $a$.
-Yet when the hypothesis space for $a$ is already discrete, the wasteful
-alternative somehow becomes standard practice.
+Yet when the hypothesis space for $a$ is discrete to begin with, the wasteful
+alternative has somehow become standard practice.
 
 The unknown parameters are:
 \begin{eqnarray}
