@@ -106,8 +106,11 @@ p(\btheta | \bdata) &=&
 \frac{p(\btheta)p(\bdata | \btheta)}
 {p(\bdata)}
 \end{eqnarray}
-where the denominator, often called the {\it evidence} or
-{\it marginal likelihood}, is given by:
+where $p(\bdata | \btheta)$ is called the likelihood, once the actual dataset
+is substituted in.
+The denominator, often called the {\it evidence} or
+{\it marginal likelihood}, is given by the expected value of the likelihood
+with respect to the prior:
 \begin{eqnarray}
 \mathcal{Z} = p(\bdata) = \int p(\btheta) p(\bdata | \btheta) d^n \btheta
 \end{eqnarray}
@@ -120,7 +123,13 @@ consider various trial values of $N$, and calculate the marginal likelihood
 p(\bdata | N) &=& \int p(\btheta | N) p(\bdata | \btheta, N) \, d^n \theta
 \end{eqnarray}
 for each possible value of $N$
-\citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}. Popular
+\citep[e.g.][]{2011MNRAS.415.2523G, 2014MNRAS.437.3540F, fengji}.
+The posterior distribution for $N$ can then be found straightforwardly by
+using Bayes' rule with $N$ as the only unknown parameter:
+\begin{eqnarray}
+p(N | \bdata) &=& \frac{p(N)p(\bdata | N)}{\sum_N p(N)p(\bdata | N)}.
+\end{eqnarray}
+Popular
 methods for calculating the marginal likelihood are Nested Sampling
 \citep{skilling} and ideas related to thermodynamic integration
 \citep[e.g.][]{neal}.
