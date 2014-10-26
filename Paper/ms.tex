@@ -66,7 +66,7 @@ methods: data analysis --- methods: statistical
 The number of known extrasolar planets has exploded in the last two
 decades, driven by improvements in
 all of the different techniques used to detect and characterise exoplanets,
-including the radial velocity method \citep[e.g.][]{},
+including the radial velocity (RV) method \citep[e.g.][]{},
 the transit method \citep[e.g.]{},
 and gravitational microlensing
 \citep[e.g.][]{2014ApJ...785..155B, 2014ApJ...790...14Y}.
@@ -83,7 +83,18 @@ classes: i) those based on periodograms \citep[e.g.][]{2009A&A...496..577Z},
 and ii) those based on model fitting in the Bayesian inference framework,
 to describe the uncertainties probabilistically
 \citep[e.g.][]{2011MNRAS.410...94G, 2014MNRAS.437.3540F,
-2011A&A...528L...5T, fengji}.
+2011A&A...528L...5T, fengji}. Bayesian model fitting via Markov Chain Monte
+Carlo (MCMC) tends to be very computationally intensive, especially if we
+want to calculate the posterior distribution for $N$, the number of planets.
+
+In this letter we introduce a trans-dimensional MCMC approach to inferring
+$N$. When $N$ is treated as just another model parameter, we can obtain its
+posterior distribution in a single run. Computing the expected RV signal from
+a planet in an elliptical orbit can be slow. Therefore we use a lookup table
+of precomputed orbits, allowing us to do $\sim 15000$ MCMC steps per second
+per CPU core. The exploration is done using Diffusive Nested Sampling
+\citep{dnest} which replaces the posterior distribution with an alternative
+{\it mixture of constrained priors}, allowing mixing between separated modes.
 
 \section{Inference}
 Bayesian inference is the use of probability theory to describe uncertainty
@@ -282,6 +293,8 @@ accepted, two more
 whose existence is mostly accepted, and another two
 (f and g, with periods 433 and 36.5 days respectively)
 whose existence is generally doubted.
+
+
 
 Our model cannot distinguish between oscillations due to planets and
 oscillations due to stellar activity: any oscillations found in the dataset
