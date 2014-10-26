@@ -87,8 +87,9 @@ to describe the uncertainties probabilistically
 Carlo (MCMC) tends to be very computationally intensive, especially if we
 want to calculate the posterior distribution for $N$, the number of planets.
 
-In this letter we introduce a trans-dimensional MCMC approach to inferring
-$N$. When $N$ is treated as just another model parameter, we can obtain its
+In this letter we introduce a trans-dimensional birth-death MCMC approach
+\citep{birthdeath} to inferring $N$.
+When $N$ is treated as just another model parameter, we can obtain its
 posterior distribution in a single run. Computing the expected RV signal from
 a planet in an elliptical orbit can be slow. Therefore we use a lookup table
 of precomputed orbits, allowing us to do $\sim 15000$ MCMC steps per second
@@ -369,6 +370,8 @@ Edition, Oxford University Press
 \bibitem[\protect\citeauthoryear{Skilling}{2006}]{skilling} Skilling, 
 J., 2006, ``Nested Sampling for General Bayesian Computation'', Bayesian 
 Analysis 4, pp. 833-860
+
+\bibitem[Stephens(2000)]{birthdeath} Stephens, M., 2000, ``Bayesian analysis of mixture models with an unknown number of components-an alternative to reversible jump methods.'', Annals of Statistics, 40-74.
 
 \bibitem[\protect\citeauthoryear{Tuomi}{2011}]{2011A&A...528L...5T} Tuomi M., 2011, A\&A, 528, L5 
 
