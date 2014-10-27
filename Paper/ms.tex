@@ -168,6 +168,24 @@ Sampling run for each, to get the marginal likelihood as a function of $a$.
 Yet when the hypothesis space for $a$ is discrete to begin with, the wasteful
 alternative has somehow become standard practice.
 
+\subsection{Trans-dimensional MCMC}
+Trans-dimensional MCMC methods such as birth-death MCMC \citep{birthdeath} or the
+more general reversible jump MCMC \citep{green} treat the model dimension
+$N$ as just another model parameter. At fixed $N$, standard techniques such
+as the Metropolis algorithm can be used to explore the posterior distribution.
+Additional moves that propose to change the value of $N$ are also defined. The
+simplest of these are birth-death moves. More complicated moves, such as
+split-and-merge \citep[e.g.][]{umstatter} are possible but usually not necessary.
+
+In the exoplanet context, a birth move
+proposes to add one more planet to the model. The new planet's properties
+(period, amplitude, eccentricity, etc) are drawn from their prior distribution
+which may depend on other other model parameters.
+The corresponding death move simply chooses a planet currently in the model,
+and removes it.
+
+
+
 The unknown parameters are:
 \begin{eqnarray}
 \left\{N, \boldsymbol{\alpha}, \{\boldsymbol{\phi}\}_{i=1}^N, y_0, s, \nu\right\}
@@ -338,6 +356,9 @@ Bayesian Analysis, submitted.
 \bibitem[\protect\citeauthoryear{Feroz 
 \& Hobson}{2014}]{2014MNRAS.437.3540F} Feroz F., Hobson M.~P., 2014, MNRAS, 437, 3540 
 
+\bibitem[\protect\citeauthoryear{Green}{1995}]{green}
+Green, P.~J., 1995, Reversible Jump Markov Chain Monte Carlo Computation and Bayesian Model Determination, Biometrika 82 (4): 711–732.
+
 \bibitem[\protect\citeauthoryear{Gregory}{2011}]{2011MNRAS.415.2523G} 
 Gregory P.~C., 2011, MNRAS, 415, 2523 
 
@@ -374,6 +395,11 @@ Analysis 4, pp. 833-860
 \bibitem[Stephens(2000)]{birthdeath} Stephens, M., 2000, ``Bayesian analysis of mixture models with an unknown number of components-an alternative to reversible jump methods.'', Annals of Statistics, 40-74.
 
 \bibitem[\protect\citeauthoryear{Tuomi}{2011}]{2011A&A...528L...5T} Tuomi M., 2011, A\&A, 528, L5 
+
+\bibitem[\protect\citeauthoryear{Umst{\"a}tter et 
+al.}{2005}]{umstatter} Umst{\"a}tter R., Christensen N., Hendry 
+M., Meyer R., Simha V., Veitch J., Vigeland S., Woan G., 2005, PhRvD, 72, 
+022001 
 
 \bibitem[\protect\citeauthoryear{Yee et al.}{2014}]{2014ApJ...790...14Y} 
 Yee J.~C., et al., 2014, ApJ, 790, 14 
