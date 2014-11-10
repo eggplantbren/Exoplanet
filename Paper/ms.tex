@@ -49,10 +49,10 @@ approach using a trans-dimensional Markov Chain Monte Carlo method within
 Nested Sampling. The posterior distribution for $N$ can be obtained with a
 single run, which takes $\sim$ 15 minutes on a typical modern desktop computer.
 We apply the method to $\nu$ Oph and Gliese 581, finding moderate evidence
-(posterior probability of existence = 70\%) for a third planet around
+(posterior probability of existence = 70\%) for a third signal in
 $\nu$ Oph with an orbital period of 75.7 $\pm$ 1.8 days. The results also
 suggest Gliese 581 hosts many (7-15) planets (or other causes of other periodic
-signals), but only four have well determined orbital periods. 
+signals), but only four have well determined periods. 
 \end{abstract}
 
 \begin{keywords}
@@ -96,6 +96,11 @@ of precomputed orbits, allowing us to do $\sim 15000$ MCMC steps per second
 per CPU core. The exploration is done using Diffusive Nested Sampling
 \citep{dnest} which replaces the posterior distribution with an alternative
 {\it mixture of constrained priors}, allowing mixing between separated modes.
+As a result, we are able to sample the posterior distribution for $N$ in
+a single run which takes about 15 minutes, whereas the approach of
+\citep{gregory} takes approximately 30 minutes per planet
+(Gregory, priv. comm.).
+
 
 \section{Inference}
 Bayesian inference is the use of probability theory to describe uncertainty
