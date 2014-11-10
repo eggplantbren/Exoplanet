@@ -193,22 +193,28 @@ to explore the prior. To implement these moves in Nested Sampling
 constraint, then the acceptance probability is 1 if the proposed move
 satisfies the likelihood constraint, and 0 if it does not.
 
-
-
-
-The unknown parameters are:
-\begin{eqnarray}
-\left\{N, \boldsymbol{\alpha}, \{\boldsymbol{\phi}\}_{i=1}^N, y_0, s, \nu\right\}
-\end{eqnarray}
-where $\boldsymbol{\alpha} = \{\mu_T, \sigma_T, \mu_A\}$ are the
-hyperparameters, and $\phi_i = \{\}$ are the properties of planet $i$.
-
 A recent paper \citep{rjobject} introduced a general approach to implementing
 trans-dimensional models within Diffusive Nested Sampling \citep{dnest}, a
 general MCMC algorithm. The \citet{rjobject} software predefines the
 Metropolis proposals for exploring trans-dimensional target distributions,
 including when the prior for the properties of each model component (i.e. each
 planet) is defined hierarchically.
+
+To fit a planet model to radial velocity data, we need parameters to describe
+the properties of each planet. We also include
+
+The unknown parameters are:
+\begin{eqnarray}
+\left\{N, \boldsymbol{\alpha}, \{\boldsymbol{\psi}\}_{i=1}^N, y_0, s, \nu\right\}
+\end{eqnarray}
+where $N$ is the number of planets,
+$\boldsymbol{\alpha} = \{\mu_T, \sigma_T, \mu_A\}$ are the
+hyperparameters used to define the prior for the properties of the planets,
+and $\psi_i = \{T_i, A_i, \phi_i, v_i, \theta_i\}$
+are the properties of planet $i$.
+The parameter $y_0$ describes a DC offset in the data, and $s$ and $\nu$ are
+parameters allowing for a non-gaussian distribution for the noise in the
+measurements.
 
 \begin{table*}
 \begin{tabular}{|l|l|l|}
