@@ -100,8 +100,10 @@ As a result, we are able to sample the posterior distribution for $N$, and
 evaluate the marginal likelihood (including the sum over $N$) in
 a single run which takes about 10 minutes on a 2-3 planet system.
 On the other hand the approach of
-\citep{2011MNRAS.410...94G} takes approximately 30 minutes per planet
-(Gregory, priv. comm.).
+\citet{2011MNRAS.410...94G} takes approximately 30 minutes per planet
+(Gregory, priv. comm.). A C++ implementation of our method is available online
+at {\tt https://github.com/eggplantbren/Exoplanet} under the terms of the
+GNU General Public Licence version 3.
 
 
 \section{Inference}
@@ -232,7 +234,7 @@ The parameter $y_0$ describes a DC offset in the data, and $s$ and $\nu$ are
 parameters allowing for a non-gaussian distribution for the noise in the
 measurements. When the model-predicted RV signal is $m(t)$, the sampling
 distribution for each measurement was a student-$t$ distribution with
-scale parameter $K\sigma_i$ and shape parameter $\nu$. In the limit
+scale parameter $\sqrt{\sigma_i^2 + s_0^2}$ and shape parameter $\nu$. In the limit
 $(s_0 \to 0, \nu \to \inf)$ the sampling distribution reduces to the standard
 assumption of a normal distribution with standard deviation $\sigma_i$ known
 from the error bars in the data set.
@@ -279,7 +281,9 @@ The expected (noise-free) signal due to an exoplanet is periodic, but
 non-sinusoidal when the orbit is not perfectly circular. The expected
 shape $m(t)$ of the variations can be obtained from mechanical considerations.
 To save time, we pre-computed the properties of orbits as a function of
-ellipticity.
+ellipticity. We also made the standard assumption that the planets do not
+interact, so the expected signal due to several planets is the sum of the
+contributions of each planet.
 
 Consider a test particle moving in the $x$-$y$ plane under the influence of a
 point mass at the origin. The motion of the test particle represents the
@@ -308,7 +312,6 @@ the radial velocity measured will instead be
 $m(t) = \cos(\theta)\dot{x}(t) + \sin(\theta)\dot{y}(t)$.
 Since the our orientation with respect to the orbits is unknown, each planet
 requires a ``viewing angle'' parameter $\theta$.
-
 Although we parameterised the orbits using the initial velocity $v$,
 the standard eccentricity $\epsilon$ can be recovered using the relation
 $\epsilon = 1 - v^2$.
@@ -316,10 +319,10 @@ $\epsilon = 1 - v^2$.
 \section{Reanalysis of $\nu$ Oph}
 The $\nu$ Oph system is generally accepted to have two confirmed planets
 \citep[e.g.][]{2011AIPC.1331..102Q, 2012PASJ...64..135S, fengji}, with periods
-of $530.3$ and $3190$ days.
-
+of $530.3$ and $3190$ days. To test our approach we applied it to the RV
+data from \citep{2012PASJ...64..135S}.
 The posterior distribution for $N$, the number of planets, is shown in
-Figure~\ref{fig:nu_oph_N}.
+Figure~\ref{fig:nu_oph_N}, showing the most probable number of planets is 3.
 
 The posterior distribution for the logarithms of the periods is shown in
 Figure~\ref{fig:nu_oph_periods}. Because of the label-switching degeneracy,
