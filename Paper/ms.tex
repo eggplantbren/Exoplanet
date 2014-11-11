@@ -329,16 +329,19 @@ The posterior distribution for the logarithms of the periods is shown in
 Figure~\ref{fig:nu_oph_periods}. Because of the label-switching degeneracy,
 the posterior samples for all periods were combined to make this figure, which
 shows three prominent peaks. Defining the log-periods by
-$S_i =  \log_{10}(T/\textnormal{1 day})$,
+$S_i =  \log_{10}\left[T/(\textnormal{1 day})\right]$,
 Figure~\ref{fig:nu_oph_periods} is a Monte Carlo representation
 of the mixture distribution
 \begin{eqnarray}
-f(S) &=& \sum_{N=0}^{10} \frac{1}{N}\sum_{i=1}^N p(S_i | N, \bdata).
+f(S) &=& \sum_{N=0}^{10} p(N | \bdata)\sum_{i=1}^N p(S_i | N, \bdata).
 \end{eqnarray}
 The two rightmost peaks are the commonly accepted periods, and the third
 prominent peak corresponds to a 75.7 $\pm$ 1.8 day period. The probability
-this signal exists is 70\%, and given that it exists, its velocity amplitude
-is about 15 m s$^{-1}$.
+this signal exists (technically, the probability a period exists between
+67.6 and 85.1 days)
+is 70\%, and given that it exists, its velocity amplitude
+is 18.6 $\pm$ 8.3 m s$^{-1}$ and its eccentricity (or velocity parameter $v$)
+is not well determined.
 
 
 The marginal likelihood was $\ln(\mathcal{Z}) \approx -217.04$ and the
@@ -358,7 +361,6 @@ system.\label{fig:nu_oph_periods}}
 \end{figure}
 
 \section{Reanalysis of Gliese 581}
-
 The red dwarf star Gliese 581 is thought to host several planets. Exactly
 how many is a matter of considerable debate. According to
 \citet{2014Sci...345..440R}, there are two planets
@@ -369,12 +371,29 @@ accepted, two more
 whose existence is mostly accepted, and another two
 (f and g, with periods 433 and 36.5 days respectively)
 whose existence is generally doubted.
+To run our code on the combined dataset from the HARPS and HIRES spectrographs,
+we extended the model to include separate DC offsets for each instrument, as
+well as separate ``extra noise'' parameters $s_0$ and $\nu$.
 
-
-
+The posterior distribution for $N$ is shown in Figure~\ref{fig:gliese581_N},
+and shows strong evidence for at least eight periods
+($P(N \leq 7 | \bdata) = 0.004$).
+It is now recognised that
+there are many possible sources for oscillations in a data set and not all
+such oscillations should be claimed as planets \citep{2014Sci...345..440R}. 
 Our model cannot distinguish between oscillations due to planets and
 oscillations due to stellar activity: any oscillations found in the dataset
-will be described as ``planets'' by the model.
+will be described as ``planets'' by the model. However it is interesting that
+we find many more signals in the data than previous authors.
+
+By inspecting the posterior distribution for the periods
+(Figure~\ref{fig:gliese581_periods}), we see that only four of the periods
+are well determined, corresponding to the known periods of Gliese 581 b, c, d,
+and e. The other ``periods'' are very uncertain. It is possible that a
+non-sinusoidal signal due to stellar activity is being modelled as several
+periods \citep{astero}, and if the model were extended to include a ``stochastic''
+oscillation \citep{gaussproc}, the number of periods detected may be reduced
+substantially.
 
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/gliese581_N.eps}
@@ -405,6 +424,12 @@ Batalha N.~M., 2014, PNAS, 111, 12647
 
 \bibitem[\protect\citeauthoryear{Bennett et 
 al.}{2014}]{2014ApJ...785..155B} Bennett D.~P., et al., 2014, ApJ, 785, 155 
+
+\bibitem[\protect\citeauthoryear{Brewer 
+\& Stello}{2009}]{gaussproc} Brewer B.~J., Stello D., 2009, MNRAS, 395, 2226 
+
+\bibitem[\protect\citeauthoryear{Brewer et al.}{2007}]{astero} 
+Brewer B.~J., Bedding T.~R., Kjeldsen H., Stello D., 2007, ApJ, 654, 551 
 
 \bibitem[\protect\citeauthoryear{Brewer, P{\'a}rtay,
 \& Cs{\'a}nyi}{2011}]{dnest} Brewer B.~J., P{\'a}rtay L.~B., Cs{\'a}nyi G., 2011,
