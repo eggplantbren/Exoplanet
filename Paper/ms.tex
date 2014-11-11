@@ -322,7 +322,8 @@ The $\nu$ Oph system is generally accepted to have two confirmed planets
 of $530.3$ and $3190$ days. To test our approach we applied it to the RV
 data from \citep{2012PASJ...64..135S}.
 The posterior distribution for $N$, the number of planets, is shown in
-Figure~\ref{fig:nu_oph_N}, showing the most probable number of planets is 3.
+Figure~\ref{fig:nu_oph_N}, showing the most probable number of planets is 3,
+and the posterior probability that $N \geq 3$ is about 95\%.
 
 The posterior distribution for the logarithms of the periods is shown in
 Figure~\ref{fig:nu_oph_periods}. Because of the label-switching degeneracy,
@@ -332,8 +333,13 @@ $S_i =  \log_{10}(T/\textnormal{1 day})$,
 Figure~\ref{fig:nu_oph_periods} is a Monte Carlo representation
 of the mixture distribution
 \begin{eqnarray}
-f(S) &=& \sum_{N=1}^{10} \frac{1}{N}\sum_{i=1}^N p(S_i | N, \bdata).
+f(S) &=& \sum_{N=0}^{10} \frac{1}{N}\sum_{i=1}^N p(S_i | N, \bdata).
 \end{eqnarray}
+The two rightmost peaks are the commonly accepted periods, and the third
+prominent peak corresponds to a $75.7 $\pm$ 1.8$ day period. The probability
+this signal exists is 70\%, and given that it exists, its velocity amplitude
+is about 15 m s$^{-1}$.
+
 
 The marginal likelihood was $\ln(\mathcal{Z}) \approx -217.04$ and the
 information was $\mathcal{H} \approx 80.0$ nats.
