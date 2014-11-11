@@ -96,8 +96,10 @@ of precomputed orbits, allowing us to do $\sim 15000$ MCMC steps per second
 per CPU core. The exploration is done using Diffusive Nested Sampling
 \citep{dnest} which replaces the posterior distribution with an alternative
 {\it mixture of constrained priors}, allowing mixing between separated modes.
-As a result, we are able to sample the posterior distribution for $N$ in
-a single run which takes about 15 minutes, whereas the approach of
+As a result, we are able to sample the posterior distribution for $N$, and
+evaluate the marginal likelihood (including the sum over $N$) in
+a single run which takes about 10 minutes on a 2-3 planet system.
+On the other hand the approach of
 \citep{2011MNRAS.410...94G} takes approximately 30 minutes per planet
 (Gregory, priv. comm.).
 
@@ -163,7 +165,8 @@ in thermodynamic integration) rather than a single distribution (the posterior).
 This intensive process needs to be run many times, for $N=0$, $N=1$, $N=2$, and
 so on.
 
-The traditional approach also contradicts the normal approach to Bayesian
+The traditional approach to inferring $N$ also contradicts
+fundamental ideas in Bayesian
 computation. Imagine we are trying to compute the posterior distribution for
 a parameter $a$ in the presence of a nuisance parameter $b$. This is usually solved
 by exploring the joint posterior for $a$ and $b$, and then only looking at the
@@ -185,7 +188,7 @@ split-and-merge \citep[e.g.][]{umstatter} are possible but usually not necessary
 In the exoplanet context, a birth move
 proposes to add one more planet to the model. The new planet's properties
 (period, amplitude, eccentricity, etc) are drawn from their prior distribution
-which may depend on other other model parameters.
+which may depend on other other model parameters or hyperparameters.
 The corresponding death move simply chooses a planet currently in the model,
 and removes it. The acceptance probability for these moves is 1 if we want
 to explore the prior. To implement these moves in Nested Sampling
@@ -200,8 +203,21 @@ Metropolis proposals for exploring trans-dimensional target distributions,
 including when the prior for the properties of each model component (i.e. each
 planet) is defined hierarchically.
 
-To fit a planet model to radial velocity data, we need parameters to describe
-the properties of each planet. We also include
+To fit a planet model to RV data, we need parameters to describe
+the properties of each planet. For simplicity, we describe each planet by
+five parameters: $T_i$, the orbital period, $A_i$, the amplitude (in metres
+per second) of the RV signal, $\phi_i$, the phase of the signal, $v_i$, an
+``initial velocity'' parameter describing the eccentricity of the orbit
+(see Section~\ref{sec:orbits}), and $\theta_i$, a ``viewing angle'' parameter
+describing the position of the observer with respect to the major axis of the
+star's elliptical trajectory.
+
+We assigned hierarchical priors to the planet's parameters. This allows the
+model to capture the idea that knowing the values of some planet's parameters
+provides some information about the parameters of another planet. Not using
+hierarchical priors usually implies a strong prior commitment to the hypothesis
+that the properties of the planets are spread out across the whole domain of
+possible values, which is not necessarily the case.
 
 The unknown parameters are:
 \begin{eqnarray}
@@ -214,7 +230,15 @@ and $\psi_i = \{T_i, A_i, \phi_i, v_i, \theta_i\}$
 are the properties of planet $i$.
 The parameter $y_0$ describes a DC offset in the data, and $s$ and $\nu$ are
 parameters allowing for a non-gaussian distribution for the noise in the
-measurements.
+measurements. When the model-predicted RV signal is $m(t)$, the sampling
+distribution for each measurement was a student-$t$ distribution with
+scale parameter $K\sigma_i$ and shape parameter $\nu$. In the limit
+$(s_0 \to 0, \nu \to \inf)$ the sampling distribution reduces to the standard
+assumption of a normal distribution with standard deviation $\sigma_i$ known
+from the error bars in the data set.
+
+All of the model assumptions are specified in detail in
+Table~\ref{tab:priors}.
 
 \begin{table*}
 \begin{tabular}{|l|l|l|}
@@ -222,6 +246,7 @@ measurements.
 Quantity	&	Meaning		& Prior\\
 \hline
 {\bf Hyperparameters}	&	\\
+$N$		& Number of planets	& Uniform$(\{0, 1, ..., N_{\rm max}\})$\\
 $\mu_T$		&	Median orbital period	& $\ln(\mu_T) \sim$ Cauchy$(5.9, 1)T(-15.3, 27.1)$\\
 $w_T$		&	Diversity of orbital periods & $w_T \sim$ Uniform$(0.1, 3)$\\
 $\mu_A$		&	Mean amplitude	& $\ln(\mu_A) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
@@ -234,7 +259,6 @@ $v_i$		&	Initial speed of orbit	&	Uniform$(0.4, 1)$\\
 $\theta_i$	&	Viewing angle	&	Uniform$(0, 2\pi)$\\
 \hline
 {\bf Other}\\
-$N$		& Number of planets	& Uniform$(\{0, 1, ..., N_{\rm max}\})$\\
 $\sigma_{\rm extra}$	& ``Extra noise'' parameter	& $\ln(\sigma) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
 $\nu$		& Shape parameter for $t$-distribution for noise & $\ln(\nu) \sim$ Uniform$(\ln(0.01), \ln(1000))$\\
 \hline
@@ -242,9 +266,15 @@ $\nu$		& Shape parameter for $t$-distribution for noise & $\ln(\nu) \sim$ Unifor
 $Y_i$		& Radial velocity measurements	&
 		Student-$t\left(m(t_i), \sqrt{\sigma_i^2 + \sigma_{\rm extra}^2}, \nu\right)$
 \end{tabular}
+\caption{All of the prior distributions in our Bayesian model.
+The priors for the planet parameters are defined conditional on the values
+of the hyperparameters. Uniform priors were used for parameters like phases.
+For parameters where a rough initial guess is possible, heavy-tailed Cauchy
+distributions were used so this information could be taken into account
+in a non-dogmatic way.\label{tab:priors}}
 \end{table*}
 
-\section{Orbit Simulations}
+\section{Orbit Simulations}\label{sec:orbits}
 The expected (noise-free) signal due to an exoplanet is periodic, but
 non-sinusoidal when the orbit is not perfectly circular. The expected
 shape $m(t)$ of the variations can be obtained from mechanical considerations.
