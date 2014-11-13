@@ -368,11 +368,6 @@ is 70\%, and given that it exists, its velocity amplitude
 is 18.6 $\pm$ 8.3 m s$^{-1}$ and its eccentricity (or velocity parameter $v$)
 is not well determined.
 
-The marginal likelihood for our model was
-$\ln(\mathcal{Z}) \approx -217.04$ and the information
-(Kullback-Leibler divergence from the prior to the posterior)
-was $\mathcal{H} \approx 80.0$ nats.
-
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/nu_oph_N.eps}
 \caption{The posterior distribution for the number of planets $N$ orbiting
@@ -384,6 +379,42 @@ $\nu$ Oph.\label{fig:nu_oph_N}}
 \caption{The posterior distribution for the orbital periods in the $\nu$ Oph
 system.\label{fig:nu_oph_periods}}
 \end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.45]{Figures/logl0.eps}
+\caption{Log likelihood vs. enclosed prior mass (a standard output of Nested
+Sampling algorithms) for the $\nu$ Oph analysis.
+There are several phase transitions (concave-up regions) present. The one at
+$\log(X) \approx -75$ separates models which contain the third signal from
+models that do not. Without using Nested Sampling it would be very difficult
+to mix between these two situations and calculate the posterior probability
+for the existence of the third signal.
+\label{fig:logl0}}
+\end{figure}
+
+Figure~\ref{fig:logl0} shows the relationship between the likelihood $L$
+and the enclosed prior mass $X$ for the $\nu$ Oph analysis. These plots are
+a standard output of Nested Sampling \citep{skilling} analyses, and provide
+insights into the structure of the problem. Concave-up regions of this curve
+indicate phase transitions which can cause severe problems for annealing-based
+methods, and sometimes even for sampling the posterior distribution. In this
+analysis, the models with a third signal exist to the left of the phase
+transition at $\log(X) \approx -75$, and models without the signal exist to the
+right of the phase transition. Mixing between these two phases is crucial for
+accurately computing the posterior probability that the third signal exists.
+However, if we had simply tried to sample the posterior distribution, it would
+not mix between these two phases because the posterior is composed of a
+large-volume low-likelihood ``slab'' and a low-volume high-likelihood ``spike''.
+It is difficult for standard MCMC methods to escape the spike because of the
+likelihood contrast, and it is also difficult to escape the slab and enter the
+spike because of its small volume. Thus, even unimodal posterior distributions
+can cause mixing problems analogous to multimodal situations if a phase
+transition is present.
+
+The marginal likelihood for our model was
+$\ln(\mathcal{Z}) \approx -217.04$ and the information
+(Kullback-Leibler divergence from the prior to the posterior)
+was $\mathcal{H} \approx 80.0$ nats.
 
 \section{Reanalysis of Gliese 581}
 The red dwarf star Gliese 581 is thought to host several planets. Exactly
@@ -438,7 +469,9 @@ to the marginal likelihood of $-640.1$ (for a 6-planet model)
 found by \citet{fengji}, although it is unclear whether we used exactly the
 same dataset.
 Interestingly, the log-likelihood curve (Figure~\ref{fig:logl})
-shows this problem has two phase transitions.
+shows this problem has two phase transitions. While these do not affect the
+posterior distribution (as they did for $\nu$ Oph), they would cause difficulties
+if we tried to calculte the marginal likelihood using thermal annealing.
 
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/logl.eps}
@@ -459,17 +492,24 @@ defines trans-dimensional birth and death moves, and does the sampling
 with respect to a Nested Sampling target distribution, rather than directly
 sampling the posterior. This approach allows us to compute the results in a
 single run, which provides posterior samples and an estimate of the marginal
-likelihood.
+likelihood. By embedding the MCMC in a Nested Sampling algorithm, instead of
+directly trying to sample the posterior distribution, we can overcome difficult
+features in the problem, such as phase transitions.
 
 We applied the code to two well-studied RV datasets, $\nu$ Oph and Gliese 581.
 In $\nu$ Oph, we found some evidence for a signal with a period of
 75.7 $\pm$ 1.8 days: the posterior probability it exists, given our assumptions,
-is 70\%. With the combined HIRES+HARPS dataset from Gliese 581, we found
+is 70\%. The posterior distribution contains models with three signals and
+models with two, however, these are separated by a phase transition. Therefore
+mixing between the two situations would be very difficult if we simply tried
+to sample the posterior distribution.
+
+With the combined HIRES+HARPS dataset from Gliese 581, we found
 evidence for a large number of ``planets'', although only four have well
 determined periods, corresponding to the Gliese 581 b, c, d,
 and e. Since our model does not include any possibility of stellar variability,
-any such periodic signals will be attributed to planets. Including non-planetary
-stellar variability is a crucial next step.
+any such periodic signals will be attributed to ``planets''.
+Including non-planetary stellar variability is a crucial next step.
 
 \vspace{-0.5cm}
 \section*{Acknowledgements}
