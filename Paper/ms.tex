@@ -214,7 +214,7 @@ per second) of the RV signal, $\phi_i$, the phase of the signal, $v_i$, an
 describing the position of the observer with respect to the major axis of the
 star's elliptical trajectory.
 
-We assigned hierarchical priors to the planet's parameters. This allows the
+We assigned hierarchical priors to some of the planet's parameters. This allows the
 model to capture the idea that knowing the values of some planet's parameters
 provides some information about the parameters of another planet. Not using
 hierarchical priors usually implies a strong prior commitment to the hypothesis
@@ -240,7 +240,25 @@ assumption of a normal distribution with standard deviation $\sigma_i$ known
 from the error bars in the data set.
 
 All of the model assumptions are specified in detail in
-Table~\ref{tab:priors}.
+Table~\ref{tab:priors}. Cauchy distributions were used when there is a
+preferred value, but since these have very heavy tails, the assumption is
+quite fail safe. For example, the prior for $\mu_T$, the typical orbital period,
+is centered around 1 year.
+
+An apparently strange choice is the conditional prior for the orbital
+periods, which is a biexponential distribution. A more conventional choice
+would have been a normal distribution, however the biexponential has
+analytical cumulative distribution and inverse, which is required for
+implementing it in the \citet{rjobject} framework.
+
+The prior for the velocity amplitudes $A_i$ is important and will affect the
+inferred number of planets $N$. For example, if the prior allows for very
+low amplitude planets to exist, the data will not rule this out. The prior
+will influence how many of these low amplitude planets will exist: if we
+believe there are many, and the data are uninformative about low amplitude
+planets, then the posterior distribution for $N$ will also indicate that there
+may be many low amplitude planets. However, their other properties, such as
+their orbital periods, will not be well determined.
 
 \begin{table*}
 \begin{tabular}{|l|l|l|}
@@ -273,7 +291,8 @@ The priors for the planet parameters are defined conditional on the values
 of the hyperparameters. Uniform priors were used for parameters like phases.
 For parameters where a rough initial guess is possible, heavy-tailed Cauchy
 distributions were used so this information could be taken into account
-in a non-dogmatic way.\label{tab:priors}}
+in a non-dogmatic way. Time units are in days and amplitude units are
+in metres per second.\label{tab:priors}}
 \end{table*}
 
 \section{Orbit Simulations}\label{sec:orbits}
