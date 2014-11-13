@@ -156,7 +156,8 @@ p(N | \bdata) &=& \frac{p(N)p(\bdata | N)}{\sum_N p(N)p(\bdata | N)}.
 Popular
 methods for calculating the marginal likelihood are Nested Sampling
 \citep{skilling} and ideas related to thermodynamic integration
-\citep[e.g.][]{neal}.
+\citep[e.g.][]{neal}. Note that thermodynamic integration can easily fail if
+there is a phase transition in the problem \citep{skilling}.
 
 This traditional approach can be very time consuming.
 Methods for calculating the marginal likelihood are
@@ -292,7 +293,8 @@ of the hyperparameters. Uniform priors were used for parameters like phases.
 For parameters where a rough initial guess is possible, heavy-tailed Cauchy
 distributions were used so this information could be taken into account
 in a non-dogmatic way. Time units are in days and amplitude units are
-in metres per second.\label{tab:priors}}
+in metres per second. The maximum number of planets, $N_{\rm max}$, was
+set to 15.\label{tab:priors}}
 \end{table*}
 
 \section{Orbit Simulations}\label{sec:orbits}
@@ -431,13 +433,36 @@ system.\label{fig:gliese581_periods}}
 \end{figure}
 
 The marginal likelihood was $\ln(\mathcal{Z}) \approx -618.04$ and the
-information was $\mathcal{H} \approx 140.2$ nats.
+information was $\mathcal{H} \approx 140.2$ nats. This compares favourably
+to the marginal likelihood of $-640.1$ found by \citet{fengji}, although it
+is unclear whether we used exactly the same dataset.
+
+\section{Conclusions}
+In this letter we introduced a trans-dimensional MCMC approach to inferring
+the number of planets $N$ in an exoplanetary system from radial velocity data.
+The MCMC was implemented using the framework of \citet{rjobject} which
+defines trans-dimensional birth and death moves, and does the sampling
+with respect to a Nested Sampling target distribution, rather than directly
+sampling the posterior. This approach allows us to compute the results in a
+single run, which provides posterior samples and an estimate of the marginal
+likelihood.
+
+We applied the code to two well-studied RV datasets, $\nu$ Oph and Gliese 581.
+In $\nu$ Oph, we found some evidence for a signal with a period of
+75.7 $\pm$ 1.8 days: the posterior probability it exists, given our assumptions,
+is 70\%. With the combined HIRES+HARPS dataset from Gliese 581, we found
+evidence for a large number of ``planets'', although only four have well
+determined periods, corresponding to the Gliese 581 b, c, d,
+and e. Since our model does not include any possibility of stellar variability,
+any such periodic signals will be attributed to planets. Including non-planetary
+stellar variability is a crucial next step.
 
 \vspace{-0.5cm}
 \section*{Acknowledgements}
 It is a pleasure to thank Fengji Hou and David Hogg (NYU) for inspiring me to
 finally work on this problem, and Phil Gregory (UBC) for writing so many
-interesting papers on it. This work was supported by a Marsden Fast Start
+interesting papers on it. Tom Loredo (Cornell) also provided interesting
+conversations. This work was supported by a Marsden Fast Start
 grant from the Royal Society of
 New Zealand.
 
