@@ -19,7 +19,7 @@
 \title[]
 {Fast Bayesian Inference for Exoplanet Discovery in Radial Velocity Data}
     
-\author[Brewer]{%
+\author[Brewer and Donovan]{%
   Brendon~J.~Brewer$^{1}$\thanks{bj.brewer@auckland.ac.nz},
   Courtney P. Donovan$^{1}$
   \medskip\\
@@ -66,7 +66,7 @@ methods: data analysis --- methods: statistical
 The number of known extrasolar planets has exploded in the last two
 decades, driven by improvements in
 all of the different techniques used to detect and characterise exoplanets,
-including the radial velocity (RV) method \citep[e.g.][]{},
+including the radial velocity (RV) method \citep[e.g.][]{2012PASJ...64..135S},
 the transit method \citep[e.g.]{2014PNAS..11112647B},
 and gravitational microlensing
 \citep[e.g.][]{2014ApJ...785..155B, 2014ApJ...790...14Y}.
@@ -90,10 +90,8 @@ want to calculate the posterior distribution for $N$, the number of planets.
 In this letter we introduce a trans-dimensional birth-death MCMC approach
 \citep{birthdeath} to inferring $N$.
 When $N$ is treated as just another model parameter, we can obtain its
-posterior distribution in a single run. Computing the expected RV signal from
-a planet in an elliptical orbit can be slow. Therefore we use a lookup table
-of precomputed orbits, allowing us to do $\sim 15000$ MCMC steps per second
-per CPU core. The exploration is done using Diffusive Nested Sampling
+posterior distribution in a single run.
+The exploration is done using Diffusive Nested Sampling
 \citep{dnest} which replaces the posterior distribution with an alternative
 {\it mixture of constrained priors}, allowing mixing between separated modes.
 As a result, we are able to sample the posterior distribution for $N$, and
@@ -105,6 +103,10 @@ On the other hand the approach of
 at {\tt https://github.com/eggplantbren/Exoplanet} under the terms of the
 GNU General Public Licence version 3.
 
+Computing the expected RV signal from
+a planet in an elliptical orbit can be slow. Therefore we use a lookup table
+of precomputed orbits, allowing us to do $\sim 15000$ MCMC steps per second
+per CPU core.
 
 \section{Inference}
 Bayesian inference is the use of probability theory to describe uncertainty
@@ -345,7 +347,7 @@ do of order 10,000 likelihood evaluations per second per CPU core.
 The $\nu$ Oph system is generally accepted to have two confirmed planets
 \citep[e.g.][]{2011AIPC.1331..102Q, 2012PASJ...64..135S, fengji}, with periods
 of $530.3$ and $3190$ days. To test our approach we applied it to the RV
-data from \citep{2012PASJ...64..135S}.
+data from \citet{2012PASJ...64..135S}.
 The posterior distribution for $N$, the number of planets, is shown in
 Figure~\ref{fig:nu_oph_N}, showing the most probable number of planets is 3,
 and the posterior probability that $N \geq 3$ is about 95\%.
