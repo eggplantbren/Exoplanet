@@ -56,7 +56,7 @@ void MyModel::calculate_mu()
 		T = exp(components[j][0]);
 		A = components[j][1];
 		phi = components[j][2];
-		v0 = components[j][3];
+		v0 = sqrt(1. - components[j][3]);
 		viewing_angle = components[j][4];
 		arg = t;
 		for(size_t i=0; i<arg.size(); i++)
@@ -153,7 +153,8 @@ void MyModel::print(std::ostream& out) const
 		T = exp(components[j][0]);
 		A = components[j][1];
 		phi = components[j][2];
-		v0 = components[j][3];
+		v0 = sqrt(1. - components[j][3]);
+
 		viewing_angle = components[j][4];
 		arg = t;
 		for(size_t i=0; i<arg.size(); i++)

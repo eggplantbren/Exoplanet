@@ -58,12 +58,13 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 {
 	if(vec[1] < 0. ||
 			vec[2] < 0. || vec[2] > 2.*M_PI ||
-			vec[3] < 0.4 || vec[3] > 1. ||
+			vec[3] < 0. || vec[3] > 0.8189776 ||
 			vec[4] < 0. || vec[4] > 2.*M_PI)
 		return -1E300;
 
 	return  -log(2.*width) - abs(vec[0] - center)/width
-		-log(mu) - vec[1]/mu;
+		-log(mu) - vec[1]/mu
+		+ 2.1*log(1. - vec[3]/0.995);
 }
 
 void MyDistribution::from_uniform(std::vector<double>& vec) const
@@ -74,7 +75,7 @@ void MyDistribution::from_uniform(std::vector<double>& vec) const
 		vec[0] = center - width*log(2. - 2.*vec[0]);
 	vec[1] = -mu*log(1. - vec[1]);
 	vec[2] = 2.*M_PI*vec[2];
-	vec[3] = 0.4 + 0.6*vec[3];
+	vec[3] = 1. - pow(1. - 0.995*vec[3], 1./3.1);
 	vec[4] = 2.*M_PI*vec[4];
 }
 
@@ -86,7 +87,7 @@ void MyDistribution::to_uniform(std::vector<double>& vec) const
 		vec[0] = 1. - 0.5*exp((center - vec[0])/width);
 	vec[1] = 1. - exp(-vec[1]/mu);
 	vec[2] = vec[2]/(2.*M_PI);
-	vec[3] = (vec[3] - 0.4)/0.6;
+	vec[3] = 1. - pow(1. - vec[3]/0.995, 3.1);
 	vec[4] = vec[4]/(2.*M_PI);
 }
 
