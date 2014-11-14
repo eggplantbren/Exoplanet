@@ -9,8 +9,8 @@
 \usepackage{dsfont}
 
 % Bold symbols
-\renewcommand{\btheta}{\boldsymbol{\theta}}
-\newcommand{\bdata}{\boldsymbol{D}}
+%\renewcommand{	heta}{\boldsymbol{\theta}}
+%\newcommand{D}{\boldsymbol{D}}
 \newcommand{\bx}{\{x_i\}}
 
 % \onecolumn
@@ -128,30 +128,30 @@ Bayesian inference is the use of probability theory to describe uncertainty
 \citep{sivia, ohagan}. In this framework, we approach data analysis problems by first
 constructing a {\it hypothesis space}, which is the set of possible answers
 to the problem we are considering. Normally, this is the set of possible
-values of a vector of parameters $\btheta$ whose values we want
+values of a vector of parameters $	heta$ whose values we want
 to know. We then assign probability distributions
 called the {\it prior} and the {\it sampling distribution}. The prior
-distribution $p(\btheta)$ describes
+distribution $p(	heta)$ describes
 our initial uncertainty about which values of the parameters
-$\btheta$ are plausible, and the
-sampling distribution $p(\bdata | \btheta)$ describes
+$	heta$ are plausible, and the
+sampling distribution $p(D | 	heta)$ describes
 our initial uncertainty about the data set we're going to observe, as a
-function of the unknown parameters $\btheta$.
+function of the unknown parameters $	heta$.
 When the data is known, our state of knowledge about the parameter is
 updated from the prior $p(\theta)$ to the posterior distribution given by
 Bayes' rule:
 \begin{eqnarray}
-p(\btheta | \bdata) &=&
-\frac{p(\btheta)p(\bdata | \btheta)}
-{p(\bdata)}
+p(	heta | D) &=&
+\frac{p(	heta)p(D | 	heta)}
+{p(D)}
 \end{eqnarray}
-where $p(\bdata | \btheta)$ is called the likelihood, once the actual dataset
+where $p(D | 	heta)$ is called the likelihood, once the actual dataset
 is substituted in.
 The denominator, often called the {\it evidence} or
 {\it marginal likelihood}, is given by the expected value of the likelihood
 with respect to the prior:
 \begin{eqnarray}
-\mathcal{Z} = p(\bdata) = \int p(\btheta) p(\bdata | \btheta) d^n \btheta
+\mathcal{Z} = p(D) = \int p(	heta) p(D | 	heta) d^n 	heta
 \end{eqnarray}
 where the integral is over the entire $n$-dimensional parameter space.
 
@@ -160,7 +160,7 @@ The number of orbiting planets, $N$, is an important parameter.
 To calculate the posterior distribution for $N$, most authors
 consider various trial values of $N$, and calculate the marginal likelihood
 \begin{eqnarray}
-p(\bdata | N) &=& \int p(\btheta | N) p(\bdata | \btheta, N) \, d^n \btheta
+p(D | N) &=& \int p(	heta | N) p(D | 	heta, N) \, d^n 	heta
 \end{eqnarray}
 for each possible value of $N$
 \citep[e.g.][]{2011MNRAS.415.2523G, 2011MNRAS.415.3462F, 2014MNRAS.437.3540F, fengji}, marginalising
@@ -168,7 +168,7 @@ over all other model parameters.
 The posterior distribution for $N$ can then be found straightforwardly by
 using Bayes' rule with $N$ as the only unknown parameter:
 \begin{eqnarray}
-p(N | \bdata) &=& \frac{p(N)p(\bdata | N)}{\sum_N p(N)p(\bdata | N)}.
+p(N | D) &=& \frac{p(N)p(D | N)}{\sum_N p(N)p(D | N)}.
 \end{eqnarray}
 Popular
 methods for calculating the marginal likelihood are Nested Sampling
@@ -240,9 +240,22 @@ in the spike region (or phase) it will be unable to escape: a proposed move
 into the slab will be rejected because of the ratio of densities. Conversely,
 if the MCMC was in the slab region, it would be unlikely to go into the spike
 region, because its volume is so small: it would be very unlikely to
-{\it propose} to move into the spike.
+{\it propose} to move into the spike. Thus, the situation behaves much like
+a multimodal posterior, despite only being unimodal.
 
+Even if the slab contains a very small amount of posterior mass, its existence
+can still cause problems with the calculation of the marginal likelihood
+if annealing methods are used. The thermodynamic integral formula gives
+the log of the marginal likelihood as an average of log likelihoods:
+\begin{eqnarray}
+\log(\mathcal{Z}) &=& \int_0^1 \left<\log\left[L(\theta)\right]\right>_\beta \, d\beta
+\end{eqnarray}
+where the expectation is taken with respect to the
+distribution with ``inverse temperature'' $\beta$, proportional to
+$\pi(\theta)L(\theta)^\beta$.
 
+Nested Sampling \citep{skilling}, and variants such as DNS, are not affected
+by phase transitions. 
 
 \subsection{Parameters and Priors}
 To fit a planet model to RV data, we need parameters to describe
@@ -307,20 +320,20 @@ Quantity	&	Meaning		& Prior\\
 \hline
 {\bf Hyperparameters}	&	\\
 $N$		& Number of planets	& Uniform$(\{0, 1, ..., N_{\rm max}\})$\\
-$\mu_T$		&	Median orbital period	& $\ln(\mu_T) \sim$ Cauchy$(5.9, 1)T(-15.3, 27.1)$\\
+$\mu_T$		&	Median orbital period	& $\log(\mu_T) \sim$ Cauchy$(5.9, 1)T(-15.3, 27.1)$\\
 $w_T$		&	Diversity of orbital periods & $w_T \sim$ Uniform$(0.1, 3)$\\
-$\mu_A$		&	Mean amplitude	& $\ln(\mu_A) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
+$\mu_A$		&	Mean amplitude	& $\log(\mu_A) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
 \hline
 {\bf Planet Parameters}\\
-$T_i$		&	Orbital period	&	$\ln(T_i) \sim $ Biexponential($\ln(\mu_T), w_T$)\\
+$T_i$		&	Orbital period	&	$\log(T_i) \sim $ Biexponential($\log(\mu_T), w_T$)\\
 $A_i$		&	Amplitude of signal	& Exponential$(\mu_A)$\\
 $\phi_i$	&	Phase of signal	&	Uniform($0, 2\pi$)\\
 $v_i$		&	Initial speed of orbit	&	Uniform$(0.4, 1)$\\
 $\theta_i$	&	Viewing angle	&	Uniform$(0, 2\pi)$\\
 \hline
 {\bf Other}\\
-$\sigma_{\rm extra}$	& ``Extra noise'' parameter	& $\ln(\sigma) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
-$\nu$		& Shape parameter for $t$-distribution for noise & $\ln(\nu) \sim$ Uniform$(\ln(0.01), \ln(1000))$\\
+$\sigma_{\rm extra}$	& ``Extra noise'' parameter	& $\log(\sigma) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
+$\nu$		& Shape parameter for $t$-distribution for noise & $\log(\nu) \sim$ Uniform$(\log(0.01), \log(1000))$\\
 \hline
 {\bf Data}\\
 $Y_i$		& Radial velocity measurements	&
@@ -397,7 +410,7 @@ $S_i =  \log_{10}\left[T/(\textnormal{1 day})\right]$,
 Figure~\ref{fig:nu_oph_periods} is a Monte Carlo representation
 of the mixture distribution
 \begin{eqnarray}
-f(S) &=& \sum_{N=0}^{10} p(N | \bdata)\sum_{i=1}^N p(S_i | N, \bdata).
+f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
 \end{eqnarray}
 The two rightmost peaks are the commonly accepted periods, and the third
 prominent peak corresponds to a 75.7 $\pm$ 1.8 day period. The probability
@@ -442,16 +455,11 @@ transition at $\log(X) \approx -75$, and models without the signal exist to the
 right of the phase transition. Mixing between these two phases is crucial for
 accurately computing the posterior probability that the third signal exists.
 However, if we had simply tried to sample the posterior distribution, it would
-not mix between these two phases because the posterior is composed of a
-large-volume low-likelihood ``slab'' and a low-volume high-likelihood ``spike''.
-It is difficult for standard MCMC methods to escape the spike because of the
-likelihood contrast, and it is also difficult to escape the slab and enter the
-spike because of its small volume. Thus, even unimodal posterior distributions
-can cause mixing problems analogous to multimodal situations if a phase
-transition is present.
+not mix easily between these two phases and would give a misleading posterior
+probability for the existence of the third signal.
 
 The marginal likelihood for our model was
-$\ln(\mathcal{Z}) \approx -217.04$ and the information
+$\log(\mathcal{Z}) \approx -217.04$ and the information
 (Kullback-Leibler divergence from the prior to the posterior)
 was $\mathcal{H} \approx 80.0$ nats.
 
@@ -472,7 +480,7 @@ well as separate ``extra noise'' parameters $s_0$ and $\nu$.
 
 The posterior distribution for $N$ is shown in Figure~\ref{fig:gliese581_N},
 and shows strong evidence for at least eight periods
-($P(N \leq 7 | \bdata) = 0.004$).
+($P(N \leq 7 | D) = 0.004$).
 It is now recognised that
 there are many possible sources for oscillations in a data set and not all
 such oscillations should be claimed as planets \citep{2014Sci...345..440R}. 
@@ -502,7 +510,7 @@ Gliese 581.\label{fig:gliese581_N}}
 system.\label{fig:gliese581_periods}}
 \end{figure}
 
-The marginal likelihood was $\ln(\mathcal{Z}) \approx -618.04$ and the
+The marginal likelihood was $\log(\mathcal{Z}) \approx -618.04$ and the
 information was $\mathcal{H} \approx 140.2$ nats. This compares favourably
 to the marginal likelihood of $-640.1$ (for a 6-planet model)
 found by \citet{fengji}, although it is unclear whether we used exactly the
