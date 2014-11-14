@@ -173,8 +173,7 @@ p(N | \bdata) &=& \frac{p(N)p(\bdata | N)}{\sum_N p(N)p(\bdata | N)}.
 Popular
 methods for calculating the marginal likelihood are Nested Sampling
 \citep{skilling} and ideas related to thermodynamic integration
-\citep[e.g.][]{neal}. Note that thermodynamic integration can easily fail if
-there is a phase transition in the problem \citep{skilling}.
+\citep[e.g.][]{neal}.
 
 This traditional approach can be very time consuming.
 Methods for calculating the marginal likelihood are
@@ -195,6 +194,8 @@ of using a discrete grid of possible $a$ values and doing an entire Nested
 Sampling run for each, to get the marginal likelihood as a function of $a$.
 Yet when the hypothesis space for $a$ is discrete to begin with, the wasteful
 alternative has somehow become standard practice.
+
+
 
 \subsection{Trans-dimensional MCMC}
 Trans-dimensional MCMC methods such as birth-death MCMC \citep{birthdeath} or the
@@ -223,6 +224,27 @@ Metropolis proposals for exploring trans-dimensional target distributions,
 including when the prior for the properties of each model component (i.e. each
 planet) is defined hierarchically.
 
+\subsection{Phase transitions}
+It is well known that Bayesian computation (using MCMC for example) can be
+difficult when the posterior distribution is multimodal or has strong
+dependencies between parameters. An uncommon but less well-known difficulty
+is the existence of {\it phase transitions} \citep{skilling}.
+
+Imagine a high-dimensional unimodal posterior distribution that is composed of a
+broad, high volume but low density ``slab'' with a narrow, low volume but high
+density ``spike'' on top of it.
+An example is a mixture of two concentric high-dimensional gaussians with
+different widths. If you ran MCMC on such a posterior, it would be difficult
+to jump between the slab and the spike components. If the MCMC is currently
+in the spike region (or phase) it will be unable to escape: a proposed move
+into the slab will be rejected because of the ratio of densities. Conversely,
+if the MCMC was in the slab region, it would be unlikely to go into the spike
+region, because its volume is so small: it would be very unlikely to
+{\it propose} to move into the spike.
+
+
+
+\subsection{Parameters and Priors}
 To fit a planet model to RV data, we need parameters to describe
 the properties of each planet. For simplicity, we describe each planet by
 five parameters: $T_i$, the orbital period, $A_i$, the amplitude (in metres
