@@ -338,12 +338,13 @@ $\mu_A$		&	Mean amplitude	& $\log(\mu_A) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
 \hline
 {\bf Planet Parameters}\\
 $T_i$		&	Orbital period	&	$\log(T_i) \sim $ Biexponential($\log(\mu_T), w_T$)\\
-$A_i$		&	Amplitude of signal	& Exponential$(\mu_A)$\\
+$A_i$		&	Amplitude of signal	& Exponential$(\textnormal{mean}=\mu_A)$\\
 $\phi_i$	&	Phase of signal	&	Uniform($0, 2\pi$)\\
 $v_i$		&	Initial speed of orbit	&	Uniform$(0.4, 1)$\\
 $\theta_i$	&	Viewing angle	&	Uniform$(0, 2\pi)$\\
 \hline
 {\bf Other}\\
+$m_0$		&	Constant DC offset	&	Uniform$(m_{0, \rm min}, m_{0, \rm max})$\\
 $\sigma_{\rm extra}$	& ``Extra noise'' parameter	& $\log(\sigma) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
 $\nu$		& Shape parameter for $t$-distribution for noise & $\log(\nu) \sim$ Uniform$(\log(0.01), \log(1000))$\\
 \hline
@@ -358,7 +359,8 @@ For parameters where a rough initial guess is possible, heavy-tailed Cauchy
 distributions were used so this information could be taken into account
 in a non-dogmatic way. Time units are in days and amplitude units are
 in metres per second. The maximum number of planets, $N_{\rm max}$, was set
-to 10.\label{tab:priors}}
+to 10. The prior limits for $m_0$ were set to the minimum and maximum value
+in the dataset, which is not strictly a valid strategy.\label{tab:priors}}
 \end{table*}
 
 \section{Orbit Simulations}\label{sec:orbits}
@@ -379,7 +381,7 @@ system. The equations of motion for the particle are:
 \frac{d^2x}{dt^2} &=& -\frac{x}{r^3} \\
 \frac{d^2y}{dt^2} &=& -\frac{y}{r^3} \\
 \end{eqnarray}
-where $r = \sqrt{x^2 + y^2}$. The solution to these ODEs are elliptical orbits
+where $r = \sqrt{x^2 + y^2}$. The solutions to this system of equations are elliptical orbits
 with the focus at the origin. We set the initial position to $(1, 0)$, and
 the initial velocity to $(0, v)$ where $v \in [0.4, 1]$.
 If $v=1$, the orbit is circular and as $v$ decreases the orbit becomes more
