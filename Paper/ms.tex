@@ -312,9 +312,9 @@ is centered around 1 year.
 
 An apparently strange choice is the conditional prior for the orbital
 periods, which is a biexponential distribution. A more conventional choice
-would have been a normal distribution, however the biexponential has
-analytical cumulative distribution and inverse, which is required for
-implementing it in the \citet{rjobject} framework.
+would have been a normal distribution. However, the \citet{rjobject} software
+needs to know the corresponding cumulative distribution and its inverse, which
+are not available in closed form for the normal distribution.
 
 The prior for the velocity amplitudes $A_i$ is important and will affect the
 inferred number of planets $N$. For example, if the prior allows for very
@@ -379,14 +379,12 @@ system. The equations of motion for the particle are:
 \frac{d^2x}{dt^2} &=& -\frac{x}{r^3} \\
 \frac{d^2y}{dt^2} &=& -\frac{y}{r^3} \\
 \end{eqnarray}
-where $r = \sqrt{x^2 + y^2}$. These ODEs can be solved for any given set of
-initial conditions for $x$, $y$, $\frac{dx}{dt}$, and $\frac{dy}{dt}$ to yield
-the shape of the orbit. To simulate orbits
-of different ellipticities, we set the initial position to $(1, 0)$, and
+where $r = \sqrt{x^2 + y^2}$. The solution to these ODEs are elliptical orbits
+with the focus at the origin. We set the initial position to $(1, 0)$, and
 the initial velocity to $(0, v)$ where $v \in [0.4, 1]$.
 If $v=1$, the orbit is circular and as $v$ decreases the orbit becomes more
 elliptical. For trial values of $v$ ranging from 0.4 to 1 in steps of 0.005,
-we simulated an orbit using a leapfrog integrator, and saved the
+we calculated the orbit, and saved the
 velocities $\frac{dx}{dt}$ and $\frac{dy}{dt}$ as a function of time to disk.
 These saved orbits were used as a lookup table for constructing the expected
 signal $y(t)$ due to a single planet.
@@ -403,7 +401,7 @@ the standard eccentricity $\epsilon$ can be recovered using the relation
 $\epsilon = 1 - v^2$.
 
 By precomputing a set of orbits before running the MCMC, we are able to
-do of order 10,000 likelihood evaluations per second per CPU core.
+do $\sim$ 15,000 likelihood evaluations per second per CPU core.
 
 \section{Reanalysis of $\nu$ Oph}
 The $\nu$ Oph system is generally accepted to have two confirmed planets
@@ -412,7 +410,9 @@ of $530.3$ and $3190$ days. To test our approach we applied it to the RV
 data from \citet{2012PASJ...64..135S}.
 The posterior distribution for $N$, the number of planets, is shown in
 Figure~\ref{fig:nu_oph_N}, showing the most probable number of planets is 3,
-and the posterior probability that $N \geq 3$ is about 95\%.
+and the posterior probability that $N \geq 3$ is about 95\%. Of course, this
+third signal is not necessarily a planet but a feature in the data which is
+better explained by a periodic signal than by noise.
 
 The posterior distribution for the logarithms of the periods is shown in
 Figure~\ref{fig:nu_oph_periods}. Because of the label-switching degeneracy,
@@ -458,7 +458,7 @@ for the existence of the third signal.
 
 Figure~\ref{fig:logl0} shows the relationship between the likelihood $L$
 and the enclosed prior mass $X$ for the $\nu$ Oph analysis. These plots are
-a standard output of Nested Sampling \citep{skilling} analyses, and provide
+a standard output of Nested Sampling analyses, and provide
 insights into the structure of the problem. Concave-up regions of this curve
 indicate phase transitions which can cause severe problems for annealing-based
 methods, and sometimes even for sampling the posterior distribution. In this
@@ -530,7 +530,7 @@ same dataset.
 Interestingly, the log-likelihood curve (Figure~\ref{fig:logl})
 shows this problem has two phase transitions. While these do not affect the
 posterior distribution (as they did for $\nu$ Oph), they would cause difficulties
-if we tried to calculte the marginal likelihood using thermal annealing.
+if we tried to calculte the marginal likelihood using annealing.
 
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/logl.eps}
@@ -574,8 +574,10 @@ Including non-planetary stellar variability is a crucial next step.
 \section*{Acknowledgements}
 It is a pleasure to thank Fengji Hou and David Hogg (NYU) for inspiring me to
 finally work on this problem, and Phil Gregory (UBC) for writing so many
-interesting papers on it. Tom Loredo (Cornell) also provided interesting
-conversations. This work was supported by a Marsden Fast Start
+interesting papers on it. We also thank Tom Loredo (Cornell) and Dan
+Foreman-Mackey (NYU) for interesting conversations and feedback.
+
+This work was supported by a Marsden Fast Start
 grant from the Royal Society of
 New Zealand.
 
