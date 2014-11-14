@@ -1,7 +1,7 @@
 from pylab import *
 import os
 
-data = loadtxt('HD208487.txt')
+data = loadtxt('nu_oph.txt')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
 hist(posterior_sample[:,1007], 100)
