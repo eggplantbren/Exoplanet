@@ -55,7 +55,7 @@ single run, which takes $\sim$ 15 minutes on a typical modern desktop computer.
 We apply the method to $\nu$ Oph and Gliese 581, finding moderate evidence
 (posterior probability of existence = 70\%) for a third signal in
 $\nu$ Oph with an orbital period of 75.7 $\pm$ 1.8 days. The results also
-suggest Gliese 581 hosts many (7-15) planets (or other causes of other periodic
+suggest Gliese 581 hosts many (7-15) ``planets'' (or other causes of other periodic
 signals), but only four have well determined periods. The analysis of both
 of these datasets shows phase transitions exist which are difficult to
 negotiate without Nested Sampling.
@@ -93,12 +93,21 @@ to describe the uncertainties probabilistically
 Carlo (MCMC) tends to be very computationally intensive, especially if we
 want to calculate the posterior distribution for $N$, the number of planets.
 
-In this letter we introduce a trans-dimensional birth-death MCMC approach
+It is now well known that RV datasets can contain periodic signals
+resulting from stellar activity rather than planets \citep{2014Sci...345..440R}.
+Therefore, it is important to develop models which attempt to distinguish
+stellar activity signals from Keplerian planet signals based on the shape of
+the oscillations and/or additional data constraining the periods of any
+stellar activity signals. We do not address this important challenge in the
+present paper. Rather, we consider the problem of inferring the number $N$ of
+Keplerian signals in an RV dataset in a computationally efficient way.
+
+We introduce a trans-dimensional birth-death MCMC approach
 \citep{birthdeath} to inferring $N$.
 When $N$ is treated as just another model parameter, we can obtain its
 posterior distribution in a single run.
 The exploration is done using Diffusive Nested Sampling
-\citep{dnest} which replaces the posterior distribution with an alternative
+\citep[DNS][]{dnest} which replaces the posterior distribution with an alternative
 {\it mixture of constrained priors}, allowing mixing between separated modes.
 As a result, we are able to sample the posterior distribution for $N$, and
 evaluate the marginal likelihood (including the sum over $N$) in
