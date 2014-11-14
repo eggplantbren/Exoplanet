@@ -1,7 +1,7 @@
 from pylab import *
 import os
 
-data = loadtxt('nu_oph.txt')
+data = loadtxt('HD208487.txt')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
 hist(posterior_sample[:,1007], 100)
@@ -9,7 +9,12 @@ xlabel('Number of Planets')
 show()
 
 T = posterior_sample[:,1008:1018]
-T = T[T != 0].flatten()
+A = posterior_sample[:,1018:1028]
+E = posterior_sample[:,1038:1048]
+which = T != 0
+T = T[which].flatten()
+A = A[which].flatten()
+E = E[which].flatten()
 # Trim
 #s = sort(T)
 #left, middle, right = s[0.25*len(s)], s[0.5*len(s)], s[0.75*len(s)]
@@ -19,6 +24,17 @@ T = T[T != 0].flatten()
 hist(T/log(10.), 300, alpha=0.5)
 xlabel(r'$\log_{10}$(Period/days)')
 xlim([0, 4])
+show()
+
+subplot(2,1,1)
+plot(T/log(10.), A, 'b.', markersize=1)
+xlim([0, 4])
+ylabel('Amplitude (m/s)')
+subplot(2,1,2)
+plot(T/log(10.), E, 'b.', markersize=1)
+xlim([0, 4])
+xlabel(r'$\log_{10}$(Period/days)')
+ylabel('Ellipticity')
 show()
 
 data[:,0] -= data[:,0].min()
