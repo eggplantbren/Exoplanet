@@ -11,15 +11,17 @@ show()
 T = posterior_sample[:,1008:1018]
 T = T[T != 0].flatten()
 # Trim
-s = sort(T)
-left, middle, right = s[0.25*len(s)], s[0.5*len(s)], s[0.75*len(s)]
-iqr = right - left
-s = s[logical_and(s > middle - 5*iqr, s < middle + 5*iqr)]
+#s = sort(T)
+#left, middle, right = s[0.25*len(s)], s[0.5*len(s)], s[0.75*len(s)]
+#iqr = right - left
+#s = s[logical_and(s > middle - 5*iqr, s < middle + 5*iqr)]
 
-hist(s, 200, alpha=0.5)
-xlabel(r'$\ln$(Period/days)')
+hist(T/log(10.), 300, alpha=0.5)
+xlabel(r'$\log_{10}$(Period/days)')
+xlim([0, 4])
 show()
 
+data[:,0] -= data[:,0].min()
 t = linspace(data[:,0].min(), data[:,0].max(), 1000)
 
 saveFrames = False # For making movies
@@ -29,13 +31,14 @@ if saveFrames:
 ion()
 for i in xrange(0, posterior_sample.shape[0]):
   hold(False)
-  plot(data[:,0], data[:,1], 'b.')
+  errorbar(data[:,0], data[:,1], fmt='b.', yerr=data[:,2])
   hold(True)
   plot(t, posterior_sample[i, 0:1000], 'r')
+  xlim([-0.05*data[:,0].max(), 1.05*data[:,0].max()])
   ylim([-1.5*max(abs(data[:,1])), 1.5*max(abs(data[:,1]))])
-  axhline(0., color='k')
-  xlabel('Time', fontsize=16)
-  ylabel('y', fontsize=16)
+  #axhline(0., color='k')
+  xlabel('Time (days)', fontsize=16)
+  ylabel('Radial Velocity (m/s)', fontsize=16)
   draw()
   if saveFrames:
     savefig('Frames/' + '%0.4d'%(i+1) + '.png', bbox_inches='tight')
