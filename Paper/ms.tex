@@ -9,7 +9,7 @@
 \usepackage{dsfont}
 
 % Bold symbols
-%\renewcommand{	heta}{\boldsymbol{\theta}}
+%\renewcommand{\theta}{\boldsymbol{\theta}}
 %\newcommand{D}{\boldsymbol{D}}
 \newcommand{\bx}{\{x_i\}}
 
@@ -128,39 +128,41 @@ Bayesian inference is the use of probability theory to describe uncertainty
 \citep{sivia, ohagan}. In this framework, we approach data analysis problems by first
 constructing a {\it hypothesis space}, which is the set of possible answers
 to the problem we are considering. Normally, this is the set of possible
-values of a vector of parameters $	heta$ whose values we want
+values of a vector of parameters $\theta$ whose values we want
 to know. We then assign probability distributions
 called the {\it prior} and the {\it sampling distribution}. The prior
-distribution $p(	heta)$ describes
+distribution $p(\theta)$ describes
 our initial uncertainty about which values of the parameters
-$	heta$ are plausible, and the
-sampling distribution $p(D | 	heta)$ describes
+$\theta$ are plausible, and the
+sampling distribution $p(D | \theta)$ describes
 our initial uncertainty about the data set we're going to observe, as a
-function of the unknown parameters $	heta$.
+function of the unknown parameters $\theta$.
 When the data is known, our state of knowledge about the parameter is
 updated from the prior $p(\theta)$ to the posterior distribution given by
 Bayes' rule:
 \begin{eqnarray}
-p(	heta | D) &=&
-\frac{p(	heta)p(D | 	heta)}
+p(\theta | D) &=&
+\frac{p(\theta)p(D | \theta)}
 {p(D)}
 \end{eqnarray}
-where $p(D | 	heta)$ is called the likelihood, once the actual dataset
+where $p(D | \theta)$ is called the likelihood, once the actual dataset
 is substituted in.
 The denominator, often called the {\it evidence} or
 {\it marginal likelihood}, is given by the expected value of the likelihood
 with respect to the prior:
 \begin{eqnarray}
-\mathcal{Z} = p(D) = \int p(	heta) p(D | 	heta) d^n 	heta
+\mathcal{Z} = p(D) = \int p(\theta) p(D | \theta) d^n \theta
 \end{eqnarray}
 where the integral is over the entire $n$-dimensional parameter space.
+In the context of Bayesian computation, the prior is often denoted $\pi(\theta)$,
+the likelihood $L(\theta)$, and the marginal likelihood $\mathcal{Z}$.
 
 \subsection{Inferring the number of planets}
 The number of orbiting planets, $N$, is an important parameter.
 To calculate the posterior distribution for $N$, most authors
 consider various trial values of $N$, and calculate the marginal likelihood
 \begin{eqnarray}
-p(D | N) &=& \int p(	heta | N) p(D | 	heta, N) \, d^n 	heta
+p(D | N) &=& \int p(\theta | N) p(D | \theta, N) \, d^n \theta
 \end{eqnarray}
 for each possible value of $N$
 \citep[e.g.][]{2011MNRAS.415.2523G, 2011MNRAS.415.3462F, 2014MNRAS.437.3540F, fengji}, marginalising
@@ -252,10 +254,20 @@ the log of the marginal likelihood as an average of log likelihoods:
 \end{eqnarray}
 where the expectation is taken with respect to the
 distribution with ``inverse temperature'' $\beta$, proportional to
-$\pi(\theta)L(\theta)^\beta$.
+$\pi(\theta)L(\theta)^\beta$. Even if the slab contains virtually zero mass
+at $\beta=1$ (i.e. the posterior), at some inverse temperature between 0 and 1
+the slab and the spike ought to contribute equally to the distribution. At
+this critical temperature the MCMC will fail to mix and will give a misleadingly
+low estimate of the average log likelihood at that temperature.
 
-Nested Sampling \citep{skilling}, and variants such as DNS, are not affected
-by phase transitions. 
+In data analysis problems, phase transitions can exist when the data contains
+a ``big'' effect which provides a lot of information about some parameters, and
+a ``small'' subtle effect.
+Nested Sampling, and variants such as DNS, are not affected
+by phase transitions. Part of their output, the relationship between the
+likelihood $L$ and the enclosed prior mass $X$, can be used to diagnose whether the
+problem contains a phase transition. In particular, if the graph of $\log(L)$
+vs. $\log(X)$ is convex at some point, then a phase transition exists.
 
 \subsection{Parameters and Priors}
 To fit a planet model to RV data, we need parameters to describe
