@@ -357,8 +357,8 @@ of the hyperparameters. Uniform priors were used for parameters like phases.
 For parameters where a rough initial guess is possible, heavy-tailed Cauchy
 distributions were used so this information could be taken into account
 in a non-dogmatic way. Time units are in days and amplitude units are
-in metres per second. The maximum number of planets, $N_{\rm max}$, was
-set to 15.\label{tab:priors}}
+in metres per second. The maximum number of planets, $N_{\rm max}$, was set
+to 10.\label{tab:priors}}
 \end{table*}
 
 \section{Orbit Simulations}\label{sec:orbits}
@@ -495,7 +495,8 @@ whose existence is mostly accepted, and another two
 whose existence is generally doubted.
 To run our code on the combined dataset from the HARPS and HIRES spectrographs,
 we extended the model to include separate DC offsets for each instrument, as
-well as separate ``extra noise'' parameters $s_0$ and $\nu$.
+well as separate ``extra noise'' parameters $s_0$ and $\nu$. We also increased
+$N_{\rm max}$ from 10 to 15 for this system.
 
 The posterior distribution for $N$ is shown in Figure~\ref{fig:gliese581_N},
 and shows strong evidence for at least eight periods
