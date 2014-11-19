@@ -10,7 +10,7 @@ using namespace DNest3;
 int main(int argc, char** argv)
 {
 	// Load the data
-	Data::get_instance().load("nu_oph.txt");
+	Data::get_instance().load("fake_data_like_nuoph.txt");
 
 	Lookup::get_instance().load();
 

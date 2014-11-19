@@ -1,7 +1,8 @@
 from pylab import *
 import os
 
-data = loadtxt('nu_oph.txt')
+data = loadtxt('fake_data_like_nuoph.txt')
+truth = loadtxt('fake_data_like_nuoph.truth')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
 hist(posterior_sample[:,1007], 100)
@@ -24,17 +25,22 @@ E = E[which].flatten()
 hist(T/log(10.), 300, alpha=0.5)
 xlabel(r'$\log_{10}$(Period/days)')
 xlim([0, 4])
+for i in xrange(1008, 1008 + int(truth[1007])):
+  axvline(truth[i]/log(10.), color='r')
 show()
 
 subplot(2,1,1)
 plot(T/log(10.), A, 'b.', markersize=1)
 xlim([0, 4])
 ylabel('Amplitude (m/s)')
+plot(truth[1008:1008 + int(truth[1007])]/log(10.), truth[1018:1018 + int(truth[1007])], 'ro')
+
 subplot(2,1,2)
 plot(T/log(10.), E, 'b.', markersize=1)
 xlim([0, 4])
 xlabel(r'$\log_{10}$(Period/days)')
 ylabel('Ellipticity')
+plot(truth[1008:1008 + int(truth[1007])]/log(10.), truth[1038:1038 + int(truth[1007])], 'ro')
 show()
 
 data[:,0] -= data[:,0].min()
