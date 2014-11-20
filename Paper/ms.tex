@@ -53,9 +53,11 @@ approach using a trans-dimensional Markov Chain Monte Carlo method within
 Nested Sampling. The posterior distribution for $N$ can be obtained with a
 single run, which takes $\sim$ 15 minutes on a typical modern desktop computer.
 We apply the method to $\nu$ Oph and Gliese 581, finding moderate evidence
-(posterior probability of existence = 70\%) for a third signal in
-$\nu$ Oph with an orbital period of 75.7 $\pm$ 1.8 days. The results also
-suggest Gliese 581 hosts many (7-15) ``planets'' (or other causes of other periodic
+for additional signals in
+$\nu$ Oph with periods of 36.12 $\pm$ 0.04 days and
+75.57 $\pm$ 0.76 days; the posterior probability that at least one of these
+exists is 79\%. The results also suggest Gliese 581 hosts many (7-15) ``planets''
+(or other causes of other periodic
 signals), but only four have well determined periods. The analysis of both
 of these datasets shows phase transitions exist which are difficult to
 negotiate without Nested Sampling.
@@ -407,9 +409,10 @@ of $530.3$ and $3190$ days. To test our approach we applied it to the RV
 data from \citet{2012PASJ...64..135S}.
 The posterior distribution for $N$, the number of planets, is shown in
 Figure~\ref{fig:nu_oph_N}, showing the most probable number of planets is 3,
-and the posterior probability that $N \geq 3$ is about 95\%. Of course, this
-third signal is not necessarily a planet but a feature in the data which is
-better explained by a periodic signal than by noise.
+and the posterior probability that $N \geq 3$ is about 95\%. Of course, these
+extra possible signals are not necessarily a planet but a feature in the data
+which is better explained by a periodic signal than by noise (and may have been
+explained by correlated noise, had we included it).
 
 The posterior distribution for the logarithms of the periods is shown in
 Figure~\ref{fig:nu_oph_periods}. Because of the label-switching degeneracy,
@@ -421,32 +424,39 @@ of the mixture distribution
 \begin{eqnarray}
 f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
 \end{eqnarray}
-The two rightmost peaks are the commonly accepted periods, and the third
-prominent peak corresponds to a 75.7 $\pm$ 1.8 day period. The probability
-this signal exists (technically, the probability a period exists between
-67.6 and 85.1 days)
-is 70\%, and given that it exists, its velocity amplitude
-is 18.6 $\pm$ 8.3 m s$^{-1}$ and its eccentricity (or velocity parameter $v$)
-is not well determined.
+The two rightmost peaks are the commonly accepted periods, and the two next
+most prominent peaks have periods of 36.12 $\pm$ 0.04 days and
+75.57 $\pm$ 0.76 days.
+The probability
+at least one of these exists (the fraction of our samples which
+have one of these signals) is 79\%.
+Given that they exist, their amplitudes are low, around 10-15 metres per second,
+which we note is above the noise level. We also found that the 75.7 $\pm$ 1.8 day
+period prefers an eccentricity of about $0.37 \pm 0.14$.
 An example model fit to the data is shown in Figure~\ref{fig:nuoph}.
 
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/nu_oph_N.eps}
 \caption{The posterior distribution for the number of planets $N$ orbiting
-$\nu$ Oph.\label{fig:nu_oph_N}}
+$\nu$ Oph. The posterior probability of $N > 2$ is about 96\%, however the
+prior probability of $N > 2$ was already high due to the uniform prior for $N$.
+\label{fig:nu_oph_N}}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/nu_oph_periods.eps}
 \caption{The posterior distribution for the orbital periods in the $\nu$ Oph
 system. The two dashed vertical lines are the commonly accepted periods
-of $530.3$ and $3190$ days.\label{fig:nu_oph_periods}}
+of $530.3$ and $3190$ days. The next most prominent peaks with well determined
+periods are at 36.12 $\pm$ 0.04 days and
+75.57 $\pm$ 0.76 days.\label{fig:nu_oph_periods}}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/nuoph.eps}
 \caption{The $\nu$ Oph radial velocity data and an example model fit which
-includes the third period.\label{fig:nuoph}}
+includes a third period. The amplitude of this additional signal is low but
+is about twice the reported errorbars on the measurements.\label{fig:nuoph}}
 \end{figure}
 
 \begin{figure}
@@ -454,10 +464,10 @@ includes the third period.\label{fig:nuoph}}
 \caption{Log likelihood vs. enclosed prior mass (a standard output of Nested
 Sampling algorithms) for the $\nu$ Oph analysis.
 There are several phase transitions (concave-up regions) present. The one at
-$\log(X) \approx -75$ separates models which contain the third signal from
+$\log(X) \approx -75$ separates models which contain additional signals from
 models that do not. Without using Nested Sampling it would be very difficult
 to mix between these two situations and calculate the posterior probability
-for the existence of the third signal.
+for the existence of the additional signals.
 \label{fig:logl0}}
 \end{figure}
 
@@ -470,10 +480,10 @@ methods, and sometimes even for sampling the posterior distribution. In this
 analysis, the models with a third signal exist to the left of the phase
 transition at $\log(X) \approx -75$, and models without the signal exist to the
 right of the phase transition. Mixing between these two phases is crucial for
-accurately computing the posterior probability that the third signal exists.
+accurately computing the posterior probability that extra signals exist.
 However, if we had simply tried to sample the posterior distribution, it would
-not mix easily between these two phases and would give a misleading posterior
-probability for the existence of the third signal.
+not mix easily between these two phases and could easily fail to detect the
+extra signals.
 
 The marginal likelihood for our model was
 $\log(\mathcal{Z}) \approx -217.65$ and the information
@@ -578,11 +588,11 @@ features in the problem, such as phase transitions.
 
 We applied the code to two well-studied RV datasets, $\nu$ Oph and Gliese 581.
 In $\nu$ Oph, we found some evidence for a signal with a period of
-75.7 $\pm$ 1.8 days: the posterior probability it exists, given our assumptions,
-is 70\%. The posterior distribution contains models with three signals and
-models with two, however, these are separated by a phase transition. Therefore
-mixing between the two situations would be very difficult if we simply tried
-to sample the posterior distribution.
+either 36.12 $\pm$ 0.04 days or
+75.57 $\pm$ 0.76 days: the posterior probability one of these exists, given our
+assumptions, is 79\%. The posterior distribution contains models with several
+signals and models with two, however, these are separated by a phase transition.
+Therefore mixing between the two situations would be very difficult if we simply tried to sample the posterior distribution.
 
 With the combined HIRES+HARPS dataset from Gliese 581, we found
 evidence for a large number of ``planets'', although only four have well
