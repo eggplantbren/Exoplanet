@@ -41,7 +41,7 @@ plot(T/log(10.), E, 'b.', markersize=1)
 hold(True)
 xlim([0, 4])
 xlabel(r'$\log_{10}$(Period/days)')
-ylabel('Ellipticity')
+ylabel('Eccentricity')
 plot(truth[1008:1008 + int(truth[1007])]/log(10.), truth[1038:1038 + int(truth[1007])], 'ro')
 show()
 
