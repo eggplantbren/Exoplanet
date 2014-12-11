@@ -297,12 +297,23 @@ and $\psi_i = \{P_i, A_i, \phi_i, e_i, \theta_i\}$
 are the properties of planet $i$.
 The parameter $y_0$ describes a DC offset in the data, and $s$ and $\nu$ are
 parameters allowing for a non-gaussian distribution for the noise in the
-measurements. When the model-predicted RV signal is $m(t)$, the sampling
-distribution for each measurement was a student-$t$ distribution with
-scale parameter $\sqrt{\sigma_i^2 + s_0^2}$ and shape parameter $\nu$. In the limit
-$(s_0 \to 0, \nu \to \inf)$ the sampling distribution reduces to the standard
-assumption of a normal distribution with standard deviation $\sigma_i$ known
-from the error bars in the data set.
+measurements.
+
+A standard assumption for the probability distribution of the data given the
+parameters (known as the sampling distribution, which becomes the likelihood
+function when the dataset is known) is a normal distribution with
+standard deviation $\sigma_i$ known from the error bars in the data set.
+However, it is usually recommended to put in ``safety features'', in case the
+data set contains any discrepant measurements, or in case the error bars in the
+data set are underestimated. To achieve this, we used a student-$t$ distribution
+instead of a normal distribution, with
+scale parameter $\sqrt{\sigma_i^2 + s_0^2}$ and shape parameter $\nu$. The
+parameter $s_0$ is an ``extra noise'' parameter that effectively increases the
+size of the error bars, and the shape parameter $\nu$ allows for heavier tails
+than a normal distribution. If $\nu$ is large, the student-$t$ distribution
+is approximately a normal distribution, and if $\nu$ is small the noise
+distribution has much heavier tails. For instance, when $\nu=1$ the student-$t$
+distribution becomes a Cauchy distribution.
 
 All of the model assumptions are specified in detail in
 Table~\ref{tab:priors}. Cauchy distributions were used when there is a
