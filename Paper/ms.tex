@@ -295,16 +295,15 @@ possible values, which is not necessarily the case.
 
 The unknown parameters are:
 \begin{eqnarray}
-\left\{N, \boldsymbol{\alpha}, \{\boldsymbol{\psi}\}_{i=1}^N, y_0, s, \nu\right\}
+\left\{N, \boldsymbol{\alpha}, \{\boldsymbol{\psi}\}_{i=1}^N, y_0, \sigma_{\rm extra}, \nu\right\}
 \end{eqnarray}
 where $N$ is the number of planets,
 $\boldsymbol{\alpha} = \{\mu_P, \sigma_P, \mu_A\}$ are the
 hyperparameters used to define the prior for the properties of the planets,
 and $\psi_i = \{P_i, A_i, \phi_i, e_i, \theta_i\}$
 are the properties of planet $i$.
-The parameter $y_0$ describes a DC offset in the data, and $s$ and $\nu$ are
-parameters allowing for a non-gaussian distribution for the noise in the
-measurements.
+The parameter $y_0$ describes a DC offset in the data, and
+$\sigma_{\rm extra}$ and $\nu$ are parameters of the noise distribution.
 
 A standard assumption for the probability distribution of the data given the
 parameters (known as the sampling distribution, which becomes the likelihood
@@ -314,8 +313,8 @@ However, it is usually recommended to put in ``safety features'', in case the
 data set contains any discrepant measurements, or in case the error bars in the
 data set are underestimated. To achieve this, we used a student-$t$ distribution
 instead of a normal distribution, with
-scale parameter $\sqrt{\sigma_i^2 + s_0^2}$ and shape parameter $\nu$. The
-parameter $s_0$ is an ``extra noise'' parameter that effectively increases the
+scale parameter $\sqrt{\sigma_i^2 + \sigma_{\rm extra}^2}$ and shape parameter $\nu$. The
+parameter $\sigma_{\rm extra}$ is an ``extra noise'' parameter that effectively increases the
 size of the error bars, and the shape parameter $\nu$ allows for heavier tails
 than a normal distribution. If $\nu$ is large, the student-$t$ distribution
 is approximately a normal distribution, and if $\nu$ is small the noise
@@ -323,7 +322,11 @@ distribution has much heavier tails. For instance, when $\nu=1$ the student-$t$
 distribution becomes a Cauchy distribution.
 
 All of the model assumptions are specified in detail in
-Table~\ref{tab:priors}. Cauchy distributions were used when there is a
+Table~\ref{tab:priors}. Most of these priors were chosen to represent vague
+prior knowledge, rather than the judgement of an informed expert on extrasolar
+planets.
+
+Cauchy distributions were used when there is a
 preferred value, but since these have very heavy tails, the assumption is
 quite fail safe. For example, the prior for $\mu_P$, the typical orbital period,
 is centered around 1 year.
