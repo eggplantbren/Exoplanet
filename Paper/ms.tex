@@ -148,7 +148,15 @@ p(\theta | D) &=&
 {p(D)}
 \end{eqnarray}
 where $p(D | \theta)$ is called the likelihood, once the actual dataset
-is substituted in.
+is substituted in. Note that some authors do not distinguish between a
+sampling distribution and a likelihood. Throughout this paper we use the term
+sampling distribution for $p(D|\theta)$ if we are discussing a probability
+distribution (actually a family of them, indexed by $\theta$)
+over the set of possible datasets. We use the term {\it likelihood}
+when the actual dataset has been plugged in, when $p(D|\theta)$
+becomes a scalar function (not a probability distribution)
+over the parameter space.
+
 The denominator, often called the {\it evidence} or
 {\it marginal likelihood}, is given by the expected value of the likelihood
 with respect to the prior:
