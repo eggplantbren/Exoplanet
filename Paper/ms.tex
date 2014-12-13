@@ -274,10 +274,9 @@ vs. $\log(X)$ is convex at some point, then a phase transition exists.
 \subsection{Parameters and Priors}
 To fit a planet model to RV data, we need parameters to describe
 the properties of each planet. For simplicity, we describe each planet by
-five parameters: $P_i$, the orbital period, $A_i$, the amplitude (in metres
-per second) of the RV signal, $\phi_i$, the phase of the signal, $e_i$, the eccentricity of the orbit, and $\theta_i$, a ``viewing angle'' parameter
-describing the position of the observer with respect to the major axis of the
-star's elliptical trajectory.
+five parameters: the orbital period $P_i$, the semi-amplitude (in metres
+per second) of the RV signal $A_i$, the phase of the signal
+$\phi_i$, the eccentricity $e_i$, and the ``viewing angle'' $\theta_i$.
 
 We assigned hierarchical priors to some of the planet's parameters. This allows the
 model to capture the idea that knowing the values of some planet's parameters
@@ -327,9 +326,10 @@ would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
 are not available in closed form for the normal distribution.
 
-The prior for the velocity amplitudes $A_i$ is important and will affect the
+The prior for the velocity semi-amplitudes $\{A_i\}$ is important and will affect the
 inferred number of planets $N$. For example, if the prior allows for very
-low amplitude planets to exist, the data will not rule this out. The prior
+low amplitude planets to exist, the data will not rule this out, and the posterior
+for $N$ will include the possibility of large numbers of planets. The prior
 will influence how many of these low amplitude planets will exist: if we
 believe there are many, and the data are uninformative about low amplitude
 planets, then the posterior distribution for $N$ will also indicate that there
