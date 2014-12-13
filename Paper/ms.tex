@@ -424,7 +424,17 @@ The eccentricity of the orbit, in terms of $v$, is $e = 1 - v^2$.
 By precomputing a set of orbits before running the MCMC, we are able to
 do $\sim$ 15,000 likelihood evaluations per second per CPU core.
 
-\section{Reanalysis of $\nu$ Oph}
+\section{Demonstration on Simulated Data}
+To test our proposed methodology, we generated a simulated dataset for a
+system with $N=5$ planets. The dataset was ``inspired by'' the $\nu$ Oph
+dataset (Section~\ref{sec:nu_oph}), and contains two large signals with
+periods of 531 and 3180 days, whose semi-amplitudes are
+322 ms$^{-1}$ and 214 ms$^{-1}$ respectively. The other three planets have
+much lower semi-amplitudes, ranging from 1-9 ms$^{-1}$. The standard deviation
+for the noise in the data was 5 ms$^{-1}$, so some of these low-amplitude
+signals should be detectable.
+
+\section{Application to $\nu$ Oph}\label{sec:nu_oph}
 The $\nu$ Oph system is generally accepted to have two confirmed planets
 \citep[e.g.][]{2011AIPC.1331..102Q, 2012PASJ...64..135S, fengji}, with periods
 of $530.3$ and $3190$ days. To test our approach we applied it to the RV
@@ -521,7 +531,7 @@ For the $\nu$ Oph data the information was $\mathcal{H} \approx 77.7$ nats
 (natural units) or 111 bits, so the posterior is roughly $e^{-77}$ times the
 volume of the prior.
 
-\section{Reanalysis of Gliese 581}
+\section{Application to Gliese 581}
 The red dwarf star Gliese 581 is thought to host several planets. Exactly
 how many is a matter of considerable debate. According to
 \citet{2014Sci...345..440R}, there are two planets
