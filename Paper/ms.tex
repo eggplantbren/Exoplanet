@@ -255,29 +255,36 @@ region, because its volume is so small: it would be very unlikely to
 {\it propose} to move into the spike. Thus, the situation behaves much like
 a multimodal posterior, despite only being unimodal.
 
-Even if the slab contains a very small amount of posterior mass, its existence
-can still cause problems with the calculation of the marginal likelihood
+If the slab contains a very small amount of posterior probability, it is not
+a problem if an MCMC algorithm spends all its time in the spike. However, this
+situation could still cause problems with the calculation of the marginal likelihood
 if annealing methods are used. The thermodynamic integral formula gives
-the log of the marginal likelihood as an average of log likelihoods:
+the log of the marginal likelihood $\mathcal{Z}$ as an average of log likelihoods:
 \begin{eqnarray}
 \log(\mathcal{Z}) &=& \int_0^1 \left<\log\left[L(\theta)\right]\right>_\beta \, d\beta
 \end{eqnarray}
 where the expectation is taken with respect to the
 distribution with ``inverse temperature'' $\beta$, proportional to
-$\pi(\theta)L(\theta)^\beta$. Even if the slab contains virtually zero mass
-at $\beta=1$ (i.e. the posterior), at some inverse temperature between 0 and 1
-the slab and the spike ought to contribute equally to the distribution. At
-this critical temperature the MCMC will fail to mix and will give a misleadingly
-low estimate of the average log likelihood at that temperature.
+$\pi(\theta)L(\theta)^\beta$. Even if the slab contains virtually zero probability
+when $\beta=1$ (i.e. the posterior), for some values of the inverse temperature
+$\beta$ the slab and the spike will both be important. At
+these temperatures the MCMC will fail to mix (it will incorrectly spend all its
+time in either the slab or the spike, rather than mixing between the two)
+and will give a misleading estimate of the average log likelihood at that temperature.
 
 In data analysis problems, phase transitions can exist when the data contains
 a ``big'' effect which provides a lot of information about some parameters, and
 a ``small'' subtle effect.
 Nested Sampling, and variants such as DNS, are not affected
-by phase transitions. Part of their output, the relationship between the
-likelihood $L$ and the enclosed prior mass $X$, can be used to diagnose whether the
+by phase transitions because the exploration only makes use of likelihood
+{\it rankings}, rather than likelihood values themselves.
+Part of their output, the relationship between the
+likelihood $L$ and the enclosed prior mass
+$X(L) = \int \pi(\theta) \mathds{1}\left[L(\theta) > L\right]\, d^n\theta$
+can be used to diagnose whether the
 problem contains a phase transition. In particular, if the graph of $\log(L)$
-vs. $\log(X)$ is convex at some point, then a phase transition exists.
+vs. $\log(X)$ is convex at some point, then a phase transition exists
+\citep{skilling}.
 
 \subsection{Parameters and Priors}
 To fit a planet model to RV data, we need parameters to describe
