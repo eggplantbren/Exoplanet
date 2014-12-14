@@ -1,12 +1,17 @@
 from pylab import *
 import os
 
+rc("font", size=14, family="serif", serif="Computer Sans")
+rc("text", usetex=True)
+
 data = loadtxt('fake_data_like_nuoph.txt')
 truth = loadtxt('fake_data_like_nuoph.truth')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
 hist(posterior_sample[:,1007], 100)
 xlabel('Number of Planets')
+ylabel('Number of Posterior Samples')
+xlim([-0.5, 10.5])
 show()
 
 T = posterior_sample[:,1008:1018]
@@ -22,28 +27,29 @@ E = E[which].flatten()
 #iqr = right - left
 #s = s[logical_and(s > middle - 5*iqr, s < middle + 5*iqr)]
 
-hist(T/log(10.), 300, alpha=0.5)
+hist(T/log(10.), 500, alpha=0.5)
 xlabel(r'$\log_{10}$(Period/days)')
 xlim([1, 4])
 for i in xrange(1008, 1008 + int(truth[1007])):
   axvline(truth[i]/log(10.), color='r')
+ylabel('Number of Posterior Samples')
 show()
 
 subplot(2,1,1)
-plot(T/log(10.), log10(A), 'b.', markersize=1)
+plot(truth[1008:1008 + int(truth[1007])]/log(10.), log10(truth[1018:1018 + int(truth[1007])]), 'ro', markersize=7)
 hold(True)
 xlim([1, 4])
 ylim([-1, 3])
 ylabel(r'$\log_{10}$[Amplitude (m/s)$]$')
-plot(truth[1008:1008 + int(truth[1007])]/log(10.), log10(truth[1018:1018 + int(truth[1007])]), 'ro')
+plot(T/log(10.), log10(A), 'b.', markersize=1)
 
 subplot(2,1,2)
-plot(T/log(10.), E, 'b.', markersize=1)
+plot(truth[1008:1008 + int(truth[1007])]/log(10.), truth[1038:1038 + int(truth[1007])], 'ro', markersize=7)
 hold(True)
 xlim([1, 4])
 xlabel(r'$\log_{10}$(Period/days)')
 ylabel('Eccentricity')
-plot(truth[1008:1008 + int(truth[1007])]/log(10.), truth[1038:1038 + int(truth[1007])], 'ro')
+plot(T/log(10.), E, 'b.', markersize=1)
 show()
 
 data[:,0] -= data[:,0].min()
