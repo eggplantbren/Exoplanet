@@ -453,8 +453,9 @@ much smaller planets which contribute small additional effects to the data.
 \label{fig:fake_data}}
 \end{figure}
 
-We ran the MCMC on the simulated dataset to obtain the posterior distribution
-for the model parameters. The posterior distribution for $N$, the number of
+We ran the MCMC on the simulated dataset to obtain samples from the
+posterior distribution. We obtained 590 samples.
+The posterior distribution for $N$, the number of
 planets, is shown in Figure~\ref{fig:fake_data_N}. The true number of planets,
 5, is also the most probable value according to the posterior distribution,
 simply by chance. The posterior distribution also suggests that $N=4$ has
@@ -462,7 +463,7 @@ substantial probability.
 The posterior distribution for the periods $\{P_i\}_{i=1}^N$ is shown in
 Figure~\ref{fig:fake_data_periods}. Because of the label switching degeneracy,
 the posterior distribution for each period is identical, so we pooled the
-results for all periods. Defining the log-periods by
+samples for all periods. Defining the log-periods by
 $S_i =  \log_{10}\left[P_i/(\textnormal{1 day})\right]$,
 Figure~\ref{fig:fake_data_periods} is a Monte Carlo representation
 of the mixture distribution
@@ -471,10 +472,12 @@ f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
 \end{eqnarray}
 The posterior distribution for the periods, shown in
 Figure~\ref{fig:fake_data_periods}, shows that four of the true periods were
-recovered, with probability close to 1. One period which was actually present
-was not detected because it had a very small amplitude. There is also some
-evidence for periods which did not exist, however the posterior probabilities
-for these peaks are not close to 1.
+recovered, with probability close to 1. One period (with $\log_{10}P_i \approx 1.8$)
+which was actually present was not ``detected'' because it had a very small
+amplitude. We note that the posterior probability near this period should not be
+precisely zero. There is also some
+evidence for periods which did not actually exist, however the posterior
+probabilities for these peaks are not close to 1.
 
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_N.eps}
@@ -486,12 +489,24 @@ probable value (this is a coincidence and will not occur in general).
 
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_periods.eps}
-\caption{The posterior distribution for the periods\label{fig:fake_data_periods}}
+\caption{The posterior distribution for the periods given the simulated
+dataset. The solid lines are the true periods, four of which were detected
+with high posterior probability.\label{fig:fake_data_periods}}
 \end{figure}
+
+The joint posterior distribution for the periods and the amplitudes of the
+signals is shown in Figure~\ref{fig:fake_data_posterior} along with the
+eccentricities. As with Figure~\ref{fig:fake_data_periods}, the samples for
+all planets were combined. The true values are also plotted as circles. Clearly, the
+reason the period of $\log_{10}(P_i) \approx 1.8$ was not ``detected'' was that
+it had a very low amplitude of approximately 1 m s$^{-1}$ which is one fifth
+of the noise level.
 
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_posterior.eps}
-\caption{\label{fig:fake_data_posterior}}
+\caption{The joint posterior distribution for the periods and the amplitudes
+(top panel) and the periods and eccentricities (bottom panel).
+\label{fig:fake_data_posterior}}
 \end{figure}
 
 
