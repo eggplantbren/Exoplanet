@@ -331,12 +331,15 @@ distribution becomes a Cauchy distribution.
 All of the model assumptions are specified in detail in
 Table~\ref{tab:priors}. Most of these priors were chosen to represent vague
 prior knowledge, rather than the judgement of an informed expert on extrasolar
-planets.
-
-Cauchy distributions were used when there is a
+planets. Uniform distributions were used for parameters such as phases, where
+time-translation symmetry seems plausible.
+Truncated Cauchy distributions were used when there is a
 preferred value, but since these have very heavy tails, the assumption is
-quite fail safe. For example, the prior for $\mu_P$, the typical orbital period,
-is centered around 1 year.
+quite fail safe relative to other possible assignments such as normal distributions.
+For example, the prior for $\mu_P$, the typical orbital period,
+is centered around 1 year but could be as low as $\approx e^{-21}$ years or as high
+as $\approx e^{21}$ years, a very wide range. Truncation intervals are
+specified with the $T(a,b)$ notation in Table~\ref{tab:priors}.
 
 An apparently strange choice is the conditional prior for the orbital
 periods, which is a biexponential distribution. A more conventional choice
