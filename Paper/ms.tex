@@ -431,14 +431,14 @@ The eccentricity of the orbit, in terms of $v$, is $e = 1 - v^2$.
 By precomputing a set of orbits before running the MCMC, we are able to
 do $\sim$ 15,000 likelihood evaluations per second per CPU core.
 
-\section{Demonstration on Simulated Data}
+\section{Demonstration on Simulated Data}\label{sec:fake_data}
 To test our proposed methodology, we generated a simulated dataset for a
 system with $N=5$ planets. The dataset was ``inspired by'' the $\nu$ Oph
 dataset (Section~\ref{sec:nu_oph}), and contains two large signals with
 periods of 531 and 3180 days, whose semi-amplitudes are
-322 ms$^{-1}$ and 214 ms$^{-1}$ respectively. The other three planets have
+322 m s$^{-1}$ and 214 m s$^{-1}$ respectively. The other three planets have
 much lower semi-amplitudes, ranging from 1-9 ms$^{-1}$. The standard deviation
-for the noise in the data was 5 ms$^{-1}$, so some of these low-amplitude
+for the noise in the data was 5 m s$^{-1}$, so some of these low-amplitude
 signals should be detectable. The simulated data is shown in
 Figure~\ref{fig:fake_data}, along with the true radial velocity curve $m(t)$
 that was used to generate the data.
@@ -448,19 +448,45 @@ that was used to generate the data.
 \caption{A simulated dataset that ``resembles'' the $\nu$ Oph dataset, which
 we used to test our methodology. The dominant signal is from two large
 planets with periods periods of 531 and 3180 days and semi-amplitudes of
-322 ms$^{-1}$ and 214 ms$^{-1}$ respectively. There are also three
+322 m s$^{-1}$ and 214 m s$^{-1}$ respectively. There are also three
 much smaller planets which contribute small additional effects to the data.
 \label{fig:fake_data}}
 \end{figure}
 
+We ran the MCMC on the simulated dataset to obtain the posterior distribution
+for the model parameters. The posterior distribution for $N$, the number of
+planets, is shown in Figure~\ref{fig:fake_data_N}. The true number of planets,
+5, is also the most probable value according to the posterior distribution,
+simply by chance. The posterior distribution also suggests that $N=4$ has
+substantial probability.
+The posterior distribution for the periods $\{P_i\}_{i=1}^N$ is shown in
+Figure~\ref{fig:fake_data_periods}. Because of the label switching degeneracy,
+the posterior distribution for each period is identical, so we pooled the
+results for all periods. Defining the log-periods by
+$S_i =  \log_{10}\left[P_i/(\textnormal{1 day})\right]$,
+Figure~\ref{fig:fake_data_periods} is a Monte Carlo representation
+of the mixture distribution
+\begin{eqnarray}
+f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
+\end{eqnarray}
+The posterior distribution for the periods, shown in
+Figure~\ref{fig:fake_data_periods}, shows that four of the true periods were
+recovered, with probability close to 1. One period which was actually present
+was not detected because it had a very small amplitude. There is also some
+evidence for periods which did not exist, however the posterior probabilities
+for these peaks are not close to 1.
+
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_N.eps}
-\caption{\label{fig:fake_data_N}}
+\caption{The posterior distribution for the number of planets $N$ given the
+simulated dataset. The true number of planets was 5, which is also the most
+probable value (this is a coincidence and will not occur in general).
+\label{fig:fake_data_N}}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_periods.eps}
-\caption{\label{fig:fake_data_periods}}
+\caption{The posterior distribution for the periods\label{fig:fake_data_periods}}
 \end{figure}
 
 \begin{figure}
@@ -482,15 +508,9 @@ which is better explained by a periodic signal than by noise (and may have been
 explained by correlated noise, had we included it).
 
 The posterior distribution for the logarithms of the periods is shown in
-Figure~\ref{fig:nu_oph_periods}. Because of the label-switching degeneracy,
+Figure~\ref{fig:nu_oph_periods}. As in Section~\ref{sec:fake_data},
 the posterior samples for all periods were combined to make this figure, which
-shows three prominent peaks. Defining the log-periods by
-$S_i =  \log_{10}\left[T/(\textnormal{1 day})\right]$,
-Figure~\ref{fig:nu_oph_periods} is a Monte Carlo representation
-of the mixture distribution
-\begin{eqnarray}
-f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
-\end{eqnarray}
+shows three prominent peaks. 
 The two rightmost peaks are the commonly accepted periods, and the two next
 most prominent peaks have periods of 36.12 $\pm$ 0.04 days and
 75.57 $\pm$ 0.76 days.
