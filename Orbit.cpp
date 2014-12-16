@@ -46,18 +46,21 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 	double S = sin(viewing_angle);
 	vector<double> vr = vx;
 	double vrmax = -1E300;
+	double vrmin =  1E300;
 	int closest = 0;
 	for(size_t i=0; i<vr.size(); i++)
 	{
 		vr[i] = C*vx[i] + S*vy[i];
-		if(abs(vr[i]) > vrmax)
-			vrmax = abs(vr[i]);
+		if(vr[i] > vrmax)
+			vrmax = vr[i];
+		if(vr[i] < vrmin)
+			vrmin = vr[i];
 		if(abs(vr[i]) < abs(vr[closest]))
 			closest = i;
 	}
 
 	for(size_t i=0; i<vr.size(); i++)
-		vr[i] /= vrmax;
+		vr[i] = 2*(vr[i] - vrmin)/(vrmax - vrmin) - 1.;
 
 	vector<double> result = arg_to_sin;
 	int index;

@@ -18,6 +18,8 @@ evaluate = function(arg_to_sin, v=0.75, viewing_angle=0.)
 
   radial_velocity = cos(viewing_angle)*trajectories[[orbit]][,1] + sin(viewing_angle)*trajectories[[orbit]][,2]
   radial_velocity = radial_velocity/max(abs(radial_velocity))
+  radial_velocity = (radial_velocity - min(radial_velocity))/(max(radial_velocity) - min(radial_velocity))
+  radial_velocity = 2*radial_velocity - 1
   closest_to_zero = which(abs(radial_velocity) == min(abs(radial_velocity)))
 
   cc = 2*pi*(closest_to_zero - 1)/N
