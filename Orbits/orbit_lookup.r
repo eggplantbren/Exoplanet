@@ -20,17 +20,21 @@ evaluate = function(arg_to_sin, v=0.75, viewing_angle=0.)
   radial_velocity = radial_velocity/max(abs(radial_velocity))
   radial_velocity = (radial_velocity - min(radial_velocity))/(max(radial_velocity) - min(radial_velocity))
   radial_velocity = 2*radial_velocity - 1
-  closest_to_zero = which(abs(radial_velocity) == min(abs(radial_velocity)))
+  closest_to_max = which(radial_velocity == max(radial_velocity))[1]
 
-  cc = 2*pi*(closest_to_zero - 1)/N
+  cc = 2*pi*(closest_to_max - 1)/N
   index = 1 + N*((arg_to_sin + cc) %% (2*pi))/(2*pi)
 
   return(radial_velocity[index])
 }
 
-t = seq(-10, 10, by=0.01)
-y = evaluate(t, v=(0.4 + 0.6*runif(1)), viewing_angle=2.*pi*runif(1))
-plot(t, y, type='l')
-abline(v=2*pi)
-print(any(is.na(y)))
+t = seq(0, 10, by=0.01)
+y = evaluate(2*pi*t/5, v=sqrt(1. - 0.5), viewing_angle=-0.8)
+plot(t, y)
+y = -evaluate(2*pi*t/5 - 0.1, v=sqrt(1. - 0.5), viewing_angle=pi - 0.8)
+lines(t, y)
+
+
+#data = as.matrix(read.csv("kepler.txt", sep=" "))
+#lines(data[,1], data[,2])
 

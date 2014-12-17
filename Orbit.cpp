@@ -38,7 +38,7 @@ void Orbit::load(const char* filename)
 	fin.close();
 }
 
-vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
+vector<double> Orbit::evaluate(const std::vector<double>& arg_to_cos,
 						double viewing_angle) const
 {
 	// Create radial velocities
@@ -47,7 +47,7 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 	vector<double> vr = vx;
 	double vrmax = -1E300;
 	double vrmin =  1E300;
-	int closest = 0;
+	int highest = 0;
 	for(size_t i=0; i<vr.size(); i++)
 	{
 		vr[i] = C*vx[i] + S*vy[i];
@@ -55,19 +55,19 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_sin,
 			vrmax = vr[i];
 		if(vr[i] < vrmin)
 			vrmin = vr[i];
-		if(abs(vr[i]) < abs(vr[closest]))
-			closest = i;
+		if(vr[i] > vr[highest])
+			highest = i;
 	}
 
 	for(size_t i=0; i<vr.size(); i++)
 		vr[i] = 2*(vr[i] - vrmin)/(vrmax - vrmin) - 1.;
 
-	vector<double> result = arg_to_sin;
+	vector<double> result = arg_to_cos;
 	int index;
-	double cc = 2.*M_PI*((double)(closest))/vr.size();
+	double cc = 2.*M_PI*((double)(highest))/vr.size();
 	for(size_t i=0; i<result.size(); i++)
 	{
-		index = (int)(vr.size()*mod(arg_to_sin[i] + cc, 2.*M_PI)/(2*M_PI));
+		index = (int)(vr.size()*mod(arg_to_cos[i] + cc, 2.*M_PI)/(2*M_PI));
 		result[i] = vr[index];
 	}
 

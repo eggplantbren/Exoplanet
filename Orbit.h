@@ -13,7 +13,7 @@ class Orbit
 		void load(const char* filename);
 
 		std::vector<double> evaluate
-				(const std::vector<double>& arg_to_sin,
+				(const std::vector<double>& arg_to_cos,
 						double viewing_angle) const;
 
 		// Unit test
