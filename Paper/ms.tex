@@ -437,11 +437,11 @@ do $\sim$ 15,000 likelihood evaluations per second per CPU core.
 
 \section{Demonstration on Simulated Data}\label{sec:fake_data}
 To test our proposed methodology, we generated a simulated dataset for a
-system with $N=5$ planets. The dataset was ``inspired by'' the $\nu$ Oph
+system with $N=7$ planets. The dataset was ``inspired by'' the $\nu$ Oph
 dataset (Section~\ref{sec:nu_oph}), and contains two large signals with
-periods of 531 and 3180 days, whose semi-amplitudes are
-322 m s$^{-1}$ and 214 m s$^{-1}$ respectively. The other three planets have
-much lower semi-amplitudes, ranging from 1-9 ms$^{-1}$. The standard deviation
+periods of 530 and 3120 days, whose semi-amplitudes are
+291 m s$^{-1}$ and 181 m s$^{-1}$ respectively. The other five planets have
+much lower semi-amplitudes, ranging from 4-30 ms$^{-1}$. The standard deviation
 for the noise in the data was 5 m s$^{-1}$, so some of these low-amplitude
 signals should be detectable. The simulated data is shown in
 Figure~\ref{fig:fake_data}, along with the true radial velocity curve $m(t)$
@@ -451,19 +451,18 @@ that was used to generate the data.
 \includegraphics[scale=0.4]{Figures/fake_data.eps}
 \caption{A simulated dataset that ``resembles'' the $\nu$ Oph dataset, which
 we used to test our methodology. The dominant signal is from two large
-planets with periods periods of 531 and 3180 days and semi-amplitudes of
-322 m s$^{-1}$ and 214 m s$^{-1}$ respectively. There are also three
+planets with periods periods of 530 and 3120 days and semi-amplitudes of
+291 m s$^{-1}$ and 181 m s$^{-1}$ respectively. There are also five
 much smaller planets which contribute small additional effects to the data.
 \label{fig:fake_data}}
 \end{figure}
 
 We ran the MCMC on the simulated dataset to obtain samples from the
-posterior distribution. We obtained 590 samples.
+posterior distribution. We obtained 520 posterior samples.
 The posterior distribution for $N$, the number of
 planets, is shown in Figure~\ref{fig:fake_data_N}. The true number of planets,
-5, is also the most probable value according to the posterior distribution,
-simply by chance. The posterior distribution also suggests that $N=4$ has
-substantial probability.
+7, is not the most probable value, but it does have substantial probability.
+The posterior distribution suggests that $N$ could be anywhere from 6 to 10.
 The posterior distribution for the periods $\{P_i\}_{i=1}^N$ is shown in
 Figure~\ref{fig:fake_data_periods}. Because of the label switching degeneracy,
 the posterior distribution for each period is identical, so we pooled the
@@ -475,8 +474,8 @@ of the mixture distribution
 f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
 \end{eqnarray}
 The posterior distribution for the periods, shown in
-Figure~\ref{fig:fake_data_periods}, shows that four of the true periods were
-recovered, with probability close to 1. One period (with $\log_{10}P_i \approx 1.8$)
+Figure~\ref{fig:fake_data_periods}, shows that six of the true periods were
+recovered, with probability close to 1. One period (with $\log_{10}P_i \approx 1.15$)
 which was actually present was not ``detected'' because it had a very small
 amplitude. We note that the posterior probability near this period should not be
 precisely zero. There is also some
@@ -486,15 +485,14 @@ probabilities for these peaks are not close to 1.
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_N.eps}
 \caption{The posterior distribution for the number of planets $N$ given the
-simulated dataset. The true number of planets was 5, which is also the most
-probable value (this is a coincidence and will not occur in general).
+simulated dataset. The true number of planets was 7.
 \label{fig:fake_data_N}}
 \end{figure}
 
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_periods.eps}
 \caption{The posterior distribution for the periods given the simulated
-dataset. The solid lines are the true periods, four of which were detected
+dataset. The solid lines are the true periods, six of which were detected
 with high posterior probability.\label{fig:fake_data_periods}}
 \end{figure}
 
@@ -502,9 +500,9 @@ The joint posterior distribution for the periods and the amplitudes of the
 signals is shown in Figure~\ref{fig:fake_data_posterior} along with the
 eccentricities. As with Figure~\ref{fig:fake_data_periods}, the samples for
 all planets were combined. The true values are also plotted as circles. Clearly, the
-reason the period of $\log_{10}(P_i) \approx 1.8$ was not ``detected'' was that
-it had a very low amplitude of approximately 1 m s$^{-1}$ which is one fifth
-of the noise level.
+reason the period of $\log_{10}(P_i) \approx 1.15$ was not ``detected'' was that
+it had a very low amplitude of approximately 4 m s$^{-1}$ which is below the
+noise level.
 
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_posterior.eps}
