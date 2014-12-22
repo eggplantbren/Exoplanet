@@ -570,8 +570,8 @@ is about twice the reported errorbars on the measurements.\label{fig:nuoph}}
 \caption{Log likelihood vs. enclosed prior mass (a standard output of Nested
 Sampling algorithms) for the $\nu$ Oph analysis.
 There are several phase transitions (concave-up regions) present. The one at
-$\log(X) \approx -75$ separates models which contain additional signals from
-models that do not. Without using Nested Sampling it would be very difficult
+$\log(X) \approx -70$ separates models which contain additional signals from
+models that do not. Without using Nested Sampling it would be more difficult
 to mix between these two situations and calculate the posterior probability
 for the existence of the additional signals.
 \label{fig:logl0}}
@@ -584,12 +584,9 @@ insights into the structure of the problem. Concave-up regions of this curve
 indicate phase transitions which can cause severe problems for annealing-based
 methods, and sometimes even for sampling the posterior distribution. In this
 analysis, the models with a third signal exist to the left of the phase
-transition at $\log(X) \approx -75$, and models without the signal exist to the
+transition at $\log(X) \approx -70$, and models without the signal exist to the
 right of the phase transition. Mixing between these two phases is crucial for
 accurately computing the posterior probability that extra signals exist.
-However, if we had simply tried to sample the posterior distribution, it would
-not mix easily between these two phases and could easily fail to detect the
-extra signals.
 
 The marginal likelihood for our model was
 $\log(\mathcal{Z}) \approx -220.5$. Nested Sampling also allows for calculation
@@ -627,7 +624,7 @@ $N_{\rm max}$ from 10 to 15 for this system.
 
 The posterior distribution for $N$ is shown in Figure~\ref{fig:gliese581_N},
 and shows strong evidence for at least eight periods
-($P(N \leq 7 | D) = 0.004$).
+($P(N \leq 7 | D) = 0.012$).
 It is now recognised that
 there are many possible sources for oscillations in a data set and not all
 such oscillations should be claimed as planets \citep{2014Sci...345..440R}. 
@@ -724,6 +721,7 @@ finally work on this problem, and Phil Gregory (UBC) for writing so many
 interesting papers on it. We also thank Tom Loredo (Cornell) and Dan
 Foreman-Mackey (NYU) for interesting conversations and feedback, and Ben
 Montet (Caltech) and Geraint Lewis (Sydney) for helpful discussions.
+The referee also provided excellent suggestions for improving the manuscript.
 
 This work was supported by a Marsden Fast Start
 grant from the Royal Society of
