@@ -5,7 +5,7 @@ t = linspace(0, 10, 10001)
 e = 0.5		# Eccentricity
 P = 5.		# Period
 K = 1.		# Semi-amplitude
-phi = 1.	# Longitude of ascending node
+phi = 0.	# Longitude of ascending node
 wbar = pi/2	# Longitude of periastron
 omega = 2.*pi/P
 
@@ -43,5 +43,5 @@ show()
 
 # EQUIVALENCE
 # kepler.py			Old code (but using cosine alignment)
-# (phi, wbar) = (0, pi/2)		(phase, viewing angle) = (0, 0)
+# (phi, wbar) = (0, pi/2)		(phase, viewing angle) = (0, -pi/2)
 # (phi, wbar) = 

@@ -1,4 +1,4 @@
-
+system("python2 kepler.py")
 
 # LOAD ALL THE FILES
 trajectories = list()
@@ -29,12 +29,9 @@ evaluate = function(arg_to_sin, v=0.75, viewing_angle=0.)
 }
 
 t = seq(0, 10, by=0.01)
-y = evaluate(2*pi*t/5, v=sqrt(1. - 0.5), viewing_angle=-0.8)
+y = evaluate(2*pi*t/5, v=sqrt(1. - 0.5), viewing_angle=-pi/2)
 plot(t, y)
-y = -evaluate(2*pi*t/5 - 0.1, v=sqrt(1. - 0.5), viewing_angle=pi - 0.8)
-lines(t, y)
 
-
-#data = as.matrix(read.csv("kepler.txt", sep=" "))
-#lines(data[,1], data[,2])
+data = as.matrix(read.csv("kepler.txt", sep=" "))
+lines(data[,1], data[,2])
 
