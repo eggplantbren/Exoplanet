@@ -286,8 +286,8 @@ the properties of each planet. For simplicity, we describe each planet by
 five parameters: the orbital period $P_i$, the semi-amplitude (in metres
 per second) of the RV signal $A_i$, the phase of the signal
 $\phi_i$ (defined such that $\psi=0$ gives an RV signal whose maximum is at
-$t=0$),
-the eccentricity $e_i$, and the ``viewing angle'' $\theta_i$.
+$t=0$), the eccentricity $e_i$, and the ``viewing angle'' $\theta_i$
+(also known as the longitude of the line of sight).
 
 We assigned hierarchical priors to some of the planet's parameters. This allows the
 model to capture the idea that knowing the values of some planet's parameters
@@ -303,10 +303,11 @@ The unknown parameters are:
 where $N$ is the number of planets,
 $\boldsymbol{\alpha} = \{\mu_P, \sigma_P, \mu_A\}$ are the
 hyperparameters used to define the prior for the properties of the planets,
-and $\psi_i = \{P_i, A_i, \phi_i, e_i, \theta_i\}$
+and $\psi_i = \{P_i, A_i, e_i, \phi_i, \theta_i\}$
 are the properties of planet $i$.
 The parameter $m_0$ describes a DC offset in the data, and
-$\sigma_{\rm extra}$ and $\nu$ are parameters of the noise distribution.
+$\sigma_{\rm extra}$ and $\nu$ are parameters of the noise distribution
+which are discussed further below.
 
 A standard assumption for the probability distribution of the data given the
 parameters (known as the sampling distribution, which becomes the likelihood
@@ -334,7 +335,7 @@ preferred value, but since these have very heavy tails, the assumption is
 quite fail safe relative to other possible assignments such as normal distributions.
 For example, the prior for $\mu_P$, the typical orbital period,
 is centered around 1 year but could be as low as $\approx e^{-21}$ years or as high
-as $\approx e^{21}$ years, a very wide range. Truncation intervals are
+as $\approx e^{21}$ years, a very generous range. Truncation intervals are
 specified with the $T(a,b)$ notation in Table~\ref{tab:priors}.
 
 An apparently strange choice is the conditional prior for the orbital
@@ -342,7 +343,6 @@ periods, which is a biexponential distribution. A more conventional choice
 would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
 are not available in closed form for the normal distribution.
-
 The prior for the velocity semi-amplitudes $\{A_i\}$ is important and will affect the
 inferred number of planets $N$. For example, if the prior allows for very
 low amplitude planets to exist, the data will not rule this out, and the posterior
