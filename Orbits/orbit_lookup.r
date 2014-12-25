@@ -29,7 +29,7 @@ evaluate = function(arg_to_sin, v=0.75, viewing_angle=0.)
 }
 
 t = seq(0, 10, by=0.01)
-y = evaluate(2*pi*t/5, v=sqrt(1. - 0.5), viewing_angle=-pi/2)
+y = evaluate(2*pi*t/5 + 2.2, v=sqrt(1. - 0.5), viewing_angle=-2.7)
 plot(t, y)
 
 data = as.matrix(read.csv("kepler.txt", sep=" "))
