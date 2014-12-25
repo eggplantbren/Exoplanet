@@ -423,7 +423,8 @@ observer is located at an angle $\theta$ with respect to the $x$-axis, then
 the radial velocity measured will instead be
 $m(t) = \cos(\theta)\dot{x}(t) + \sin(\theta)\dot{y}(t)$.
 Since the our orientation with respect to the orbits is unknown, each planet
-requires a ``viewing angle'' parameter $\theta$.
+requires a ``viewing angle'' parameter $\theta$ also known as the longitude
+of the line of sight \citep{ohta}.
 The eccentricity of the orbit, in terms of $v$, is $e = 1 - v^2$.
 By precomputing a set of orbits before running the MCMC, we are able to
 do $\sim$ 15,000 likelihood evaluations per second per CPU core.
@@ -763,6 +764,9 @@ Neal, R.~M., 2001, Statistics and Computing 11.2, 125-139.
 
 \bibitem[\protect\citeauthoryear{O'Hagan and Forster}{2004}]{ohagan}
 O'Hagan, A., Forster,~J., 2004, Bayesian inference. London: Arnold.
+
+\bibitem[\protect\citeauthoryear{Ohta, Taruya, 
+\& Suto}{2005}]{ohta} Ohta Y., Taruya A., Suto Y., 2005, ApJ, 622, 1118
 
 \bibitem[\protect\citeauthoryear{Quirrenbach, Reffert, 
 \& Bergmann}{2011}]{2011AIPC.1331..102Q} Quirrenbach A., Reffert S., Bergmann C., 2011, AIPC, 1331, 102 
