@@ -285,9 +285,11 @@ To fit a planet model to RV data, we need parameters to describe
 the properties of each planet. For simplicity, we describe each planet by
 five parameters: the orbital period $P_i$, the semi-amplitude (in metres
 per second) of the RV signal $A_i$, the phase of the signal
-$\phi_i$ (defined such that $\psi=0$ gives an RV signal whose maximum is at
+$\phi_i$ (defined such that $\phi=0$ gives an RV signal whose maximum is at
 $t=0$), the eccentricity $e_i$, and the ``viewing angle'' $\theta_i$
-(also known as the longitude of the line of sight).
+(also known as the longitude of the line of sight). We defined our parameters
+such that in the limit of zero eccentricity, the RV signal of a planet
+reduces to $A_i\cos\left(2\pi t/P_i + \phi_i\right)$.
 
 We assigned hierarchical priors to some of the planet's parameters. This allows the
 model to capture the idea that knowing the values of some planet's parameters
