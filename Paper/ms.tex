@@ -121,11 +121,6 @@ On the other hand the approach of
 at {\tt https://github.com/eggplantbren/Exoplanet} under the terms of the
 GNU General Public Licence version 3.
 
-Computing the expected RV signal from
-a planet in an elliptical orbit can be slow. Therefore we use a lookup table
-of precomputed orbits, allowing us to do $\sim 15000$ MCMC steps per second
-per CPU core.
-
 \section{Inference}
 Bayesian inference is the use of probability theory to describe uncertainty
 \citep{sivia, ohagan}. In this framework, we approach data analysis problems by first
@@ -205,10 +200,8 @@ by exploring the joint posterior for $a$ and $b$, and then only looking at the
 generated values of $a$. Nobody would suggest the wasteful alternative
 of using a discrete grid of possible $a$ values and doing an entire Nested
 Sampling run for each, to get the marginal likelihood as a function of $a$.
-Yet when the hypothesis space for $a$ is discrete to begin with, the wasteful
-alternative has somehow become standard practice.
-
-
+When the hypothesis space for $a$ is discrete, MCMC is still possible and there
+is no reason to switch to the wasteful alternative.
 
 \subsection{Trans-dimensional MCMC}
 Trans-dimensional MCMC methods such as birth-death MCMC \citep{birthdeath} or the
