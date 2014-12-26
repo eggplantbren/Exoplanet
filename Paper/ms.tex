@@ -334,7 +334,7 @@ planets. Uniform distributions were used for parameters such as phases, where
 time-translation symmetry seems plausible.
 Truncated Cauchy distributions were used when there is a
 preferred value, but since these have very heavy tails, the assumption is
-quite fail safe relative to other possible assignments such as normal distributions.
+quite fail safe relative to other possible ``informative'' assignments such as normal distributions.
 For example, the prior for $\mu_P$, the typical orbital period,
 is centered around 1 year but could be as low as $\approx e^{-21}$ years or as high
 as $\approx e^{21}$ years, a very generous range. Truncation intervals are
@@ -342,12 +342,14 @@ specified with the $T(a,b)$ notation in Table~\ref{tab:priors}.
 
 An apparently strange choice is the conditional prior for the (logarithms of)
 the orbital
-periods, which is a biexponential distribution given $\mu_P$ and $w_P$.
+periods, which is a biexponential distribution given a location parameter
+$\mu_P$ and scale parameter, or width, $w_P$.
 Rather than assigning independent priors to the log periods, the hierarchical
 model allows for the periods to ``cluster around'' a typical period $\mu_P$ if
 there is evidence for this. On the other hand, independent priors for the
 periods would imply a strong prior commitment to the hypothesis that the
-periods are spread out across the whole prior volume.
+periods are spread out across the whole prior volume (equivalent to assuming
+a fixed large value for $w_P$.
 A more conventional choice for the conditional prior given $\mu_P$ and $w_P$
 would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
