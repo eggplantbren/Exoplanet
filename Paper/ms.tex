@@ -286,7 +286,7 @@ the properties of each planet. For simplicity, we describe each planet by
 five parameters: the orbital period $P_i$, the semi-amplitude (in metres
 per second) of the RV signal $A_i$, the phase of the signal
 $\phi_i$ (defined such that $\phi=0$ gives an RV signal whose maximum is at
-$t=0$), the eccentricity $e_i$, and the ``viewing angle'' $\theta_i$
+$t=0$), the eccentricity $e_i$, and the ``viewing angle'' $\omega_i$
 (also known as the longitude of the line of sight). We defined our parameters
 such that in the limit of zero eccentricity, the RV signal of a planet
 reduces to $A_i\cos\left(2\pi t/P_i + \phi_i\right)$.
@@ -305,7 +305,7 @@ The unknown parameters are:
 where $N$ is the number of planets,
 $\boldsymbol{\alpha} = \{\mu_P, \sigma_P, \mu_A\}$ are the
 hyperparameters used to define the prior for the properties of the planets,
-and $\psi_i = \{P_i, A_i, e_i, \phi_i, \theta_i\}$
+and $\psi_i = \{P_i, A_i, e_i, \phi_i, \omega_i\}$
 are the properties of planet $i$.
 The parameter $m_0$ describes a DC offset in the data, and
 $\sigma_{\rm extra}$ and $\nu$ are parameters of the noise distribution
@@ -371,7 +371,7 @@ $P_i$		&	Orbital period	&	$\log(P_i) \sim $ Biexponential($\log(\mu_P), w_P$)\\
 $A_i$		&	Amplitude of signal	& Exponential$(\textnormal{mean}=\mu_A)$\\
 $\phi_i$	&	Phase of signal	&	Uniform($0, 2\pi$)\\
 $e_i$		&	Eccentricity of orbit	&	Beta$(1, 3.1)T(0, 0.8)$\\
-$\theta_i$	&	Viewing angle	&	Uniform$(0, 2\pi)$\\
+$\omega_i$	&	Viewing angle	&	Uniform$(0, 2\pi)$\\
 \hline
 {\bf Other}\\
 $m_0$		&	Constant DC offset	&	Uniform$(m_{0, \rm min}, m_{0, \rm max})$\\
@@ -423,11 +423,11 @@ signal $y(t)$ due to a single planet.
 Because of the initial conditions, the simulated orbits were all horizontally
 aligned. If the observer is located on the $x$-axis a large distance
 from the origin, they will measure $m(t) = \dot{x}(t)$. However, if the
-observer is located at an angle $\theta$ with respect to the $x$-axis, then
+observer is located at an angle $\omega$ with respect to the $x$-axis, then
 the radial velocity measured will instead be
-$m(t) = \cos(\theta)\dot{x}(t) + \sin(\theta)\dot{y}(t)$.
+$m(t) = \cos(\omega)\dot{x}(t) + \sin(\omega)\dot{y}(t)$.
 Since the our orientation with respect to the orbits is unknown, each planet
-requires a ``viewing angle'' parameter $\theta$ also known as the longitude
+requires a ``viewing angle'' parameter $\omega$ also known as the longitude
 of the line of sight \citep{ohta}.
 The eccentricity of the orbit, in terms of $v$, is $e = 1 - v^2$.
 By precomputing a set of orbits before running the MCMC, we are able to
