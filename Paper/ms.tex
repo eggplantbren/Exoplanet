@@ -342,10 +342,17 @@ specified with the $T(a,b)$ notation in Table~\ref{tab:priors}.
 
 An apparently strange choice is the conditional prior for the (logarithms of)
 the orbital
-periods, which is a biexponential distribution. A more conventional choice
+periods, which is a biexponential distribution given $\mu_P$ and $w_P$.
+Rather than assigning independent priors to the log periods, the hierarchical
+model allows for the periods to ``cluster around'' a typical period $\mu_P$ if
+there is evidence for this. On the other hand, independent priors for the
+periods would imply a strong prior commitment to the hypothesis that the
+periods are spread out across the whole prior volume.
+A more conventional choice for the conditional prior given $\mu_P$ and $w_P$
 would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
 are not available in closed form for the normal distribution.
+
 The prior for the velocity semi-amplitudes $\{A_i\}$ is important and will affect the
 inferred number of planets $N$. For example, if the prior allows for very
 low amplitude planets to exist, the data will not rule this out, and the posterior
