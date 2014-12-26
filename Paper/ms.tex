@@ -340,7 +340,8 @@ is centered around 1 year but could be as low as $\approx e^{-21}$ years or as h
 as $\approx e^{21}$ years, a very generous range. Truncation intervals are
 specified with the $T(a,b)$ notation in Table~\ref{tab:priors}.
 
-An apparently strange choice is the conditional prior for the orbital
+An apparently strange choice is the conditional prior for the (logarithms of)
+the orbital
 periods, which is a biexponential distribution. A more conventional choice
 would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
@@ -353,7 +354,10 @@ will influence how many of these low amplitude planets will exist: if we
 believe there are many, and the data are uninformative about low amplitude
 planets, then the posterior distribution for $N$ will also indicate that there
 may be many low amplitude planets. However, their other properties, such as
-their orbital periods, will not be well determined.
+their orbital periods, will not be well determined. The Beta prior for
+eccentricity was suggested by Gregory (priv. comm) and is an approximation
+to the inferred frequency distribution of eccentricities in the population
+\citep{kipping}.
 
 \begin{table*}
 \begin{tabular}{|l|l|l|}
@@ -762,6 +766,9 @@ Gregory P.~C., 2011, MNRAS, 410, 94
 
 \bibitem[\protect\citeauthoryear{Hou, Goodman, 
 \& Hogg}{2014}]{fengji} Hou F., Goodman J., Hogg D.~W., 2014, arXiv, arXiv:1401.6128 
+
+\bibitem[\protect\citeauthoryear{Kipping}{2013}]{kipping} 
+Kipping D.~M., 2013, MNRAS, 434, L51 
 
 \bibitem[\protect\citeauthoryear{Neal}{2001}]{neal}
 Neal, R.~M., 2001, Statistics and Computing 11.2, 125-139.
