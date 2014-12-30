@@ -46,13 +46,12 @@ under a given set of simplifying assumptions (e.g. no stellar activity) can
 be difficult. It is common for the posterior distribution for the
 planet parameters, such as orbital periods,
 to be multimodal and to have other awkward features. In
-addition, when $N$ is unknown, the marginal likelihood (or evidence), as a
-function of $N$, is required. Rather than doing separate runs with different
-values of $N$, we propose an alternative
+addition, when $N$ is unknown, the marginal likelihood (or evidence) as a
+function of $N$ is required. Rather than doing separate runs with different
+trial values of $N$, we propose an alternative
 approach using a trans-dimensional Markov Chain Monte Carlo method within
 Nested Sampling. The posterior distribution for $N$ can be obtained with a
-single run, which takes $\sim$ 15 minutes on a typical modern desktop computer.
-We apply the method to $\nu$ Oph and Gliese 581, finding moderate evidence
+single run. We apply the method to $\nu$ Oph and Gliese 581, finding moderate evidence
 for additional signals in
 $\nu$ Oph with periods of 36.11 $\pm$ 0.034 days,
 75.58 $\pm$ 0.80 days, and 1709 $\pm$ 183 days;
@@ -82,7 +81,7 @@ and gravitational microlensing
 
 The problem of inferring the properties of an
 exoplanetary system from observational data can be challenging.
-In the particular case of radial velocity data,
+In the case of radial velocity data,
 the expected signal due to an exoplanet is periodic, and the goal is to
 infer the number of planets in the system, as well as their properties such
 as orbital periods and eccentricities. Many
@@ -93,7 +92,7 @@ and ii) those based on model fitting in the Bayesian inference framework,
 to describe the uncertainties probabilistically
 \citep[e.g.][]{2011MNRAS.410...94G, 2014MNRAS.437.3540F,
 2011A&A...528L...5T, fengji}. Bayesian model fitting via Markov Chain Monte
-Carlo (MCMC) tends to be very computationally intensive, especially if we
+Carlo (MCMC) tends to be computationally intensive, especially if we
 want to calculate the posterior distribution for $N$, the number of planets.
 
 It is now well known that RV datasets can contain periodic signals
@@ -109,7 +108,8 @@ We introduce a trans-dimensional birth-death MCMC approach
 \citep{birthdeath} to inferring $N$.
 When $N$ is treated as just another model parameter, we can obtain its
 posterior distribution in a single run.
-The exploration is done using Diffusive Nested Sampling
+In addition, rather than trying to sample the posterior distribution, 
+we use Diffusive Nested Sampling
 \citep[DNS][]{dnest} which replaces the posterior distribution with an alternative
 {\it mixture of constrained priors}, allowing mixing between separated modes.
 As a result, we are able to sample the posterior distribution for $N$, and
@@ -119,7 +119,7 @@ On the other hand the approach of
 \citet{2011MNRAS.410...94G} takes approximately 30 minutes per planet
 (Gregory, priv. comm.). A C++ implementation of our method is available online
 at {\tt https://github.com/eggplantbren/Exoplanet} under the terms of the
-GNU General Public Licence version 3.
+GNU General Public Licence.
 
 \section{Inference}
 Bayesian inference is the use of probability theory to describe uncertainty
@@ -143,8 +143,9 @@ p(\theta | D) &=&
 \frac{p(\theta)p(D | \theta)}
 {p(D)}
 \end{eqnarray}
-where $p(D | \theta)$ is called the likelihood, once the actual dataset
-is substituted in. Note that some authors do not distinguish between a
+where $p(D | \theta)$ as a function of $\theta$ is called the likelihood,
+once the actual dataset has been substituted in. Note that some authors do not
+distinguish between a
 sampling distribution and a likelihood. Throughout this paper we use the term
 sampling distribution for $p(D|\theta)$ if we are discussing a probability
 distribution (actually a family of them, indexed by $\theta$)
@@ -181,7 +182,8 @@ p(N | D) &=& \frac{p(N)p(D | N)}{\sum_N p(N)p(D | N)}.
 Popular
 methods for calculating the marginal likelihood are Nested Sampling
 \citep{skilling} and ideas related to thermodynamic integration
-\citep[e.g.][]{neal}.
+\citep[e.g.][]{neal}. Relationships between these methods are discussed by
+\citet{cameron} and~\citet{scott}.
 
 This traditional approach can be very time consuming.
 Methods for calculating the marginal likelihood are
@@ -210,7 +212,9 @@ $N$ as just another model parameter. At fixed $N$, standard techniques such
 as the Metropolis algorithm can be used to explore the posterior distribution.
 Additional moves that propose to change the value of $N$ are also defined. The
 simplest of these are birth-death moves. More complicated moves, such as
-split-and-merge \citep[e.g.][]{umstatter} are possible but usually not necessary.
+split-and-merge are possible but not always necessary.
+Trans-dimensional MCMC is a natural tool for a wide range of astronomical
+data analysis problems \citep[e.g.][]{umstatter, walmswell, starfield}.
 
 In the exoplanet context, a birth move
 proposes to add one more planet to the model. The new planet's properties
@@ -264,11 +268,13 @@ when $\beta=1$ (i.e. the posterior), for some values of the inverse temperature
 $\beta$ the slab and the spike will both be important. At
 these temperatures the MCMC will fail to mix (it will incorrectly spend all its
 time in either the slab or the spike, rather than mixing between the two)
-and will give a misleading estimate of the average log likelihood at that temperature.
+and will give a misleading estimate of the average log likelihood at that temperature
+and therefore an incorrect marginal likelihood estimate.
 
-In data analysis problems, phase transitions can exist when the data contains
+Phase transitions are well known in statistical mechanics, but can also occur
+in Bayesian data analysis. Typically this occors when the data contains
 a ``big'' effect which provides a lot of information about some parameters, and
-a ``small'' subtle effect.
+a ``small'' subtle effect as well.
 Nested Sampling, and variants such as DNS, are not affected
 by phase transitions because the exploration only makes use of likelihood
 {\it rankings}, rather than likelihood values themselves, and are therefore
@@ -292,19 +298,13 @@ $t=0$), the eccentricity $e_i$, and the ``viewing angle'' $\omega_i$
 such that in the limit of zero eccentricity, the RV signal of a planet
 reduces to $A_i\cos\left(2\pi t/P_i + \phi_i\right)$.
 
-We assigned hierarchical priors to some of the planet's parameters. This allows the
-model to capture the idea that knowing the values of some planet's parameters
-provides some information about the parameters of another planet. Not using
-hierarchical priors usually implies a strong prior commitment to the hypothesis
-that the properties of the planets are spread out across the whole domain of
-possible values, which is not necessarily the case.
-
 The unknown parameters are:
 \begin{eqnarray}
-\left\{N, \boldsymbol{\alpha}, \{\boldsymbol{\psi}\}_{i=1}^N, m_0, \sigma_{\rm extra}, \nu\right\}
+\left\{N, \boldsymbol{\alpha}, \{\boldsymbol{\psi}\}_{i=1}^N, m_0,
+\sigma_{\rm extra}, \nu\right\}
 \end{eqnarray}
 where $N$ is the number of planets,
-$\boldsymbol{\alpha} = \{\mu_P, \sigma_P, \mu_A\}$ are the
+$\boldsymbol{\alpha} = \{\mu_P, \sigma_P, \mu_A\}$ are hyperparameters
 hyperparameters used to define the prior for the properties of the planets,
 and $\psi_i = \{P_i, A_i, e_i, \phi_i, \omega_i\}$
 are the properties of planet $i$.
@@ -329,7 +329,16 @@ distribution has much heavier tails. For instance, when $\nu=1$ the student-$t$
 distribution becomes a Cauchy distribution.
 
 All of the model assumptions are specified in detail in
-Table~\ref{tab:priors}. Most of these priors were chosen to represent vague
+Table~\ref{tab:priors}. We assigned hierarchical priors to some of the planet's
+parameters (i.e. the prior for the planets' parameters is defined conditional
+on some hyperparameters). This allows the
+model to capture the idea that knowing the values of some planet's parameters
+provides some information about the parameters of another planet. Not using
+hierarchical priors usually implies a strong prior commitment to the hypothesis
+that the properties of the planets are spread out across the whole domain of
+possible values, which is not necessarily the case.
+
+Most of our priors were chosen to represent vague
 prior knowledge, rather than the judgement of an informed expert on extrasolar
 planets. Uniform distributions were used for parameters such as phases, where
 time-translation symmetry seems plausible. For some parameters we assigned the
@@ -347,7 +356,10 @@ expresses a slight preference for $\mu_P$ being of order one year.
 An apparently strange choice is the conditional prior for the (logarithms of)
 the orbital
 periods, which is a biexponential distribution given a location parameter
-$\mu_P$ and scale parameter, or width, $w_P$.
+$\mu_P$ and a scale parameter $w_P$ which determines the width of the
+distribution\footnote{A biexponential distribution with location parameter
+$\mu$ and scale parameter $w$ has probability density function
+$p(x|\mu, w) = \frac{1}{2w} \exp\left(-\frac{|x - \mu|}{w}\right)$.}.
 Rather than assigning independent priors to the log periods, the hierarchical
 model allows for the periods to ``cluster around'' a typical period $\mu_P$ if
 there is evidence for this. On the other hand, independent priors for the
@@ -760,8 +772,15 @@ Brewer B.~J., Bedding T.~R., Kjeldsen H., Stello D., 2007, ApJ, 654, 551
 \& Cs{\'a}nyi}{2011}]{dnest} Brewer B.~J., P{\'a}rtay L.~B., Cs{\'a}nyi G., 2011,
 Statistics and Computing, 21, 4, 649-656. arXiv:0912.2380
 
+\bibitem[\protect\citeauthoryear{Brewer, Foreman-Mackey, 
+\& Hogg}{2013}]{starfield} Brewer B.~J., Foreman-Mackey D., Hogg D.~W., 2013, AJ, 146, 7
+
 \bibitem[\protect\citeauthoryear{Brewer}{2014}]{rjobject} Brewer, B. J., 2014,
 submitted. ArXiv: 1411.3921
+
+\bibitem[\protect\citeauthoryear{Cameron 
+\& Pettitt}{2014}]{cameron} Cameron E., Pettitt A., 2014,
+Statistical Science, Vol. 29, No. 3, 397-419
 
 \bibitem[\protect\citeauthoryear{Feroz 
 \& Hobson}{2014}]{2014MNRAS.437.3540F} Feroz F., Hobson M.~P., 2014, MNRAS, 437, 3540 
@@ -793,6 +812,9 @@ O'Hagan, A., Forster,~J., 2004, Bayesian inference. London: Arnold.
 \bibitem[\protect\citeauthoryear{Ohta, Taruya, 
 \& Suto}{2005}]{ohta} Ohta Y., Taruya A., Suto Y., 2005, ApJ, 622, 1118
 
+\bibitem[\protect\citeauthoryear{Polson 
+\& Scott}{2014}]{scott} Polson N.~G., Scott J.~G., 2014, arXiv, arXiv:1409.3601
+
 \bibitem[\protect\citeauthoryear{Quirrenbach, Reffert, 
 \& Bergmann}{2011}]{2011AIPC.1331..102Q} Quirrenbach A., Reffert S., Bergmann C., 2011, AIPC, 1331, 102 
 
@@ -819,6 +841,10 @@ Analysis 4, pp. 833-860
 al.}{2005}]{umstatter} Umst{\"a}tter R., Christensen N., Hendry 
 M., Meyer R., Simha V., Veitch J., Vigeland S., Woan G., 2005, PhRvD, 72, 
 022001 
+
+\bibitem[\protect\citeauthoryear{Walmswell et 
+al.}{2013}]{walmswell} Walmswell J.~J., Eldridge J.~J., Brewer 
+B.~J., Tout C.~A., 2013, MNRAS, 435, 2171
 
 \bibitem[\protect\citeauthoryear{Yee et al.}{2014}]{2014ApJ...790...14Y} 
 Yee J.~C., et al., 2014, ApJ, 790, 14 
