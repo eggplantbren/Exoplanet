@@ -331,14 +331,17 @@ All of the model assumptions are specified in detail in
 Table~\ref{tab:priors}. Most of these priors were chosen to represent vague
 prior knowledge, rather than the judgement of an informed expert on extrasolar
 planets. Uniform distributions were used for parameters such as phases, where
-time-translation symmetry seems plausible.
+time-translation symmetry seems plausible. For some parameters we assigned the
+distribution in terms of the log of the parameter, rather than the parameter
+itself, when the parameter is positive and uncertain by orders of magnitude.
 Truncated Cauchy distributions were used when there is a
 preferred value, but since these have very heavy tails, the assumption is
 quite fail safe relative to other possible ``informative'' assignments such as normal distributions.
 For example, the prior for $\mu_P$, the typical orbital period,
 is centered around 1 year but could be as low as $\approx e^{-21}$ years or as high
-as $\approx e^{21}$ years, a very generous range. Truncation intervals are
-specified with the $T(a,b)$ notation in Table~\ref{tab:priors}.
+as $\approx e^{21}$ years, a very generous range. A uniform distribution for
+$\log(\mu_P)$ would have been more conventional, whereas the Cauchy distribution
+expresses a slight preference for $\mu_P$ being of order one year.
 
 An apparently strange choice is the conditional prior for the (logarithms of)
 the orbital
@@ -349,7 +352,7 @@ model allows for the periods to ``cluster around'' a typical period $\mu_P$ if
 there is evidence for this. On the other hand, independent priors for the
 periods would imply a strong prior commitment to the hypothesis that the
 periods are spread out across the whole prior volume (equivalent to assuming
-a fixed large value for $w_P$.
+a fixed large value for $w_P$).
 A more conventional choice for the conditional prior given $\mu_P$ and $w_P$
 would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
@@ -403,7 +406,8 @@ distributions were used so this information could be taken into account
 in a non-dogmatic way. Time units are in days and amplitude units are
 in metres per second. The maximum number of planets, $N_{\rm max}$, was set
 to 10. The prior limits for $m_0$ were set to the minimum and maximum value
-in the dataset, which is not strictly a valid strategy.\label{tab:priors}}
+in the dataset, which is not strictly a valid strategy. The 
+Truncation intervals are specified with the $T(a,b)$ notation.\label{tab:priors}}
 \end{table*}
 
 \section{Orbit Look-Up Table}\label{sec:orbits}
