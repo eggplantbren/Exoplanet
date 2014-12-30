@@ -271,7 +271,8 @@ a ``big'' effect which provides a lot of information about some parameters, and
 a ``small'' subtle effect.
 Nested Sampling, and variants such as DNS, are not affected
 by phase transitions because the exploration only makes use of likelihood
-{\it rankings}, rather than likelihood values themselves.
+{\it rankings}, rather than likelihood values themselves, and are therefore
+invariant under monotonic transformations of the likelihood function.
 Part of their output, the relationship between the
 likelihood $L$ and the enclosed prior mass
 $X(L) = \int \pi(\theta) \mathds{1}\left[L(\theta) > L\right]\, d^n\theta$
