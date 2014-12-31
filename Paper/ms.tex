@@ -733,9 +733,10 @@ defines trans-dimensional birth and death moves, and does the sampling
 with respect to a Nested Sampling target distribution, rather than directly
 sampling the posterior. This approach allows us to compute the results in a
 single run, which provides posterior samples and an estimate of the marginal
-likelihood. By embedding the MCMC in a Nested Sampling algorithm, instead of
+likelihood. By using Diffusive Nested Sampling, instead of
 directly trying to sample the posterior distribution, we can overcome difficult
-features in the problem, such as phase transitions.
+features in the problem, such as phase transitions and (to some extent)
+multiple modes.
 
 We applied the code to two well-studied RV datasets, $\nu$ Oph and Gliese 581.
 In $\nu$ Oph, we found some evidence for additional signals with low amplitude,
