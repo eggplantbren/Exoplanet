@@ -370,9 +370,14 @@ A more conventional choice for the conditional prior given $\mu_P$ and $w_P$
 would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
 are not available in closed form for the normal distribution.
+Our prior for $w_P$, which controls the diversity of the log-periods, was
+uniform between 0.1 and 3, since it is unlikely that many planets have
+extremely similar or extremely different (over several orders of magnitude)
+orbital periods.
 
 For the velocity semi-amplitudes $\{A_i\}$, we chose an exponential distribution
-given the hyperparameter $\mu_A$. Our prior for $\mu_A$ spans many orders of
+given the hyperparameter $\mu_A$ which sets the mean of the exponential distribution.
+Our prior for $\mu_A$ spans many orders of
 magnitude but expresses a slight preference for $\mu_A$ being of order unity,
 using a Cauchy distribution. The prior for the semi-amplitudes
 will influence how many of these low amplitude planets will be inferred: if we
@@ -391,25 +396,25 @@ Quantity	&	Meaning		& Prior\\
 \hline
 {\bf Hyperparameters}	&	\\
 $N$		& Number of planets	& Uniform$(\{0, 1, ..., N_{\rm max}\})$\\
-$\mu_P$		&	Median orbital period	& $\log(\mu_P) \sim$ Cauchy$(5.9, 1)T(-15.3, 27.1)$\\
-$w_P$		&	Diversity of orbital periods & $w_P \sim$ Uniform$(0.1, 3)$\\
-$\mu_A$		&	Mean amplitude	& $\log(\mu_A) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
+$\mu_P$		&	Median orbital period (years)	& $\log(\mu_P) \sim$ Cauchy$({\rm location}=5.9, {\rm scale}=1)T(-15.3, 27.1)$\\
+$w_P$		&	Diversity of orbital periods & $w_P \sim$ Uniform$({\rm min}=0.1, {\rm max}=3)$\\
+$\mu_A$		&	Mean amplitude (metres per second)	& $\log(\mu_A) \sim$ Cauchy$({\rm location}=0, {\rm scale}=1)T(-21.2, 21.2)$\\
 \hline
 {\bf Planet Parameters}\\
-$P_i$		&	Orbital period	&	$\log(P_i) \sim $ Biexponential($\log(\mu_P), w_P$)\\
-$A_i$		&	Semi-mplitude of signal	& Exponential$(\textnormal{mean}=\mu_A)$\\
-$\phi_i$	&	Phase of signal	&	Uniform($0, 2\pi$)\\
-$e_i$		&	Eccentricity of orbit	&	Beta$(1, 3.1)T(0, 0.8)$\\
-$\omega_i$	&	Viewing angle	&	Uniform$(0, 2\pi)$\\
+$P_i$		&	Orbital period	&	$\log(P_i) \sim $ Biexponential$({\rm location}=\log(\mu_P), {\rm scale}=w_P$)\\
+$A_i$		&	Semi-amplitude of signal	& Exponential$(\textnormal{mean}=\mu_A)$\\
+$\phi_i$	&	Phase of signal	&	Uniform($\textnormal{min}=0, \textnormal{max}=2\pi$)\\
+$e_i$		&	Eccentricity of orbit	&	Beta$(\alpha=1, \beta=3.1)T(0, 0.8)$\\
+$\omega_i$	&	Viewing angle	&	Uniform$({\rm min}=0, {\rm max}=2\pi)$\\
 \hline
 {\bf Other}\\
-$m_0$		&	Constant DC offset	&	Uniform$(m_{0, \rm min}, m_{0, \rm max})$\\
-$\sigma_{\rm extra}$	& ``Extra noise'' parameter	& $\log(\sigma) \sim$ Cauchy$(0, 1)T(-21.2, 21.2)$\\
-$\nu$		& Shape parameter for $t$-distribution for noise & $\log(\nu) \sim$ Uniform$(\log(0.01), \log(1000))$\\
+$m_0$		&	Constant DC offset	&	Uniform$({\rm min}=m_{0, \rm min}, {\rm max}=m_{0, \rm max})$\\
+$\sigma_{\rm extra}$	& ``Extra noise'' parameter	& $\log(\sigma) \sim$ Cauchy$({\rm location}=0, {\rm scale}=1)T(-21.2, 21.2)$\\
+$\nu$		& Shape parameter for $t$-distribution for noise & $\log(\nu) \sim$ Uniform$({\rm min}=\log(0.01), {\rm max}=\log(1000))$\\
 \hline
 {\bf Data}\\
 $Y_i$		& Radial velocity measurements	&
-		Student-$t\left(m(t_i), \sqrt{\sigma_i^2 + \sigma_{\rm extra}^2}, \nu\right)$
+		Student-$t\left({\rm location}=m(t_i), {\rm scale}=\sqrt{\sigma_i^2 + \sigma_{\rm extra}^2}, {\rm shape}=\nu\right)$
 \end{tabular}
 \caption{All of the prior distributions in our Bayesian model.
 The priors for the planet parameters are defined conditional on the values
@@ -419,8 +424,9 @@ distributions were used so this information could be taken into account
 in a non-dogmatic way. Time units are in days and amplitude units are
 in metres per second. The maximum number of planets, $N_{\rm max}$, was set
 to 10. The prior limits for $m_0$ were set to the minimum and maximum value
-in the dataset, which is not strictly a valid strategy. The 
-Truncation intervals are specified with the $T(a,b)$ notation.\label{tab:priors}}
+in the dataset, which is not strictly a valid strategy. Some of the distributions
+were truncated for numerical reasons, the truncated intervals are specified with the
+$T(a,b)$ notation.\label{tab:priors}}
 \end{table*}
 
 \section{Orbit Look-Up Table}\label{sec:orbits}
