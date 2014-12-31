@@ -371,11 +371,11 @@ would have been a normal distribution. However, the \citet{rjobject} software
 needs to know the corresponding cumulative distribution and its inverse, which
 are not available in closed form for the normal distribution.
 
-The prior for the velocity semi-amplitudes $\{A_i\}$ is important and will affect the
-inferred number of planets $N$. For example, if the prior allows for very
-low amplitude planets to exist, the data will not rule this out, and the posterior
-for $N$ will include the possibility of large numbers of planets. The prior
-will influence how many of these low amplitude planets will exist: if we
+For the velocity semi-amplitudes $\{A_i\}$, we chose an exponential distribution
+given the hyperparameter $\mu_A$. Our prior for $\mu_A$ spans many orders of
+magnitude but expresses a slight preference for $\mu_A$ being of order unity,
+using a Cauchy distribution. The prior for the semi-amplitudes
+will influence how many of these low amplitude planets will be inferred: if we
 believe there are many, and the data are uninformative about low amplitude
 planets, then the posterior distribution for $N$ will also indicate that there
 may be many low amplitude planets. However, their other properties, such as
@@ -485,12 +485,20 @@ much smaller planets which contribute small additional effects to the data.
 \label{fig:fake_data}}
 \end{figure}
 
-We ran the MCMC on the simulated dataset to obtain samples from the
+We ran our algorithm on the simulated dataset to obtain samples from the
 posterior distribution. We obtained 520 posterior samples.
 The posterior distribution for $N$, the number of
 planets, is shown in Figure~\ref{fig:fake_data_N}. The true number of planets,
 7, is not the most probable value, but it does have substantial probability.
 The posterior distribution suggests that $N$ could be anywhere from 6 to 10.
+
+\begin{figure}
+\includegraphics[scale=0.4]{Figures/fake_data_N.eps}
+\caption{The posterior distribution for the number of planets $N$ given the
+simulated dataset. The true number of planets was 7.
+\label{fig:fake_data_N}}
+\end{figure}
+
 The posterior distribution for the periods $\{P_i\}_{i=1}^N$ is shown in
 Figure~\ref{fig:fake_data_periods}. Because of the label switching degeneracy,
 the posterior distribution for each period is identical, so we pooled the
@@ -501,6 +509,12 @@ of the mixture distribution
 \begin{eqnarray}
 f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
 \end{eqnarray}
+If a certain period is accurately measured (i.e. its probability of existence
+is close to 1 and the posterior distribution for its period is very narrow)
+then it will appear in Figure 3 with a height of $\sim 520$. If the uncertainty
+in the period is larger than the histogram bin width then the peak will be
+spread over several bins.
+
 The posterior distribution for the periods, shown in
 Figure~\ref{fig:fake_data_periods}, shows that six of the true periods were
 recovered, with probability close to 1. One period (with $\log_{10}P_i \approx 1.15$)
@@ -509,13 +523,6 @@ amplitude. We note that the posterior probability near this period should not be
 precisely zero. There is also some
 evidence for periods which did not actually exist, however the posterior
 probabilities for these peaks are not close to 1.
-
-\begin{figure}
-\includegraphics[scale=0.4]{Figures/fake_data_N.eps}
-\caption{The posterior distribution for the number of planets $N$ given the
-simulated dataset. The true number of planets was 7.
-\label{fig:fake_data_N}}
-\end{figure}
 
 \begin{figure}
 \includegraphics[scale=0.4]{Figures/fake_data_periods.eps}
@@ -539,7 +546,6 @@ noise level.
 simulated dataset. The true values are plotted as circles.
 \label{fig:fake_data_posterior}}
 \end{figure}
-
 
 \section{Application to $\nu$ Oph}\label{sec:nu_oph}
 The $\nu$ Oph system is generally accepted to have two confirmed planets
@@ -597,7 +603,7 @@ is about twice the reported errorbars on the measurements.\label{fig:nuoph}}
 \includegraphics[scale=0.45]{Figures/logl0.eps}
 \caption{Log likelihood vs. enclosed prior mass (a standard output of Nested
 Sampling algorithms) for the $\nu$ Oph analysis.
-There are several phase transitions (concave-up regions) present. The one at
+There are several phase transitions (concave-up regions) present. The small one at
 $\log(X) \approx -70$ separates models which contain additional signals from
 models that do not. Without using Nested Sampling it would be more difficult
 to mix between these two situations and calculate the posterior probability
@@ -627,8 +633,8 @@ An intuitive interpretation of this quantity is the number of times the
 prior distribution had to be compressed by a factor of $e$ (if the logarithm
 in the formula is a natural logarithm) to get to the posterior distribution.
 For the $\nu$ Oph data the information was $\mathcal{H} \approx 76.6$ nats
-(natural units) or 111 bits, so the posterior is roughly $e^{-76.6}$ times the
-volume of the prior.
+(natural units) or 111 bits, so the posterior occupies about $e^{-76.6}$ times
+the prior volume.
 
 \section{Application to Gliese 581}
 The red dwarf star Gliese 581 is thought to host several planets. Exactly
@@ -652,7 +658,14 @@ $N_{\rm max}$ from 10 to 15 for this system.
 
 The posterior distribution for $N$ is shown in Figure~\ref{fig:gliese581_N},
 and shows strong evidence for at least eight periods
-($P(N \leq 7 | D) = 0.012$).
+($P(N \leq 7 | D) = 0.012$). Some authors \citep[e.g.][]{2011A&A...528L...5T}
+recommend that the probability of $N$ planets should be $\geq$ 150 times
+greater than the probability of $N-1$ planets existing before making a
+claim that $N$ planets have been definitively detected. Such a decision rule
+is presumably equivalent to a utility function where false positives are much
+worse than false negatives. We note that applying this rule to our results, we
+would assert $N=6$, even though this has a tiny probability.
+
 It is now recognised that
 there are many possible sources for oscillations in a data set and not all
 such oscillations should be claimed as planets \citep{2014Sci...345..440R}. 
@@ -660,11 +673,10 @@ Our model cannot distinguish between oscillations due to planets and
 oscillations due to stellar activity: any oscillations found in the dataset
 will be described as ``planets'' by the model. However it is interesting that
 we find many more signals in the data than previous authors.
-
 By inspecting the posterior distribution for the periods
 (Figure~\ref{fig:gliese581_periods}), we see that only four of the periods
 are well determined, corresponding to the known periods of Gliese 581 b, c, d,
-and e. The other ``periods'' are very uncertain. It is possible that a
+and e. The other ``periods'' are very uncertain. It is quite likely that a
 non-sinusoidal signal due to stellar activity is being modelled as several
 periods \citep{astero}, and if the model were extended to include a ``stochastic''
 oscillation \citep{gaussproc}, the number of periods detected may be reduced
@@ -691,7 +703,6 @@ system. The solid lines are Gliese 581 b and c, the dashed lines are
 \caption{A portion of the Gliese 581 data and an example model fit.
 \label{fig:gliese581}}
 \end{figure}
-
 
 The marginal likelihood was $\log(\mathcal{Z}) \approx -616.3$ and the
 information was $\mathcal{H} \approx 130.4$ nats. This compares favourably
