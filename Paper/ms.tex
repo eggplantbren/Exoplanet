@@ -95,14 +95,17 @@ to describe the uncertainties probabilistically
 Carlo (MCMC) tends to be computationally intensive, especially if we
 want to calculate the posterior distribution for $N$, the number of planets.
 
-It is now well known that RV datasets can contain periodic signals
-resulting from stellar activity rather than planets \citep{2014Sci...345..440R}.
+It is well known that RV datasets can contain periodic signals
+resulting from stellar activity rather than planets,
+which can affect the conclusions we draw about
+exoplanet systems \citep[e.g.][]{2001A&A...379..279Q, 2007A&A...474..293B, 2014Sci...345..440R}.
 Therefore, it is important to develop models which attempt to distinguish
 stellar activity signals from Keplerian planet signals based on the shape of
 the oscillations and/or additional data constraining the periods of any
 stellar activity signals. We do not address this important challenge in the
 present paper. Rather, we consider the problem of inferring the number $N$ of
-Keplerian signals in an RV dataset in a computationally efficient way.
+Keplerian signals in an RV dataset in a computationally efficient way, under
+the simplifying assumption that only Keplerian signals are present in the data.
 
 We introduce a trans-dimensional birth-death MCMC approach
 \citep{birthdeath} to inferring $N$.
@@ -782,6 +785,9 @@ Batalha N.~M., 2014, PNAS, 111, 12647
 \bibitem[\protect\citeauthoryear{Bennett et 
 al.}{2014}]{2014ApJ...785..155B} Bennett D.~P., et al., 2014, ApJ, 785, 155 
 
+\bibitem[Bonfils et 
+al.(2007)]{2007A&A...474..293B} Bonfils, X., Mayor, M., Delfosse, X., et al.\ 2007, A\&A, 474, 293 
+
 \bibitem[\protect\citeauthoryear{Brewer 
 \& Stello}{2009}]{gaussproc} Brewer B.~J., Stello D., 2009, MNRAS, 395, 2226 
 
@@ -796,7 +802,7 @@ Statistics and Computing, 21, 4, 649-656. arXiv:0912.2380
 \& Hogg}{2013}]{starfield} Brewer B.~J., Foreman-Mackey D., Hogg D.~W., 2013, AJ, 146, 7
 
 \bibitem[\protect\citeauthoryear{Brewer}{2014}]{rjobject} Brewer, B. J., 2014,
-submitted. ArXiv: 1411.3921
+ArXiv: 1411.3921
 
 \bibitem[\protect\citeauthoryear{Cameron 
 \& Pettitt}{2014}]{cameron} Cameron E., Pettitt A., 2014,
@@ -834,6 +840,9 @@ O'Hagan, A., Forster,~J., 2004, Bayesian inference. London: Arnold.
 
 \bibitem[\protect\citeauthoryear{Polson 
 \& Scott}{2014}]{scott} Polson N.~G., Scott J.~G., 2014, arXiv, arXiv:1409.3601
+
+\bibitem[Queloz et 
+al.(2001)]{2001A&A...379..279Q} Queloz, D., Henry, G.~W., Sivan, J.~P., et al.\ 2001, A\&A, 379, 279 
 
 \bibitem[\protect\citeauthoryear{Quirrenbach, Reffert, 
 \& Bergmann}{2011}]{2011AIPC.1331..102Q} Quirrenbach A., Reffert S., Bergmann C., 2011, AIPC, 1331, 102 
