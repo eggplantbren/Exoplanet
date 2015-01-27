@@ -521,8 +521,8 @@ of the mixture distribution
 \begin{eqnarray}
 f(S) &=& \sum_{N=0}^{10} p(N | D)\sum_{i=1}^N p(S_i | N, D).
 \end{eqnarray}
-If a certain period is accurately measured (i.e. its probability of existence
-is close to 1 and the posterior distribution for its period is very narrow)
+If a certain period is accurately measured (i.e. it appears in close to 100 of
+the posterior samples and the distribution for its period is very narrow)
 then it will appear in Figure 3 with a height of $\sim 520$. If the uncertainty
 in the period is larger than the histogram bin width then the peak will be
 spread over several bins.
@@ -692,9 +692,11 @@ is the physical stability of the orbital system which is ignored by this type
 of analysis \citep{orbital}. However it is interesting that
 we find many more signals in the data than previous authors.
 By inspecting the posterior distribution for the periods
-(Figure~\ref{fig:gliese581_periods}), we see that only four of the periods
-are well determined, corresponding to the known periods of Gliese 581 b, c, d,
-and e. The other ``periods'' are more uncertain. As with $\nu$ Oph, we can
+(Figure~\ref{fig:gliese581_periods}), we see that only 4 of the periods
+are well determined and have a posterior probability close to 1 (i.e. they
+are present in all samples), corresponding to the known periods of Gliese 581
+b, c, d, and e. The other ``periods'' are more uncertain.
+As with $\nu$ Oph, we can
 calculate the posterior probability of any hypothesis
 about Gliese 581 by computing the fraction of the posterior samples that have
 that property. The posterior probabilities for planets b, c, d, and e, are
@@ -709,7 +711,7 @@ used;][]{astero}, and if the model were extended to include a ``stochastic''
 oscillation \citep[e.g.][]{gaussproc}, the number of periods detected may be reduced
 substantially. Another contributing factor is the prior for the amplitudes.
 With these kinds of models, the posterior distribution for $N$
-can also be influenced by the prior for the amplitudes $A_i$. Many authors
+can be influenced by the prior for the amplitudes $A_i$. Many authors
 assign independent broad priors to the amplitudes, and this causes the
 ``Occam's razor'' penalty for adding extra signals to be quite strong. Since we
 use a hierarchical prior for the amplitudes, if some amplitudes are found to
