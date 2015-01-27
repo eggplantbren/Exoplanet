@@ -313,7 +313,10 @@ and $\psi_i = \{P_i, A_i, e_i, \phi_i, \omega_i\}$
 are the properties of planet $i$.
 The parameter $m_0$ describes a DC offset in the data, and
 $\sigma_{\rm extra}$ and $\nu$ are parameters of the noise distribution
-which are discussed further below.
+which are discussed further below. Note that our parameter $\omega_i$ is
+standard, however $\phi_i$ is non-standard because we assert that $\phi_i=0$
+always implies the signal is at its maximum at $t=0$. Our parameter space is
+equivalent to the standard one, we are just using a different coordinate system.
 
 A standard assumption for the probability distribution of the data given the
 parameters (known as the sampling distribution, which becomes the likelihood
@@ -575,10 +578,14 @@ shows several prominent peaks.
 The two peaks with vertical dashed lines are the commonly accepted periods of
 530 and 3190 days, and the other prominent peaks (i.e. signals which have a
 moderate probability of existence) have periods of 36.11 $\pm$ 0.034 days,
-75.58 $\pm$ 0.80 days, and 1709 $\pm$ 183 days.
-The probability that
-at least one of these ``extra'' signals exists, given by the fraction of
-samples that have one of these signals, is 85\%.
+75.58 $\pm$ 0.80 days, and 1709 $\pm$ 183 days. As with any MCMC output,
+if we are interested in the probability of any proposition $Q$ (for example,
+``$Q \equiv$ a planet exists with period between 35 and 37 days''), we can
+calculate the proportion of the posterior samples for which $Q$ is true, which
+(if we have a lot of samples) is a Monte Carlo estimate of the posterior
+probability of $Q$. For $\nu$ Oph, we calculated the probability that
+at least one of these ``extra'' signals (beyond the two commonly accepted ones)
+exists, as 85\%.
 Given that they exist, their amplitudes are low, around 5-40 metres per second,
 which we note is above the noise level. An example model fit to the data is
 shown in Figure~\ref{fig:nuoph}.
@@ -673,11 +680,11 @@ greater than the probability of $N-1$ planets existing before making a
 claim that $N$ planets have been definitively detected. Such a decision rule
 is presumably equivalent to a utility function where false positives are much
 worse than false negatives. We note that applying this rule to our results, we
-would assert $N=6$, even though this has a tiny probability.
+would assert $N=6$, even though this has a very small posterior probability.
 
 It is now recognised that
 there are many possible sources for oscillations in a data set and not all
-such oscillations should be claimed as planets \citep{2014Sci...345..440R}. 
+such oscillations should be claimed as planets. 
 Our model cannot distinguish between oscillations due to planets and
 oscillations due to stellar activity: any oscillations found in the dataset
 will be described as ``planets'' by the model. Another important consideration
@@ -691,7 +698,14 @@ and e. The other ``periods'' are very uncertain. It is quite likely that a
 non-sinusoidal signal due to stellar activity is being modelled as several
 periods \citep{astero}, and if the model were extended to include a ``stochastic''
 oscillation \citep{gaussproc}, the number of periods detected may be reduced
-substantially. An example model fit for Gliese 581 is shown in
+substantially. With these kinds of models, the posterior distribution for $N$
+can also be influenced by the prior for the amplitudes $A_i$. Many authors
+assign independent broad priors to the amplitudes, and this causes the
+``Occam's razor'' penalty for adding extra signals to be quite strong. Since we
+use a hierarchical prior for the amplitudes, if some amplitudes are found to
+be low, $\mu_A$ will become small. When $\mu_A$ is small, it is likely that any
+extra signals will have small amplitudes, so the ``Occam's razor'' effect is
+weaker. An example model fit for Gliese 581 is shown in
 Figure~\ref{fig:gliese581}.
 
 \begin{figure}
@@ -708,6 +722,12 @@ system. The solid lines are Gliese 581 b and c, the dashed lines are
 \label{fig:gliese581_periods}}
 \end{figure}
 
+As with $\nu$ Oph, we can calculate the posterior probability of any hypothesis
+about Gliese 581 by computing the fraction of the posterior samples that have
+that property. The posterior probabilities for planets b, c, d, and e, are
+close to 1. The posterior probability a signal exists with $\log_{10}(P)
+\in [1.55, 1.57]$ is 88\%, and the probability for a signal with
+$\log_{10}(P) \in [2.6, 2.8]$ is 85\%.
 
 \begin{figure}
 \includegraphics[scale=0.45]{Figures/gliese581.eps}
