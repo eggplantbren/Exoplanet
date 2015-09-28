@@ -35,6 +35,7 @@ void MyModel::fromPrior()
 	eta2 = exp(log(1E-3) + log(1E4)*randomU());
 
 	calculate_mu();
+	calculate_C();
 }
 
 void MyModel::calculate_C()
@@ -123,6 +124,7 @@ double MyModel::perturb()
 			wrap(eta2, log(1E-3), log(1E1));
 			eta2 = exp(eta2);
 		}
+		calculate_C();
 	}
 	else if(randomU() <= 0.5)
 	{
