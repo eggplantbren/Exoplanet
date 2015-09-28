@@ -4,6 +4,7 @@
 #include "Model.h"
 #include <vector>
 #include <RJObject.h>
+#include <Eigen/Dense>
 #include "MyDistribution.h"
 
 class MyModel:public DNest3::Model
@@ -21,6 +22,11 @@ class MyModel:public DNest3::Model
 		// The signal
 		std::vector<long double> mu;
 		void calculate_mu();
+
+		// The covariance matrix for the data
+		Eigen::MatrixXd C;
+		void calculate_C();
+
 		unsigned int staleness;
 
 	public:

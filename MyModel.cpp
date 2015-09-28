@@ -12,6 +12,8 @@ using namespace DNest3;
 MyModel::MyModel()
 :objects(5, 10, false, MyDistribution())
 ,mu(Data::get_instance().get_t().size())
+,C(Data::get_instance().get_t().size(),
+			Data::get_instance().get_t().size())
 {
 
 }
@@ -32,6 +34,26 @@ void MyModel::fromPrior()
 	eta2 = exp(log(1E-3) + log(1E4)*randomU());
 
 	calculate_mu();
+}
+
+void MyModel::calculate_C()
+{
+	// Get the data
+	const vector<double>& t = Data::get_instance().get_t();
+	const vector<double>& sig = Data::get_instance().get_sig();
+
+	for(size_t i=0; i<Data::get_instance().get_t().size(); i++)
+	{
+		for(size_t j=i; j<Data::get_instance().get_t().size(); j++)
+		{
+			C(i, j) = eta1*eta1*exp(-0.5*pow((t[i] - t[j])/eta2, 2));
+
+			if(i==j)
+				C(i, j) += sig[i]*sig[i] + extra_sigma*extra_sigma;
+			else
+				C(j, i) = C(i, j);
+		}
+	}
 }
 
 void MyModel::calculate_mu()
@@ -132,7 +154,10 @@ double MyModel::logLikelihood() const
 	const vector<double>& sig = Data::get_instance().get_sig();
 
 	double logL = 0.;
-//	double var;
+	double var;
+
+
+
 //	for(size_t i=0; i<y.size(); i++)
 //	{
 //		var = sig[i]*sig[i] + extra_sigma*extra_sigma;
