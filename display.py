@@ -8,15 +8,15 @@ data = loadtxt('fake_data_like_nuoph.txt')
 truth = loadtxt('fake_data_like_nuoph.truth')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
-hist(posterior_sample[:,1007], 100)
+hist(posterior_sample[:,1008], 100)
 xlabel('Number of Planets')
 ylabel('Number of Posterior Samples')
 xlim([-0.5, 10.5])
 show()
 
-T = posterior_sample[:,1008:1018]
-A = posterior_sample[:,1018:1028]
-E = posterior_sample[:,1038:1048]
+T = posterior_sample[:,1009:1019]
+A = posterior_sample[:,1019:1029]
+E = posterior_sample[:,1039:1049]
 which = T != 0
 T = T[which].flatten()
 A = A[which].flatten()
@@ -30,13 +30,13 @@ E = E[which].flatten()
 hist(T/log(10.), 500, alpha=0.5)
 xlabel(r'$\log_{10}$(Period/days)')
 xlim([1, 4])
-for i in xrange(1008, 1008 + int(truth[1007])):
+for i in xrange(1009, 1009 + int(truth[1008])):
   axvline(truth[i]/log(10.), color='r')
 ylabel('Number of Posterior Samples')
 show()
 
 subplot(2,1,1)
-plot(truth[1008:1008 + int(truth[1007])]/log(10.), log10(truth[1018:1018 + int(truth[1007])]), 'ro', markersize=7)
+plot(truth[1009:1009 + int(truth[1008])]/log(10.), log10(truth[1018:1018 + int(truth[1008])]), 'ro', markersize=7)
 hold(True)
 xlim([1, 4])
 ylim([-1, 3])
@@ -44,7 +44,7 @@ ylabel(r'$\log_{10}$[Amplitude (m/s)$]$')
 plot(T/log(10.), log10(A), 'b.', markersize=1)
 
 subplot(2,1,2)
-plot(truth[1008:1008 + int(truth[1007])]/log(10.), truth[1038:1038 + int(truth[1007])], 'ro', markersize=7)
+plot(truth[1009:1009 + int(truth[1008])]/log(10.), truth[1038:1038 + int(truth[1008])], 'ro', markersize=7)
 hold(True)
 xlim([1, 4])
 xlabel(r'$\log_{10}$(Period/days)')

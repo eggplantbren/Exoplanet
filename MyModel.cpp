@@ -235,7 +235,7 @@ void MyModel::print(std::ostream& out) const
 
 	for(size_t i=0; i<signal.size(); i++)
 		out<<signal[i]<<' ';
-	out<<extra_sigma<<' ';
+	out<<extra_sigma<<' '<<eta1<<' '<<eta2<<' ';
 	objects.print(out); out<<' '<<staleness<<' ';
 	out<<background<<' ';
 }
