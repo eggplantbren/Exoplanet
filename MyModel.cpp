@@ -7,6 +7,7 @@
 #include <gsl/gsl_sf_gamma.h>
 
 using namespace std;
+using namespace Eigen;
 using namespace DNest3;
 
 MyModel::MyModel()
@@ -151,11 +152,33 @@ double MyModel::logLikelihood() const
 {
 	// Get the data
 	const vector<double>& y = Data::get_instance().get_y();
-	const vector<double>& sig = Data::get_instance().get_sig();
 
-	double logL = 0.;
-	double var;
+	VectorXd residual(y.size());
+	for(size_t i=0; i<y.size(); i++)
+		residual(i) = y[i] - mu[i];
 
+	Eigen::LLT<Eigen::MatrixXd> cholesky = C.llt();
+	MatrixXd L = cholesky.matrixL();
+
+	double logDeterminant = 0.;
+	for(size_t i=0; i<y.size(); i++)
+		logDeterminant += 2.*log(L(i,i));
+
+	// C^-1*(y-mu)
+	VectorXd solution = cholesky.solve(residual);
+
+	// y*solution
+	double exponent = 0.;
+	for(size_t i=0; i<y.size(); i++)
+		exponent += residual(i)*solution(i);
+
+	double logL = -0.5*y.size()*log(2*M_PI)
+					- 0.5*logDeterminant - 0.5*exponent;
+
+	if(isnan(logL) || isinf(logL))
+		logL = -1E300;
+
+	return logL;
 
 
 //	for(size_t i=0; i<y.size(); i++)

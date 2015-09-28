@@ -5,6 +5,7 @@
 #include <vector>
 #include <RJObject.h>
 #include <Eigen/Dense>
+#include <Eigen/Cholesky>
 #include "MyDistribution.h"
 
 class MyModel:public DNest3::Model
