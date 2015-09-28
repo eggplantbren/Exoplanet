@@ -12,8 +12,11 @@ class MyModel:public DNest3::Model
 		RJObject<MyDistribution> objects;
 
 		double background;
-		double extra_sigma; // Noise scale parameter
-		double nu; // Noise shape parameter
+
+		double extra_sigma;
+
+		// Parameters for the quasi-periodic extra noise
+		double eta1, eta2;
 
 		// The signal
 		std::vector<long double> mu;

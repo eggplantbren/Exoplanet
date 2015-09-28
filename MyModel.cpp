@@ -22,8 +22,15 @@ void MyModel::fromPrior()
 	objects.consolidate_diff();
 	background = Data::get_instance().get_y_min() +
 		(Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*randomU();
+
 	extra_sigma = exp(tan(M_PI*(0.97*randomU() - 0.485)));
-	nu = exp(log(0.1) + log(1000.)*randomU());
+
+	// Log-uniform prior from 10^(-2) to 10^2 m/s
+	eta1 = exp(log(1E-2) + log(1E4)*randomU());
+
+	// Log-uniform prior from 10^(-3) to 10 years
+	eta2 = exp(log(1E-3) + log(1E4)*randomU());
+
 	calculate_mu();
 }
 
@@ -71,11 +78,28 @@ double MyModel::perturb()
 {
 	double logH = 0.;
 
-	if(randomU() <= 0.75)
+	if(randomU() <= 0.5)
 	{
 		logH += objects.perturb();
 		objects.consolidate_diff();
 		calculate_mu();
+	}
+	else if(randomU() <= 0.5)
+	{
+		if(randomU() <= 0.5)
+		{
+			eta1 = log(eta1);
+			eta1 += log(1E4)*randh();
+			wrap(eta1, log(1E-2), log(1E2));
+			eta1 = exp(eta1);
+		}
+		else
+		{
+			eta2 = log(eta2);
+			eta2 += log(1E4)*randh();
+			wrap(eta2, log(1E-3), log(1E1));
+			eta2 = exp(eta2);
+		}
 	}
 	else if(randomU() <= 0.5)
 	{
@@ -85,11 +109,6 @@ double MyModel::perturb()
 		wrap(extra_sigma, 0., 1.);
 		extra_sigma = tan(M_PI*(0.97*extra_sigma - 0.485));
 		extra_sigma = exp(extra_sigma);
-
-		nu = log(nu);
-		nu += log(1000.)*randh();
-		wrap(nu, log(0.1), log(1000.));
-		nu = exp(nu);
 	}
 	else
 	{
@@ -113,14 +132,14 @@ double MyModel::logLikelihood() const
 	const vector<double>& sig = Data::get_instance().get_sig();
 
 	double logL = 0.;
-	double var;
-	for(size_t i=0; i<y.size(); i++)
-	{
-		var = sig[i]*sig[i] + extra_sigma*extra_sigma;
-		logL += gsl_sf_lngamma(0.5*(nu + 1.)) - gsl_sf_lngamma(0.5*nu)
-			- 0.5*log(M_PI*nu) - 0.5*log(var)
-			- 0.5*(nu + 1.)*log(1. + pow(y[i] - mu[i], 2)/var/nu);
-	}
+//	double var;
+//	for(size_t i=0; i<y.size(); i++)
+//	{
+//		var = sig[i]*sig[i] + extra_sigma*extra_sigma;
+//		logL += gsl_sf_lngamma(0.5*(nu + 1.)) - gsl_sf_lngamma(0.5*nu)
+//			- 0.5*log(M_PI*nu) - 0.5*log(var)
+//			- 0.5*(nu + 1.)*log(1. + pow(y[i] - mu[i], 2)/var/nu);
+//	}
 
 	return logL;
 }
@@ -166,7 +185,7 @@ void MyModel::print(std::ostream& out) const
 
 	for(size_t i=0; i<signal.size(); i++)
 		out<<signal[i]<<' ';
-	out<<extra_sigma<<' '<<nu<<' ';
+	out<<extra_sigma<<' ';
 	objects.print(out); out<<' '<<staleness<<' ';
 	out<<background<<' ';
 }
