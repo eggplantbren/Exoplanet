@@ -18,7 +18,7 @@ class MyModel:public DNest3::Model
 		double extra_sigma;
 
 		// Parameters for the quasi-periodic extra noise
-		double eta1, eta2;
+		double eta1, eta2, eta3, eta4;
 
 		// The signal
 		std::vector<long double> mu;

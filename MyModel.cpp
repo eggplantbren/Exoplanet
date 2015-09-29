@@ -34,6 +34,13 @@ void MyModel::fromPrior()
 	// Log-uniform prior from 10^(-3) to 10 years
 	eta2 = exp(log(1E-3) + log(1E4)*randomU());
 
+	// Log-uniform prior from 1 day to 100 days
+	eta3 = exp(log(1.) + log(1E2)*randomU());
+
+	// Log-uniform prior from 10^(-3) to 10 years
+	eta4 = exp(log(1E-3) + log(1E4)*randomU());
+
+
 	calculate_mu();
 	calculate_C();
 }
@@ -48,7 +55,8 @@ void MyModel::calculate_C()
 	{
 		for(size_t j=i; j<Data::get_instance().get_t().size(); j++)
 		{
-			C(i, j) = eta1*eta1*exp(-0.5*pow((t[i] - t[j])/eta2, 2));
+			C(i, j) = eta1*eta1*exp(-0.5*pow((t[i] - t[j])/eta2, 2) 
+				                    -2.0*pow(sin(M_PI*(t[i] - t[j])/eta3)/eta4, 2) );
 
 			if(i==j)
 				C(i, j) += sig[i]*sig[i] + extra_sigma*extra_sigma;
@@ -110,21 +118,36 @@ double MyModel::perturb()
 	}
 	else if(randomU() <= 0.5)
 	{
-		if(randomU() <= 0.5)
+		if(randomU() <= 0.25)
 		{
 			eta1 = log(eta1);
 			eta1 += log(1E4)*randh();
 			wrap(eta1, log(1E-2), log(1E2));
 			eta1 = exp(eta1);
 		}
-		else
+		else if(randomU() <= 0.33330)
 		{
 			eta2 = log(eta2);
 			eta2 += log(1E4)*randh();
 			wrap(eta2, log(1E-3), log(1E1));
 			eta2 = exp(eta2);
 		}
+		else if(randomU() <= 0.5)
+		{
+			eta3 = log(eta3);
+			eta3 += log(1E2)*randh();
+			wrap(eta3, log(1.), log(1E2));
+			eta3 = exp(eta3);
+		}
+		else
+		{
+			eta4 = log(eta4);
+			eta4 += log(1E4)*randh();
+			wrap(eta4, log(1E-3), log(1E1));
+			eta4 = exp(eta4);
+		}
 		calculate_C();
+
 	}
 	else if(randomU() <= 0.5)
 	{
@@ -235,7 +258,7 @@ void MyModel::print(std::ostream& out) const
 
 	for(size_t i=0; i<signal.size(); i++)
 		out<<signal[i]<<' ';
-	out<<extra_sigma<<' '<<eta1<<' '<<eta2<<' ';
+	out<<extra_sigma<<' '<<eta1<<' '<<eta2<<' '<<eta3<<' '<<eta4<<' ';
 	objects.print(out); out<<' '<<staleness<<' ';
 	out<<background<<' ';
 }
