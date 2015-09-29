@@ -157,6 +157,8 @@ double MyModel::perturb()
 		wrap(extra_sigma, 0., 1.);
 		extra_sigma = tan(M_PI*(0.97*extra_sigma - 0.485));
 		extra_sigma = exp(extra_sigma);
+
+		calculate_C();
 	}
 	else
 	{
