@@ -1,13 +1,10 @@
 #include "MyModel.h"
-#include "RandomNumberGenerator.h"
-#include "Utils.h"
 #include "Data.h"
 #include <cmath>
 #include "Lookup.h"
 #include <gsl/gsl_sf_gamma.h>
 
 using namespace std;
-using namespace DNest3;
 
 MyModel::MyModel()
 :objects(5, 10, false, MyDistribution())
@@ -16,14 +13,14 @@ MyModel::MyModel()
 
 }
 
-void MyModel::fromPrior()
+void MyModel::from_prior(DNest4::RNG& rng)
 {
-	objects.fromPrior();
+	objects.from_prior(rng);
 	objects.consolidate_diff();
 	background = Data::get_instance().get_y_min() +
-		(Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*randomU();
-	extra_sigma = exp(tan(M_PI*(0.97*randomU() - 0.485)));
-	nu = exp(log(0.1) + log(1000.)*randomU());
+		(Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*rng.rand();
+	extra_sigma = exp(tan(M_PI*(0.97*rng.rand() - 0.485)));
+	nu = exp(log(0.1) + log(1000.)*rng.rand());
 	calculate_mu();
 }
 
@@ -67,28 +64,28 @@ void MyModel::calculate_mu()
 	}
 }
 
-double MyModel::perturb()
+double MyModel::perturb(DNest4::RNG& rng)
 {
 	double logH = 0.;
 
-	if(randomU() <= 0.75)
+	if(rng.rand() <= 0.75)
 	{
-		logH += objects.perturb();
+		logH += objects.perturb(rng);
 		objects.consolidate_diff();
 		calculate_mu();
 	}
-	else if(randomU() <= 0.5)
+	else if(rng.rand() <= 0.5)
 	{
 		extra_sigma = log(extra_sigma);
 		extra_sigma = (atan(extra_sigma)/M_PI + 0.485)/0.97;
-		extra_sigma += randh();
-		wrap(extra_sigma, 0., 1.);
+		extra_sigma += rng.randh();
+		DNest4::wrap(extra_sigma, 0., 1.);
 		extra_sigma = tan(M_PI*(0.97*extra_sigma - 0.485));
 		extra_sigma = exp(extra_sigma);
 
 		nu = log(nu);
-		nu += log(1000.)*randh();
-		wrap(nu, log(0.1), log(1000.));
+		nu += log(1000.)*rng.randh();
+		DNest4::wrap(nu, log(0.1), log(1000.));
 		nu = exp(nu);
 	}
 	else
@@ -96,8 +93,8 @@ double MyModel::perturb()
 		for(size_t i=0; i<mu.size(); i++)
 			mu[i] -= background;
 
-		background += (Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*randh();
-		wrap(background, Data::get_instance().get_y_min(), Data::get_instance().get_y_max());
+		background += (Data::get_instance().get_y_max() - Data::get_instance().get_y_min())*rng.randh();
+		DNest4::wrap(background, Data::get_instance().get_y_min(), Data::get_instance().get_y_max());
 
 		for(size_t i=0; i<mu.size(); i++)
 			mu[i] += background;
@@ -106,7 +103,7 @@ double MyModel::perturb()
 	return logH;
 }
 
-double MyModel::logLikelihood() const
+double MyModel::log_likelihood() const
 {
 	// Get the data
 	const vector<double>& y = Data::get_instance().get_y();
