@@ -1,47 +1,43 @@
 #include "MyDistribution.h"
-#include "RandomNumberGenerator.h"
-#include "Utils.h"
 #include <cmath>
-
-using namespace DNest3;
 
 MyDistribution::MyDistribution()
 {
 
 }
 
-void MyDistribution::fromPrior()
+void MyDistribution::from_prior(DNest4::RNG& rng)
 {
 	// Cauchy prior centered on 5.901 = log(365 days).
-	center = 5.901 + tan(M_PI*(0.97*randomU() - 0.485));
-	width = 0.1 + 2.9*randomU();
-	mu = exp(tan(M_PI*(0.97*randomU() - 0.485)));
+	center = 5.901 + tan(M_PI*(0.97*rng.rand() - 0.485));
+	width = 0.1 + 2.9*rng.rand();
+	mu = exp(tan(M_PI*(0.97*rng.rand() - 0.485)));
 }
 
-double MyDistribution::perturb_parameters()
+double MyDistribution::perturb_hyperparameters(DNest4::RNG& rng)
 {
 	double logH = 0.;
 
-	int which = randInt(3);
+	int which = rng.rand_int(3);
 
 	if(which == 0)
 	{
 		center = (atan(center - 5.901)/M_PI + 0.485)/0.97;
-		center += randh();
-		wrap(center, 0., 1.);
+		center += rng.randh();
+		DNest4::wrap(center, 0., 1.);
 		center = 5.901 + tan(M_PI*(0.97*center - 0.485));
 	}
 	else if(which == 1)
 	{
-		width += 2.9*randh();
-		wrap(width, 0.1, 3.);
+		width += 2.9*rng.randh();
+		DNest4::wrap(width, 0.1, 3.);
 	}
 	else
 	{
 		mu = log(mu);
 		mu = (atan(mu)/M_PI + 0.485)/0.97;
-		mu += randh();
-		wrap(mu, 0., 1.);
+		mu += rng.randh();
+		DNest4::wrap(mu, 0., 1.);
 		mu = tan(M_PI*(0.97*mu - 0.485));
 		mu = exp(mu);
 	}
