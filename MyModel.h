@@ -1,15 +1,14 @@
 #ifndef _MyModel_
 #define _MyModel_
 
-#include "Model.h"
 #include <vector>
-#include <RJObject.h>
+#include "DNest4/code/DNest4.h"
 #include "MyDistribution.h"
 
-class MyModel:public DNest3::Model
+class MyModel
 {
 	private:
-		RJObject<MyDistribution> objects;
+		DNest4::RJObject<MyDistribution> objects;
 
 		double background;
 		double extra_sigma; // Noise scale parameter
@@ -24,13 +23,13 @@ class MyModel:public DNest3::Model
 		MyModel();
 
 		// Generate the point from the prior
-		void fromPrior();
+		void from_prior(DNest4::RNG& rng);
 
 		// Metropolis-Hastings proposals
-		double perturb();
+		double perturb(DNest4::RNG& rng);
 
 		// Likelihood function
-		double logLikelihood() const;
+		double log_likelihood() const;
 
 		// Print to stream
 		void print(std::ostream& out) const;

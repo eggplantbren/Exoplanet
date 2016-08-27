@@ -1,12 +1,12 @@
 #ifndef _MyDistribution_
 #define _MyDistribution_
 
-#include <Distributions/Distribution.h>
+#include "DNest4/code/DNest4.h"
 
 // Based on ClassicMassInf1D from RJObject
 // Think of "position x" as log-period
 // and mass as amplitude
-class MyDistribution:public Distribution
+class MyDistribution:public DNest4::ConditionalPrior
 {
 	private:
 		// Parameters of bi-exponential distribution for log-periods
@@ -15,12 +15,11 @@ class MyDistribution:public Distribution
 		// Mean of exponential distribution for amplitudes
 		double mu;
 
-		double perturb_parameters();
-
 	public:
 		MyDistribution();
 
-		void fromPrior();
+		void from_prior(DNest4::RNG& rng);
+        double perturb_hyperparameters(DNest4::RNG& rng);
 
 		double log_pdf(const std::vector<double>& vec) const;
 		void from_uniform(std::vector<double>& vec) const;
