@@ -1,11 +1,10 @@
 #include "Orbit.h"
+#include "DNest4/code/DNest4.h"
 #include <fstream>
 #include <iostream>
-#include "Utils.h"
 #include <cmath>
 
 using namespace std;
-using namespace DNest3;
 
 Orbit::Orbit()
 {
@@ -67,7 +66,8 @@ vector<double> Orbit::evaluate(const std::vector<double>& arg_to_cos,
 	double cc = 2.*M_PI*((double)(highest))/vr.size();
 	for(size_t i=0; i<result.size(); i++)
 	{
-		index = (int)(vr.size()*mod(arg_to_cos[i] + cc, 2.*M_PI)/(2*M_PI));
+		index = (int)(vr.size()*
+                    DNest4::mod(arg_to_cos[i] + cc, 2.*M_PI)/(2*M_PI));
 		result[i] = vr[index];
 	}
 
