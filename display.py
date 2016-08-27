@@ -1,12 +1,13 @@
 from pylab import *
 import os
+import dnest4.classic as dn4
 
 rc("font", size=14, family="serif", serif="Computer Sans")
 rc("text", usetex=True)
 
 data = loadtxt('fake_data_like_nuoph.txt')
 truth = loadtxt('fake_data_like_nuoph.truth')
-posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
+posterior_sample = atleast_2d(dn4.my_loadtxt('posterior_sample.txt'))
 
 hist(posterior_sample[:,1007], 100)
 xlabel('Number of Planets')
@@ -30,7 +31,7 @@ E = E[which].flatten()
 hist(T/log(10.), 500, alpha=0.5)
 xlabel(r'$\log_{10}$(Period/days)')
 xlim([1, 4])
-for i in xrange(1008, 1008 + int(truth[1007])):
+for i in range(1008, 1008 + int(truth[1007])):
   axvline(truth[i]/log(10.), color='r')
 ylabel('Number of Posterior Samples')
 show()
@@ -60,7 +61,7 @@ if saveFrames:
   os.system('rm Frames/*.png')
 
 ion()
-for i in xrange(0, posterior_sample.shape[0]):
+for i in range(0, posterior_sample.shape[0]):
   hold(False)
   errorbar(data[:,0], data[:,1], fmt='b.', yerr=data[:,2])
   hold(True)
