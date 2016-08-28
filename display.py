@@ -51,7 +51,7 @@ hold(True)
 xlim([1, 4])
 xlabel(r'$\log_{10}$(Period/days)')
 ylabel('Eccentricity')
-plot(T/log(10.), E, 'b.', markersize=1)
+plot(T/log(10.), E, 'g.', markersize=1)
 show()
 
 data[:,0] -= data[:,0].min()
