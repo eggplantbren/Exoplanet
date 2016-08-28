@@ -15,7 +15,7 @@ for v0 in linspace(0.4, 1., 121):
 	keep = empty((steps, 2))
 
 	ion()
-	for i in xrange(0, steps):
+	for i in range(0, steps):
 	  phi1 = arctan2(pos[1], pos[0])
 
 	  pos += 0.5*dt*vel

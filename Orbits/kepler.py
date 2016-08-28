@@ -17,7 +17,7 @@ def update(E, t):
 ion()
 hold(False)
 E = omega*t + phi
-for i in xrange(0, 20):
+for i in range(0, 20):
   hold(True)
   plot(t, E)
   E = update(E, t)
