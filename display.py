@@ -39,7 +39,6 @@ show()
 
 subplot(2,1,1)
 plot(truth[1008:1008 + int(truth[1007])]/log(10.), log10(truth[1018:1018 + int(truth[1007])]), 'ko', markersize=7, alpha=0.5)
-hold(True)
 xlim([1, 4])
 ylim([-1, 3])
 ylabel(r'$\log_{10}$[Amplitude (m/s)$]$')
@@ -47,7 +46,6 @@ plot(T/log(10.), log10(A), 'g.', markersize=1)
 
 subplot(2,1,2)
 plot(truth[1008:1008 + int(truth[1007])]/log(10.), truth[1038:1038 + int(truth[1007])], 'ko', markersize=7, alpha=0.5)
-hold(True)
 xlim([1, 4])
 xlabel(r'$\log_{10}$(Period/days)')
 ylabel('Eccentricity')
@@ -61,22 +59,18 @@ saveFrames = False # For making movies
 if saveFrames:
   os.system('rm Frames/*.png')
 
-ion()
 for i in range(0, posterior_sample.shape[0]):
-  hold(False)
+  clf()
   errorbar(data[:,0], data[:,1], fmt='k.', yerr=data[:,2])
-  hold(True)
   plot(t, posterior_sample[i, 0:1000], 'g')
   xlim([-0.05*data[:,0].max(), 1.05*data[:,0].max()])
   ylim([-1.5*max(abs(data[:,1])), 1.5*max(abs(data[:,1]))])
   #axhline(0., color='k')
   xlabel('Time (days)', fontsize=16)
   ylabel('Radial Velocity (m/s)', fontsize=16)
-  draw()
   if saveFrames:
     savefig('Frames/' + '%0.4d'%(i+1) + '.png', bbox_inches='tight')
     print('Frames/' + '%0.4d'%(i+1) + '.png')
 
 
-ioff()
 show()
