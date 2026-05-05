@@ -1,4 +1,4 @@
-CFLAGS = -std=c++11 -O3 -DNDEBUG -Wall -Wextra -pedantic
+CFLAGS = -std=c++11 -O3 -march=native -DNDEBUG -Wall -Wextra -pedantic
 LIBS = -ldnest4 -lgsl -lgslcblas
 
 default:
